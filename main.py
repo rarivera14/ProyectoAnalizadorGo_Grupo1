@@ -24,6 +24,7 @@ tokens = (
   'LLAVEDE',
   'EQUIVALENTE',
   'VARIABLE',
+  'BOOLEAN',
   'ID'
 ) + tuple(reserved.values())
  
@@ -48,6 +49,10 @@ def t_newline(t):
   r'\n+'
   t.lexer.lineno += len(t.value)
 
+def t_BOOL(t):
+  r'(true|false)'
+  t.type = reserved.get(t.value, 'BOOLEAN')
+  return t
 def t_VARIABLE(t):
   r'[a-zA-Z]+'
   t.type = reserved.get(t.value,'VARIABLE')
@@ -67,14 +72,14 @@ def t_error(t):
 if __name__ == '__main__':
   lexer = lex.lex()
 
-  # Test it out
+  # Data de prueba
   data = '''package main 
     if 2==4 {
       return true
     } 
     '''
   
-  # Give the lexer some input
+  # Pasando la data como entrada en el lexer
   lexer.input(data)
   
   # Tokenize
