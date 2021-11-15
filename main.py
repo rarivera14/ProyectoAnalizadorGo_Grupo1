@@ -1,12 +1,33 @@
 import ply.lex as lex
- 
+
+# Ricardo Contribution -Reserved Keywords
 reserved = {
-    'if' : 'IF',
-    'package': 'PACKAGE',
+    'break' : 'BREAK',
     'default': 'DEFAULT',
     'func': 'FUNCTION',
-    'return': 'RETURN'
+    'interface': 'INTERFACE',
+    'select': 'SELECT',
+    'if' : 'IF',
+    'package': 'PACKAGE',
+    'return': 'RETURN',
+    'case': 'CASE',
+    'defer': 'DEFER',
+    'go': 'GO',
+    'map': 'MAP',
+    'struct': 'STRUCT',
+    'chan': 'CHAN',
+    'else': 'ELSE',
+    'goto': 'GOTO',
+    'const': 'CONST',
+    'fallthrough': 'FALLTHROUGH',
+    'range': 'RANGE',
+    'type': 'TYPE',
+    'continue': 'CONTINUE',
+    'for': 'FOR',
+    'import': 'IMPORT',
+    'var': 'VAR'
 }
+##############################
 
  # List of token names.   This is always required
 tokens = (
