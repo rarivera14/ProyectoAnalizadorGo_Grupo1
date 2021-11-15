@@ -31,6 +31,7 @@ reserved = {
 
  # List of token names.   This is always required
 tokens = (
+  # William Venegas
   'NUMBER',
   'MAS',
   'RESTA',
@@ -45,10 +46,17 @@ tokens = (
   'LLAVEDE',
   'EQUIVALENTE',
   'VARIABLE',
+  'BOOLEAN',
+  'BACKTICK',
+  'COMILLASDOBLES',
+  'INCREMENTO',
+  'DECREMENTO',
   'ID'
+  # William Venegas
 ) + tuple(reserved.values())
  
- # Regular expression rules for simple tokens
+# Regular expression rules for simple tokens
+# William Venegas
 t_MAS    = r'\+'
 t_RESTA   = r'-'
 t_MULTI   = r'\*'
@@ -62,12 +70,26 @@ t_EQUIVALENTE = r'=='
 t_DIFERENTE = r'!='
 t_LLAVEIZ = r'\{'
 t_LLAVEDE = r'\}'
+t_COMILLASDOBLES = r'\"'
+t_INCREMENTO = r'\+\+'
+t_DECREMENTO = r'\-\-'
+# William Venegas
 #t_VARIABLE = r'[a-z]+'
  
  # Define a rule so we can track line numbers
 def t_newline(t):
   r'\n+'
   t.lexer.lineno += len(t.value)
+# William Venegas
+def t_BOOL(t):
+  r'(true|false)'
+  t.type = reserved.get(t.value, 'BOOLEAN')
+  return t
+# William Venegas
+def t_BACKTICK(t):
+  r'`'
+  t.type = reserved.get(t.value, 'BACKTICK')
+  return t
 
 def t_VARIABLE(t):
   r'[a-zA-Z]+'
@@ -88,14 +110,21 @@ def t_error(t):
 if __name__ == '__main__':
   lexer = lex.lex()
 
-  # Test it out
+  # Data de prueba
   data = '''package main 
     if 2==4 {
+      5+2
+      4.567 * 2
+      `hola`
+      "test"
+      count++
+      i--
       return true
+      
     } 
     '''
   
-  # Give the lexer some input
+  # Pasando la data como entrada en el lexer
   lexer.input(data)
   
   # Tokenize
