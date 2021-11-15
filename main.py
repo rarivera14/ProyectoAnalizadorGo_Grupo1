@@ -51,8 +51,22 @@ tokens = (
   'COMILLASDOBLES',
   'INCREMENTO',
   'DECREMENTO',
-  'ID'
+  'ID',
   # William Venegas
+
+  # Ricardo Zevallos
+  'ASIGNADOR',
+  'ASIGNADORSUM',
+  'ASIGNADORRESTA',
+  'ASIGNADORMULT',
+  'ASIGNADORDIV',
+  'MAYORQUE',
+  'MENORQUE',
+  'MAYOROIGUALQUE',
+  'MENOROIGUALQUE',
+  'FLOTANTEI',
+  'STRING'
+ # Ricardo Zevallos
 ) + tuple(reserved.values())
  
 # Regular expression rules for simple tokens
@@ -75,6 +89,22 @@ t_INCREMENTO = r'\+\+'
 t_DECREMENTO = r'\-\-'
 # William Venegas
 #t_VARIABLE = r'[a-z]+'
+
+# Ricardo Zevallos
+t_BOOLEAN = r'true|false'
+t_STRING = r'".*"'
+t_FLOTANTEI = r'(\d+\.\d+i)|(\d+i)'
+t_MAYORQUE = r'>'
+t_MENORQUE = r'<'
+t_MAYOROIGUALQUE = r'>='
+t_MENOROIGUALQUE = r'<='
+t_ASIGNADOR = r'='
+t_ASIGNADORSUM = r'\+='
+t_ASIGNADORRESTA = r'-='
+t_ASIGNADORMULT = r'\*='
+t_ASIGNADORDIV = r'/='
+
+# Ricardo Zevallos1
  
  # Define a rule so we can track line numbers
 def t_newline(t):
@@ -121,6 +151,7 @@ def test(opcion):
       if 2==4 {
         5+2
         4.567 * 2
+        4.567 <= 3
         `hola`
         "test"
         count++
