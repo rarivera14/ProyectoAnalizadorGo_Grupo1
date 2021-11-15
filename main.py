@@ -27,6 +27,8 @@ tokens = (
   'BOOLEAN',
   'BACKTICK',
   'COMILLASDOBLES',
+  'INCREMENTO',
+  'DECREMENTO',
   'ID'
 ) + tuple(reserved.values())
  
@@ -45,6 +47,8 @@ t_DIFERENTE = r'!='
 t_LLAVEIZ = r'\{'
 t_LLAVEDE = r'\}'
 t_COMILLASDOBLES = r'\"'
+t_INCREMENTO = r'\+\+'
+t_DECREMENTO = r'\-\-'
 #t_VARIABLE = r'[a-z]+'
  
  # Define a rule so we can track line numbers
@@ -84,8 +88,12 @@ if __name__ == '__main__':
   # Data de prueba
   data = '''package main 
     if 2==4 {
+      5+2
+      4.567 * 2
       `hola`
       "test"
+      count++
+      i--
       return true
       
     } 
