@@ -114,7 +114,6 @@ def menu():
 lexer = lex.lex()
 
 def test(opcion):
-  data = ''
   if opcion == 1:
   # Data de prueba
     data = '''package main 
