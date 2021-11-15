@@ -86,29 +86,54 @@ def t_error(t):
   print("Componente léxico no reconocido '%s'" % t.value[0])
   t.lexer.skip(1)
  
-if __name__ == '__main__':
-  lexer = lex.lex()
+def menu():
+  print("-"*8+"MENU"+"-"*8)
+  print("1. Test auto\n2. Test Manual\n3. Cancelar")
 
+lexer = lex.lex()
+
+def test(opcion):
+  data = ''
+  if opcion == 1:
   # Data de prueba
-  data = '''package main 
-    if 2==4 {
-      5+2
-      4.567 * 2
-      `hola`
-      "test"
-      count++
-      i--
-      return true
-      
-    } 
+    data = '''package main 
+    func main() {
+      if 2==4 {
+        5+2
+        4.567 * 2
+        `hola`
+        "test"
+        count++
+        i--
+        return true 
+      }else{
+        return false
+      }
+    }
     '''
+
+  if opcion == 2:
+    data = input("Ingrese su test: ")  
   
+  if opcion == 3:
+    print("Cancelando...")
+    return
   # Pasando la data como entrada en el lexer
   lexer.input(data)
-  
-  # Tokenize
+
+  # Probando la data
   while True:
-    tok = lexer.token()
-    if not tok: 
-      break    
-    print(tok)
+        tok = lexer.token()
+        if not tok:
+            break  # No more input
+        print(tok)
+
+if __name__ == '__main__':
+  # Principal
+  opcion = 0
+  while opcion != 3:
+    menu()  
+    opcion = int(input("Ingrese una opción: "))
+    test(opcion)
+
+    
