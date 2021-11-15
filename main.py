@@ -25,6 +25,8 @@ tokens = (
   'EQUIVALENTE',
   'VARIABLE',
   'BOOLEAN',
+  'BACKTICK',
+  'COMILLASDOBLES',
   'ID'
 ) + tuple(reserved.values())
  
@@ -42,6 +44,7 @@ t_EQUIVALENTE = r'=='
 t_DIFERENTE = r'!='
 t_LLAVEIZ = r'\{'
 t_LLAVEDE = r'\}'
+t_COMILLASDOBLES = r'\"'
 #t_VARIABLE = r'[a-z]+'
  
  # Define a rule so we can track line numbers
@@ -53,6 +56,12 @@ def t_BOOL(t):
   r'(true|false)'
   t.type = reserved.get(t.value, 'BOOLEAN')
   return t
+
+def t_BACKTICK(t):
+  r'`'
+  t.type = reserved.get(t.value, 'BACKTICK')
+  return t
+
 def t_VARIABLE(t):
   r'[a-zA-Z]+'
   t.type = reserved.get(t.value,'VARIABLE')
@@ -75,7 +84,10 @@ if __name__ == '__main__':
   # Data de prueba
   data = '''package main 
     if 2==4 {
+      `hola`
+      "test"
       return true
+      
     } 
     '''
   
