@@ -10,6 +10,7 @@ reserved = {
 
  # List of token names.   This is always required
 tokens = (
+  # William Venegas
   'NUMBER',
   'MAS',
   'RESTA',
@@ -30,9 +31,11 @@ tokens = (
   'INCREMENTO',
   'DECREMENTO',
   'ID'
+  # William Venegas
 ) + tuple(reserved.values())
  
- # Regular expression rules for simple tokens
+# Regular expression rules for simple tokens
+# William Venegas
 t_MAS    = r'\+'
 t_RESTA   = r'-'
 t_MULTI   = r'\*'
@@ -49,18 +52,19 @@ t_LLAVEDE = r'\}'
 t_COMILLASDOBLES = r'\"'
 t_INCREMENTO = r'\+\+'
 t_DECREMENTO = r'\-\-'
+# William Venegas
 #t_VARIABLE = r'[a-z]+'
  
  # Define a rule so we can track line numbers
 def t_newline(t):
   r'\n+'
   t.lexer.lineno += len(t.value)
-
+# William Venegas
 def t_BOOL(t):
   r'(true|false)'
   t.type = reserved.get(t.value, 'BOOLEAN')
   return t
-
+# William Venegas
 def t_BACKTICK(t):
   r'`'
   t.type = reserved.get(t.value, 'BACKTICK')
