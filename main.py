@@ -122,7 +122,7 @@ def t_BACKTICK(t):
   return t
 
 def t_VARIABLE(t):
-  r'[a-zA-Z]+'
+  r'[a-zA-Z]+[0-9]'
   t.type = reserved.get(t.value,'VARIABLE')
   return t
 
