@@ -9,6 +9,7 @@ def p_golang(p):
               | expression
               | condicional
               | bucleFor
+              | funcion
   '''
 
 def p_asignacion(p):
@@ -23,19 +24,28 @@ def p_asignacion_mate(p):
                      | VAR VARIABLE ASIGNADOR expression
   '''
 
-
 def p_asignacion_otros(p):
     ''' asignacionOtros : VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
                      | VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
                      | VAR VARIABLE ASIGNADOR valoresOtros
   '''
 
-
 def p_valores_otros(p):
     ''' valoresOtros : STRING
                     | BOOLEAN
   '''
-## Todo condicionales
+
+######## Todo Funciones
+def p_funcion_go(p):
+  ''' funcion : FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE
+              | FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+  '''
+
+def p_parametros_func(p):
+  ''' parametros : VARIABLE TIPODATOS
+                  | VARIABLE TIPODATOS COMA parametros
+  '''
+######## Todo condicionales
 def p_condicional(p):
   ''' condicional : tiposCondicion condicion LLAVEIZ golang LLAVEDE 
                   | condicional ELSE LLAVEIZ golang LLAVEDE
