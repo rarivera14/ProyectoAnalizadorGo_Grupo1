@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ASIGNADOR ASIGNADORDIV ASIGNADORMULT ASIGNADORRESTA ASIGNADORSUM BACKTICK BOOLEAN BREAK CASE CHAN COMILLASDOBLES CONST CONTINUE DECREMENTO DEFAULT DEFER DIFERENTE DIVIDE DOSPUNTOS ELSE EQUIVALENTE FALLTHROUGH FLOTANTE FLOTANTEI FOR FUNCTION GO GOTO ID IF IMPORT INCREMENTO INTERFACE LLAVEDE LLAVEIZ LPAREN MAP MAS MAYOROIGUALQUE MAYORQUE MENOROIGUALQUE MENORQUE MODULO MULTI NUMBER PACKAGE RANGE RESTA RETURN RPAREN SELECT STRING STRUCT TIPODATOS TYPE VAR VARIABLE golang : asignacion \n              | expression\n   asignacion : asignacionMate\n                  | asignacionOtros\n   asignacionMate : VAR VARIABLE TIPODATOS ASIGNADOR expression\n                     | VARIABLE DOSPUNTOS ASIGNADOR expression\n                     | VAR VARIABLE ASIGNADOR expression\n   asignacionOtros : VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros\n                     | VARIABLE DOSPUNTOS ASIGNADOR valoresOtros\n                     | VAR VARIABLE ASIGNADOR valoresOtros\n   valoresOtros : STRING\n                    | BOOLEAN\n  expression : expression MAS termexpression : expression RESTA termexpression : termterm : term MULTI factorterm : term DIVIDE factorterm : factor\n  factor : NUMBER \n          | FLOTANTE \n          | VARIABLE\n  factor : LPAREN expression RPAREN'
+_lr_signature = 'ASIGNADOR ASIGNADORDIV ASIGNADORMULT ASIGNADORRESTA ASIGNADORSUM BACKTICK BOOLEAN BREAK CASE CHAN COMILLASDOBLES CONST CONTINUE DECREMENTO DEFAULT DEFER DIFERENTE DIVIDE DOSPUNTOS ELSE EQUIVALENTE FALLTHROUGH FLOTANTE FLOTANTEI FOR FUNCTION GO GOTO ID IF IMPORT INCREMENTO INTERFACE LLAVEDE LLAVEIZ LPAREN MAP MAS MAYOROIGUALQUE MAYORQUE MENOROIGUALQUE MENORQUE MODULO MULTI NUMBER PACKAGE PUNTOCOMA RANGE RESTA RETURN RPAREN SELECT STRING STRUCT TIPODATOS TYPE VAR VARIABLE golang : asignacion\n              | expression\n              | condicional\n              | bucleFor\n   asignacion : asignacionMate\n                  | asignacionOtros\n   asignacionMate : VAR VARIABLE TIPODATOS ASIGNADOR expression\n                     | VARIABLE DOSPUNTOS ASIGNADOR expression\n                     | VAR VARIABLE ASIGNADOR expression\n   asignacionOtros : VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros\n                     | VARIABLE DOSPUNTOS ASIGNADOR valoresOtros\n                     | VAR VARIABLE ASIGNADOR valoresOtros\n   valoresOtros : STRING\n                    | BOOLEAN\n   condicional : tiposCondicion condicion LLAVEIZ golang LLAVEDE\n                  | condicional ELSE LLAVEIZ golang LLAVEDE\n\n   tiposCondicion : IF\n                      | ELSE IF\n   condicion : expression\n                | LPAREN expression comparadores expression RPAREN\n                | LPAREN expression comparadores expression RPAREN comparadores condicion\n                | expression comparadores condicion\n   comparadores : MAYORQUE\n                  | MENORQUE\n                  | MAYOROIGUALQUE\n                  | MENOROIGUALQUE\n                  | EQUIVALENTE\n                  | DIFERENTE\n   bucleFor : FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE asignacionFOR : VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA  condicionFOR : VARIABLE comparadores expression PUNTOCOMA  updateFOR : VARIABLE incrementoDecremento incrementoDecremento : INCREMENTO\n                            | DECREMENTO\n  expression : expression MAS termexpression : expression RESTA termexpression : termterm : term MULTI factorterm : term DIVIDE factorterm : factor\n  factor : NUMBER \n          | FLOTANTE \n          | VARIABLE\n  factor : LPAREN expression RPAREN'
     
-_lr_action_items = {'VAR':([0,],[7,]),'VARIABLE':([0,7,12,13,14,15,16,26,27,29,],[8,17,20,20,20,20,20,20,20,20,]),'NUMBER':([0,12,13,14,15,16,26,27,29,],[10,10,10,10,10,10,10,10,10,]),'FLOTANTE':([0,12,13,14,15,16,26,27,29,],[11,11,11,11,11,11,11,11,11,]),'LPAREN':([0,12,13,14,15,16,26,27,29,],[12,12,12,12,12,12,12,12,12,]),'$end':([1,2,3,4,5,6,8,9,10,11,20,21,22,23,24,28,30,31,32,33,34,35,36,37,],[0,-1,-2,-3,-4,-15,-21,-18,-19,-20,-21,-13,-14,-16,-17,-22,-7,-10,-11,-12,-6,-9,-5,-8,]),'MAS':([3,6,8,9,10,11,19,20,21,22,23,24,28,30,34,36,],[13,-15,-21,-18,-19,-20,13,-21,-13,-14,-16,-17,-22,13,13,13,]),'RESTA':([3,6,8,9,10,11,19,20,21,22,23,24,28,30,34,36,],[14,-15,-21,-18,-19,-20,14,-21,-13,-14,-16,-17,-22,14,14,14,]),'RPAREN':([6,9,10,11,19,20,21,22,23,24,28,],[-15,-18,-19,-20,28,-21,-13,-14,-16,-17,-22,]),'MULTI':([6,8,9,10,11,20,21,22,23,24,28,],[15,-21,-18,-19,-20,-21,15,15,-16,-17,-22,]),'DIVIDE':([6,8,9,10,11,20,21,22,23,24,28,],[16,-21,-18,-19,-20,-21,16,16,-16,-17,-22,]),'DOSPUNTOS':([8,],[18,]),'TIPODATOS':([17,],[25,]),'ASIGNADOR':([17,18,25,],[26,27,29,]),'STRING':([26,27,29,],[32,32,32,]),'BOOLEAN':([26,27,29,],[33,33,33,]),}
+_lr_action_items = {'FOR':([0,36,39,73,],[11,11,11,11,]),'VAR':([0,36,39,73,],[12,12,12,12,]),'VARIABLE':([0,9,11,12,15,18,19,20,22,23,26,28,29,36,39,40,41,42,43,44,45,46,48,52,53,58,61,62,63,73,83,84,85,],[13,27,30,31,-17,27,27,27,27,27,27,-18,49,13,13,27,-23,-24,-25,-26,-27,-28,60,27,27,27,27,27,27,13,-31,-30,27,]),'IF':([0,10,36,39,73,],[15,28,15,15,15,]),'ELSE':([0,4,36,39,70,71,73,],[10,21,10,10,-16,-15,10,]),'NUMBER':([0,9,15,18,19,20,22,23,26,28,36,39,40,41,42,43,44,45,46,52,53,58,61,62,63,73,85,],[16,16,-17,16,16,16,16,16,16,-18,16,16,16,-23,-24,-25,-26,-27,-28,16,16,16,16,16,16,16,16,]),'FLOTANTE':([0,9,15,18,19,20,22,23,26,28,36,39,40,41,42,43,44,45,46,52,53,58,61,62,63,73,85,],[17,17,-17,17,17,17,17,17,17,-18,17,17,17,-23,-24,-25,-26,-27,-28,17,17,17,17,17,17,17,17,]),'LPAREN':([0,9,15,18,19,20,22,23,26,28,36,39,40,41,42,43,44,45,46,52,53,58,61,62,63,73,85,],[18,26,-17,18,18,18,18,18,18,-18,18,18,26,-23,-24,-25,-26,-27,-28,18,18,18,18,18,18,18,26,]),'$end':([1,2,3,4,5,6,7,8,13,14,16,17,27,34,35,37,38,54,64,65,66,67,68,69,70,71,79,80,86,],[0,-1,-2,-3,-4,-5,-6,-37,-43,-40,-41,-42,-43,-35,-36,-38,-39,-44,-9,-12,-13,-14,-8,-11,-16,-15,-7,-10,-29,]),'LLAVEDE':([2,3,4,5,6,7,8,13,14,16,17,27,34,35,37,38,54,55,56,64,65,66,67,68,69,70,71,79,80,82,86,],[-1,-2,-3,-4,-5,-6,-37,-43,-40,-41,-42,-43,-35,-36,-38,-39,-44,70,71,-9,-12,-13,-14,-8,-11,-16,-15,-7,-10,86,-29,]),'MAS':([3,8,13,14,16,17,25,27,33,34,35,37,38,47,54,64,68,72,77,78,79,],[19,-37,-43,-40,-41,-42,19,-43,19,-35,-36,-38,-39,19,-44,19,19,19,19,19,19,]),'RESTA':([3,8,13,14,16,17,25,27,33,34,35,37,38,47,54,64,68,72,77,78,79,],[20,-37,-43,-40,-41,-42,20,-43,20,-35,-36,-38,-39,20,-44,20,20,20,20,20,20,]),'MAYORQUE':([8,14,16,17,25,27,34,35,37,38,47,49,54,81,],[-37,-40,-41,-42,41,-43,-35,-36,-38,-39,41,41,-44,41,]),'MENORQUE':([8,14,16,17,25,27,34,35,37,38,47,49,54,81,],[-37,-40,-41,-42,42,-43,-35,-36,-38,-39,42,42,-44,42,]),'MAYOROIGUALQUE':([8,14,16,17,25,27,34,35,37,38,47,49,54,81,],[-37,-40,-41,-42,43,-43,-35,-36,-38,-39,43,43,-44,43,]),'MENOROIGUALQUE':([8,14,16,17,25,27,34,35,37,38,47,49,54,81,],[-37,-40,-41,-42,44,-43,-35,-36,-38,-39,44,44,-44,44,]),'EQUIVALENTE':([8,14,16,17,25,27,34,35,37,38,47,49,54,81,],[-37,-40,-41,-42,45,-43,-35,-36,-38,-39,45,45,-44,45,]),'DIFERENTE':([8,14,16,17,25,27,34,35,37,38,47,49,54,81,],[-37,-40,-41,-42,46,-43,-35,-36,-38,-39,46,46,-44,46,]),'LLAVEIZ':([8,14,16,17,21,24,25,27,34,35,37,38,54,57,59,74,75,76,81,87,],[-37,-40,-41,-42,36,39,-19,-43,-35,-36,-38,-39,-44,-22,73,-32,-33,-34,-20,-21,]),'RPAREN':([8,14,16,17,27,33,34,35,37,38,47,54,72,],[-37,-40,-41,-42,-43,54,-35,-36,-38,-39,54,-44,81,]),'PUNTOCOMA':([8,14,16,17,27,34,35,37,38,54,77,78,],[-37,-40,-41,-42,-43,-35,-36,-38,-39,-44,83,84,]),'MULTI':([8,13,14,16,17,27,34,35,37,38,54,],[22,-43,-40,-41,-42,-43,22,22,-38,-39,-44,]),'DIVIDE':([8,13,14,16,17,27,34,35,37,38,54,],[23,-43,-40,-41,-42,-43,23,23,-38,-39,-44,]),'DOSPUNTOS':([13,30,],[32,50,]),'TIPODATOS':([31,],[51,]),'ASIGNADOR':([31,32,50,51,],[52,53,62,63,]),'STRING':([52,53,63,],[66,66,66,]),'BOOLEAN':([52,53,63,],[67,67,67,]),'INCREMENTO':([60,],[75,]),'DECREMENTO':([60,],[76,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'golang':([0,],[1,]),'asignacion':([0,],[2,]),'expression':([0,12,26,27,29,],[3,19,30,34,36,]),'asignacionMate':([0,],[4,]),'asignacionOtros':([0,],[5,]),'term':([0,12,13,14,26,27,29,],[6,6,21,22,6,6,6,]),'factor':([0,12,13,14,15,16,26,27,29,],[9,9,9,9,23,24,9,9,9,]),'valoresOtros':([26,27,29,],[31,35,37,]),}
+_lr_goto_items = {'golang':([0,36,39,73,],[1,55,56,82,]),'asignacion':([0,36,39,73,],[2,2,2,2,]),'expression':([0,9,18,26,36,39,40,52,53,58,61,62,63,73,85,],[3,25,33,47,3,3,25,64,68,72,77,78,79,3,25,]),'condicional':([0,36,39,73,],[4,4,4,4,]),'bucleFor':([0,36,39,73,],[5,5,5,5,]),'asignacionMate':([0,36,39,73,],[6,6,6,6,]),'asignacionOtros':([0,36,39,73,],[7,7,7,7,]),'term':([0,9,18,19,20,26,36,39,40,52,53,58,61,62,63,73,85,],[8,8,8,34,35,8,8,8,8,8,8,8,8,8,8,8,8,]),'tiposCondicion':([0,36,39,73,],[9,9,9,9,]),'factor':([0,9,18,19,20,22,23,26,36,39,40,52,53,58,61,62,63,73,85,],[14,14,14,14,14,37,38,14,14,14,14,14,14,14,14,14,14,14,14,]),'condicion':([9,40,85,],[24,57,87,]),'asignacionFOR':([11,],[29,]),'comparadores':([25,47,49,81,],[40,58,61,85,]),'condicionFOR':([29,],[48,]),'updateFOR':([48,],[59,]),'valoresOtros':([52,53,63,],[65,69,80,]),'incrementoDecremento':([60,],[74,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,26 +27,48 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> golang","S'",1,None,None,None),
-  ('golang -> asignacion','golang',1,'p_golang','sintactico.py',7),
-  ('golang -> expression','golang',1,'p_golang','sintactico.py',8),
-  ('asignacion -> asignacionMate','asignacion',1,'p_asignacion','sintactico.py',13),
-  ('asignacion -> asignacionOtros','asignacion',1,'p_asignacion','sintactico.py',14),
-  ('asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression','asignacionMate',5,'p_asignacion_mate','sintactico.py',18),
-  ('asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression','asignacionMate',4,'p_asignacion_mate','sintactico.py',19),
-  ('asignacionMate -> VAR VARIABLE ASIGNADOR expression','asignacionMate',4,'p_asignacion_mate','sintactico.py',20),
-  ('asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros','asignacionOtros',5,'p_asignacion_otros','sintactico.py',24),
-  ('asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros','asignacionOtros',4,'p_asignacion_otros','sintactico.py',25),
-  ('asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros','asignacionOtros',4,'p_asignacion_otros','sintactico.py',26),
-  ('valoresOtros -> STRING','valoresOtros',1,'p_valores_otros','sintactico.py',29),
-  ('valoresOtros -> BOOLEAN','valoresOtros',1,'p_valores_otros','sintactico.py',30),
-  ('expression -> expression MAS term','expression',3,'p_expression_plus','sintactico.py',34),
-  ('expression -> expression RESTA term','expression',3,'p_expression_minus','sintactico.py',37),
-  ('expression -> term','expression',1,'p_expression_term','sintactico.py',40),
-  ('term -> term MULTI factor','term',3,'p_term_times','sintactico.py',43),
-  ('term -> term DIVIDE factor','term',3,'p_term_div','sintactico.py',46),
-  ('term -> factor','term',1,'p_term_factor','sintactico.py',49),
-  ('factor -> NUMBER','factor',1,'p_factor_num','sintactico.py',53),
-  ('factor -> FLOTANTE','factor',1,'p_factor_num','sintactico.py',54),
-  ('factor -> VARIABLE','factor',1,'p_factor_num','sintactico.py',55),
-  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_expr','sintactico.py',59),
+  ('golang -> asignacion','golang',1,'p_golang','sintactico.py',8),
+  ('golang -> expression','golang',1,'p_golang','sintactico.py',9),
+  ('golang -> condicional','golang',1,'p_golang','sintactico.py',10),
+  ('golang -> bucleFor','golang',1,'p_golang','sintactico.py',11),
+  ('asignacion -> asignacionMate','asignacion',1,'p_asignacion','sintactico.py',16),
+  ('asignacion -> asignacionOtros','asignacion',1,'p_asignacion','sintactico.py',17),
+  ('asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression','asignacionMate',5,'p_asignacion_mate','sintactico.py',22),
+  ('asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression','asignacionMate',4,'p_asignacion_mate','sintactico.py',23),
+  ('asignacionMate -> VAR VARIABLE ASIGNADOR expression','asignacionMate',4,'p_asignacion_mate','sintactico.py',24),
+  ('asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros','asignacionOtros',5,'p_asignacion_otros','sintactico.py',29),
+  ('asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros','asignacionOtros',4,'p_asignacion_otros','sintactico.py',30),
+  ('asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros','asignacionOtros',4,'p_asignacion_otros','sintactico.py',31),
+  ('valoresOtros -> STRING','valoresOtros',1,'p_valores_otros','sintactico.py',36),
+  ('valoresOtros -> BOOLEAN','valoresOtros',1,'p_valores_otros','sintactico.py',37),
+  ('condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE','condicional',5,'p_condicional','sintactico.py',43),
+  ('condicional -> condicional ELSE LLAVEIZ golang LLAVEDE','condicional',5,'p_condicional','sintactico.py',44),
+  ('tiposCondicion -> IF','tiposCondicion',1,'p_tipos_condicion','sintactico.py',50),
+  ('tiposCondicion -> ELSE IF','tiposCondicion',2,'p_tipos_condicion','sintactico.py',51),
+  ('condicion -> expression','condicion',1,'p_condicion','sintactico.py',56),
+  ('condicion -> LPAREN expression comparadores expression RPAREN','condicion',5,'p_condicion','sintactico.py',57),
+  ('condicion -> LPAREN expression comparadores expression RPAREN comparadores condicion','condicion',7,'p_condicion','sintactico.py',58),
+  ('condicion -> expression comparadores condicion','condicion',3,'p_condicion','sintactico.py',59),
+  ('comparadores -> MAYORQUE','comparadores',1,'p_comparadores','sintactico.py',64),
+  ('comparadores -> MENORQUE','comparadores',1,'p_comparadores','sintactico.py',65),
+  ('comparadores -> MAYOROIGUALQUE','comparadores',1,'p_comparadores','sintactico.py',66),
+  ('comparadores -> MENOROIGUALQUE','comparadores',1,'p_comparadores','sintactico.py',67),
+  ('comparadores -> EQUIVALENTE','comparadores',1,'p_comparadores','sintactico.py',68),
+  ('comparadores -> DIFERENTE','comparadores',1,'p_comparadores','sintactico.py',69),
+  ('bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE','bucleFor',7,'p_bucle_for','sintactico.py',78),
+  ('asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA','asignacionFOR',5,'p_asignacion_for','sintactico.py',82),
+  ('condicionFOR -> VARIABLE comparadores expression PUNTOCOMA','condicionFOR',4,'p_condicion_for','sintactico.py',86),
+  ('updateFOR -> VARIABLE incrementoDecremento','updateFOR',2,'p_update_for','sintactico.py',90),
+  ('incrementoDecremento -> INCREMENTO','incrementoDecremento',1,'p_incrementos_decrementos','sintactico.py',94),
+  ('incrementoDecremento -> DECREMENTO','incrementoDecremento',1,'p_incrementos_decrementos','sintactico.py',95),
+  ('expression -> expression MAS term','expression',3,'p_expression_plus','sintactico.py',102),
+  ('expression -> expression RESTA term','expression',3,'p_expression_minus','sintactico.py',106),
+  ('expression -> term','expression',1,'p_expression_term','sintactico.py',110),
+  ('term -> term MULTI factor','term',3,'p_term_times','sintactico.py',114),
+  ('term -> term DIVIDE factor','term',3,'p_term_div','sintactico.py',118),
+  ('term -> factor','term',1,'p_term_factor','sintactico.py',122),
+  ('factor -> NUMBER','factor',1,'p_factor_num','sintactico.py',127),
+  ('factor -> FLOTANTE','factor',1,'p_factor_num','sintactico.py',128),
+  ('factor -> VARIABLE','factor',1,'p_factor_num','sintactico.py',129),
+  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_expr','sintactico.py',134),
 ]
