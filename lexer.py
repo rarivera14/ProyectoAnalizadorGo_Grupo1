@@ -2,12 +2,12 @@ import ply.lex as lex
 
 # Ricardo Contribution -Reserved Keywords
 reserved = {
-    'break' : 'BREAK',
+    'break': 'BREAK',
     'default': 'DEFAULT',
     'func': 'FUNCTION',
     'interface': 'INTERFACE',
     'select': 'SELECT',
-    'if' : 'IF',
+    'if': 'IF',
     'package': 'PACKAGE',
     'return': 'RETURN',
     'case': 'CASE',
@@ -30,7 +30,7 @@ reserved = {
 }
 ##############################
 
- # List of token names.   This is always required
+# List of token names.   This is always required
 tokens = (
   # William Venegas
   'NUMBER',
@@ -75,12 +75,12 @@ tokens = (
  
 # Regular expression rules for simple tokens
 # William Venegas
-t_MAS    = r'\+'
-t_RESTA   = r'-'
-t_MULTI   = r'\*'
-t_DIVIDE  = r'/'
-t_LPAREN  = r'\('
-t_RPAREN  = r'\)'
+t_MAS = r'\+'
+t_RESTA = r'-'
+t_MULTI = r'\*'
+t_DIVIDE = r'/'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
 t_NUMBER = r'\d+'
 t_FLOTANTE = r'\d+\.\d+'
 t_MODULO = r'%'
@@ -94,7 +94,7 @@ t_DECREMENTO = r'\-\-'
 t_DOSPUNTOS = r':'
 t_PUNTOCOMA = r';'
 # William Venegas
-#t_VARIABLE = r'[a-z]+'
+# t_VARIABLE = r'[a-z]+'
 
 # Ricardo Zevallos
 t_BOOLEAN = r'true|false'
@@ -109,48 +109,60 @@ t_ASIGNADORSUM = r'\+='
 t_ASIGNADORRESTA = r'-='
 t_ASIGNADORMULT = r'\*='
 t_ASIGNADORDIV = r'/='
+
+
 # Ricardo Zevallos1
- 
+
 # William Venegas
 def t_TIPODATOS(t):
     r'int | string | float64 | bool'
     return t
 
+
 def t_BOOL(t):
-  r'(true|false)'
-  t.type = reserved.get(t.value, 'BOOLEAN')
-  return t
+    r'(true|false)'
+    t.type = reserved.get(t.value, 'BOOLEAN')
+    return t
+
+
 # William Venegas
 def t_BACKTICK(t):
-  r'`'
-  t.type = reserved.get(t.value, 'BACKTICK')
-  return t
+    r'`'
+    t.type = reserved.get(t.value, 'BACKTICK')
+    return t
+
 
 def t_VARIABLE(t):
-  r'[a-zA-Z_][a-zA-Z_0-9]*'
-  t.type = reserved.get(t.value,'VARIABLE')
-  return t
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value, 'VARIABLE')
+    return t
+
 
 def t_newline(t):
-  r'\n+'
-  t.lexer.lineno += len(t.value)
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
-t_ignore  = ' \t'
- 
+
+t_ignore = ' \t'
+
+
 def t_error(t):
-  print("Componente léxico no reconocido '%s'" % t.value[0])
-  t.lexer.skip(1)
- 
+    print("Componente léxico no reconocido '%s'" % t.value[0])
+    t.lexer.skip(1)
+
+
 def menu():
-  print("-"*8+"MENU"+"-"*8)
-  print("1. Test auto\n2. Test Manual\n3. Cancelar")
+    print("-" * 8 + "MENU" + "-" * 8)
+    print("1. Test auto\n2. Test Manual\n3. Cancelar")
+
 
 lexer = lex.lex()
 
+
 def test(opcion):
-  if opcion == 1:
-  # Data de prueba
-    data = '''package main 
+    if opcion == 1:
+        # Data de prueba
+        data = '''package main 
     func main() {
       if 2==4 {
         5+2
@@ -167,28 +179,28 @@ def test(opcion):
     }
     '''
 
-  if opcion == 2:
-    data = input("Ingrese su test: ")  
-  
-  if opcion == 3:
-    print("Cancelando...")
-    return
-  # Pasando la data como entrada en el lexer
-  lexer.input(data)
+    if opcion == 2:
+        data = input("Ingrese su test: ")
 
-  # Probando la data
-  while True:
+    if opcion == 3:
+        print("Cancelando...")
+        return
+    # Pasando la data como entrada en el lexer
+    lexer.input(data)
+
+    # Probando la data
+    while True:
         tok = lexer.token()
         if not tok:
             break  # No more input
         print(tok)
 
-if __name__ == '__main__':
-  # Principal
-  opcion = 0
-  while opcion != 3:
-    menu()  
-    opcion = int(input("Ingrese una opción: "))
-    test(opcion)
 
+if __name__ == '_main_':
+    # Principal
+    opcion = 0
+    while opcion != 3:
+        menu()
+        opcion = int(input("Ingrese una opción: "))
+        test(opcion)
     
