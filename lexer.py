@@ -26,7 +26,9 @@ reserved = {
     'for': 'FOR',
     'import': 'IMPORT',
     'var': 'VAR',
-    'remove': 'REMOVE'
+    'remove': 'REMOVE',
+    'switch': 'SWITCH'
+
 
 }
 ##############################
@@ -74,7 +76,11 @@ tokens = (
   'PUNTOCOMA',
   'COMA',
   'PUNTO',
-  'TIPODATOS'
+  'TIPODATOS',
+   'PRINT',
+    'PRINTLN',
+    'PRINTF'
+
  # Ricardo Zevallos
 ) + tuple(reserved.values())
  
@@ -119,6 +125,17 @@ t_ASIGNADORRESTA = r'-='
 t_ASIGNADORMULT = r'\*='
 t_ASIGNADORDIV = r'/='
 
+def t_PRINTLN(t):
+    r'fmt.Println'
+    return t
+
+def t_PRINTF(t):
+    r'fmt.Printf'
+    return t
+
+def t_PRINT(t):
+    r'fmt.Print'
+    return t
 
 # Ricardo Zevallos1
 

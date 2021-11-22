@@ -13,6 +13,8 @@ def p_golang(p):
               | imports
               | array
               | metodosPropiedadesArray
+              | print
+              | switch
   '''
 
 def p_asignacion(p):
@@ -220,6 +222,44 @@ def p_incrementos_decrementos(p):
 
 
 #Fin###############################################
+
+#Contribucion Ricardo Zevallos#
+#Inicio###########################################
+
+def p_print(p):
+  '''
+  print : PRINT LPAREN parametro RPAREN
+          | PRINTLN LPAREN parametro RPAREN
+          | PRINTF LPAREN parametro RPAREN
+  '''
+
+def p_parametro_print(p):
+  ''' parametro : argumento
+                  | argumento COMA parametro
+  '''
+
+def p_argumento(p):
+    '''
+  argumento : NUMBER
+          | FLOTANTE
+          | VARIABLE
+          | STRING
+  '''
+
+##switch
+
+def p_switch(p):
+  'switch : SWITCH argumento LLAVEIZ casos LLAVEDE'
+
+def p_casos(p):
+  ''' casos : CASE argumento DOSPUNTOS golang
+                      | CASE argumento DOSPUNTOS golang casos
+  '''
+
+
+
+#######################
+
 
 def p_expression_plus(p):
     'expression : expression MAS term'
