@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ASIGNADOR ASIGNADORDIV ASIGNADORMULT ASIGNADORRESTA ASIGNADORSUM BACKTICK BOOLEAN BREAK CASE CHAN COMILLASDOBLES CONST CONTINUE DECREMENTO DEFAULT DEFER DIFERENTE DIVIDE ELSE EQUIVALENTE FALLTHROUGH FLOTANTE FLOTANTEI FOR FUNCTION GO GOTO ID IF IMPORT INCREMENTO INTERFACE LLAVEDE LLAVEIZ LPAREN MAP MAS MAYOROIGUALQUE MAYORQUE MENOROIGUALQUE MENORQUE MODULO MULTI NUMBER PACKAGE RANGE RESTA RETURN RPAREN SELECT STRING STRUCT TYPE VAR VARIABLEgolang : expressionexpression : expression MAS termexpression : expression RESTA termexpression : termterm : term MULTI factorterm : term DIVIDE factorterm : factor\n  factor : NUMBER \n          | VARIABLE\n  factor : LPAREN expression RPAREN'
+_lr_signature = 'ASIGNADOR ASIGNADORDIV ASIGNADORMULT ASIGNADORRESTA ASIGNADORSUM BACKTICK BOOLEAN BREAK CASE CHAN COMILLASDOBLES CONST CONTINUE DECREMENTO DEFAULT DEFER DIFERENTE DIVIDE DOSPUNTOS ELSE EQUIVALENTE FALLTHROUGH FLOTANTE FLOTANTEI FOR FUNCTION GO GOTO ID IF IMPORT INCREMENTO INTERFACE LLAVEDE LLAVEIZ LPAREN MAP MAS MAYOROIGUALQUE MAYORQUE MENOROIGUALQUE MENORQUE MODULO MULTI NUMBER PACKAGE RANGE RESTA RETURN RPAREN SELECT STRING STRUCT TIPODATOS TYPE VAR VARIABLE golang : expression \n              | asignacion\n   asignacion : asignacionMate\n                  | asignacionOtros\n   asignacionMate : VAR VARIABLE TIPODATOS ASIGNADOR expression\n                     | VARIABLE DOSPUNTOS ASIGNADOR expression\n                     | VAR VARIABLE ASIGNADOR expression\n   asignacionOtros : VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros\n                     | VARIABLE DOSPUNTOS ASIGNADOR valoresOtros\n                     | VAR VARIABLE ASIGNADOR valoresOtros\n   valoresOtros : STRING\n                    | BOOLEAN\n  expression : expression MAS termexpression : expression RESTA termexpression : termterm : term MULTI factorterm : term DIVIDE factorterm : factor\n  factor : NUMBER \n          | FLOTANTE \n          | VARIABLE\n  factor : LPAREN expression RPAREN'
     
-_lr_action_items = {'NUMBER':([0,7,8,9,10,11,],[5,5,5,5,5,5,]),'VARIABLE':([0,7,8,9,10,11,],[6,6,6,6,6,6,]),'LPAREN':([0,7,8,9,10,11,],[7,7,7,7,7,7,]),'$end':([1,2,3,4,5,6,13,14,15,16,17,],[0,-1,-4,-7,-8,-9,-2,-3,-5,-6,-10,]),'MAS':([2,3,4,5,6,12,13,14,15,16,17,],[8,-4,-7,-8,-9,8,-2,-3,-5,-6,-10,]),'RESTA':([2,3,4,5,6,12,13,14,15,16,17,],[9,-4,-7,-8,-9,9,-2,-3,-5,-6,-10,]),'RPAREN':([3,4,5,6,12,13,14,15,16,17,],[-4,-7,-8,-9,17,-2,-3,-5,-6,-10,]),'MULTI':([3,4,5,6,13,14,15,16,17,],[10,-7,-8,-9,10,10,-5,-6,-10,]),'DIVIDE':([3,4,5,6,13,14,15,16,17,],[11,-7,-8,-9,11,11,-5,-6,-10,]),}
+_lr_action_items = {'VAR':([0,],[8,]),'VARIABLE':([0,8,12,13,14,15,16,26,27,29,],[9,17,20,20,20,20,20,20,20,20,]),'NUMBER':([0,12,13,14,15,16,26,27,29,],[10,10,10,10,10,10,10,10,10,]),'FLOTANTE':([0,12,13,14,15,16,26,27,29,],[11,11,11,11,11,11,11,11,11,]),'LPAREN':([0,12,13,14,15,16,26,27,29,],[12,12,12,12,12,12,12,12,12,]),'$end':([1,2,3,4,5,6,7,9,10,11,20,21,22,23,24,28,30,31,32,33,34,35,36,37,],[0,-1,-2,-15,-3,-4,-18,-21,-19,-20,-21,-13,-14,-16,-17,-22,-7,-10,-11,-12,-6,-9,-5,-8,]),'MAS':([2,4,7,9,10,11,19,20,21,22,23,24,28,30,34,36,],[13,-15,-18,-21,-19,-20,13,-21,-13,-14,-16,-17,-22,13,13,13,]),'RESTA':([2,4,7,9,10,11,19,20,21,22,23,24,28,30,34,36,],[14,-15,-18,-21,-19,-20,14,-21,-13,-14,-16,-17,-22,14,14,14,]),'RPAREN':([4,7,10,11,19,20,21,22,23,24,28,],[-15,-18,-19,-20,28,-21,-13,-14,-16,-17,-22,]),'MULTI':([4,7,9,10,11,20,21,22,23,24,28,],[15,-18,-21,-19,-20,-21,15,15,-16,-17,-22,]),'DIVIDE':([4,7,9,10,11,20,21,22,23,24,28,],[16,-18,-21,-19,-20,-21,16,16,-16,-17,-22,]),'DOSPUNTOS':([9,],[18,]),'TIPODATOS':([17,],[25,]),'ASIGNADOR':([17,18,25,],[26,27,29,]),'STRING':([26,27,29,],[32,32,32,]),'BOOLEAN':([26,27,29,],[33,33,33,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'golang':([0,],[1,]),'expression':([0,7,],[2,12,]),'term':([0,7,8,9,],[3,3,13,14,]),'factor':([0,7,8,9,10,11,],[4,4,4,4,15,16,]),}
+_lr_goto_items = {'golang':([0,],[1,]),'expression':([0,12,26,27,29,],[2,19,30,34,36,]),'asignacion':([0,],[3,]),'term':([0,12,13,14,26,27,29,],[4,4,21,22,4,4,4,]),'asignacionMate':([0,],[5,]),'asignacionOtros':([0,],[6,]),'factor':([0,12,13,14,15,16,26,27,29,],[7,7,7,7,23,24,7,7,7,]),'valoresOtros':([26,27,29,],[31,35,37,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,14 +27,26 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> golang","S'",1,None,None,None),
-  ('golang -> expression','golang',1,'p_golang','sintactico.py',6),
-  ('expression -> expression MAS term','expression',3,'p_expression_plus','sintactico.py',9),
-  ('expression -> expression RESTA term','expression',3,'p_expression_minus','sintactico.py',12),
-  ('expression -> term','expression',1,'p_expression_term','sintactico.py',15),
-  ('term -> term MULTI factor','term',3,'p_term_times','sintactico.py',18),
-  ('term -> term DIVIDE factor','term',3,'p_term_div','sintactico.py',21),
-  ('term -> factor','term',1,'p_term_factor','sintactico.py',24),
-  ('factor -> NUMBER','factor',1,'p_factor_num','sintactico.py',28),
-  ('factor -> VARIABLE','factor',1,'p_factor_num','sintactico.py',29),
-  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_expr','sintactico.py',33),
+  ('golang -> expression','golang',1,'p_golang','sintactico.py',7),
+  ('golang -> asignacion','golang',1,'p_golang','sintactico.py',8),
+  ('asignacion -> asignacionMate','asignacion',1,'p_asignacion','sintactico.py',13),
+  ('asignacion -> asignacionOtros','asignacion',1,'p_asignacion','sintactico.py',14),
+  ('asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression','asignacionMate',5,'p_asignacion_mate','sintactico.py',18),
+  ('asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression','asignacionMate',4,'p_asignacion_mate','sintactico.py',19),
+  ('asignacionMate -> VAR VARIABLE ASIGNADOR expression','asignacionMate',4,'p_asignacion_mate','sintactico.py',20),
+  ('asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros','asignacionOtros',5,'p_asignacion_otros','sintactico.py',24),
+  ('asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros','asignacionOtros',4,'p_asignacion_otros','sintactico.py',25),
+  ('asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros','asignacionOtros',4,'p_asignacion_otros','sintactico.py',26),
+  ('valoresOtros -> STRING','valoresOtros',1,'p_valores_otros','sintactico.py',29),
+  ('valoresOtros -> BOOLEAN','valoresOtros',1,'p_valores_otros','sintactico.py',30),
+  ('expression -> expression MAS term','expression',3,'p_expression_plus','sintactico.py',34),
+  ('expression -> expression RESTA term','expression',3,'p_expression_minus','sintactico.py',37),
+  ('expression -> term','expression',1,'p_expression_term','sintactico.py',40),
+  ('term -> term MULTI factor','term',3,'p_term_times','sintactico.py',43),
+  ('term -> term DIVIDE factor','term',3,'p_term_div','sintactico.py',46),
+  ('term -> factor','term',1,'p_term_factor','sintactico.py',49),
+  ('factor -> NUMBER','factor',1,'p_factor_num','sintactico.py',53),
+  ('factor -> FLOTANTE','factor',1,'p_factor_num','sintactico.py',54),
+  ('factor -> VARIABLE','factor',1,'p_factor_num','sintactico.py',55),
+  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_expr','sintactico.py',59),
 ]

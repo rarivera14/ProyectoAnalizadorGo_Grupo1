@@ -25,7 +25,8 @@ reserved = {
     'continue': 'CONTINUE',
     'for': 'FOR',
     'import': 'IMPORT',
-    'var': 'VAR'
+    'var': 'VAR',
+
 }
 ##############################
 
@@ -66,7 +67,8 @@ tokens = (
   'MENOROIGUALQUE',
   'FLOTANTEI',
   'STRING',
-  'DOSPUNTOS'
+  'DOSPUNTOS',
+  'TIPODATOS'
  # Ricardo Zevallos
 ) + tuple(reserved.values())
  
@@ -108,6 +110,10 @@ t_ASIGNADORDIV = r'/='
 # Ricardo Zevallos1
  
 # William Venegas
+def t_TIPODATOS(t):
+    r'int | string | float64 | bool'
+    return t
+
 def t_BOOL(t):
   r'(true|false)'
   t.type = reserved.get(t.value, 'BOOLEAN')
