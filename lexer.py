@@ -103,13 +103,8 @@ t_ASIGNADORSUM = r'\+='
 t_ASIGNADORRESTA = r'-='
 t_ASIGNADORMULT = r'\*='
 t_ASIGNADORDIV = r'/='
-
 # Ricardo Zevallos1
  
- # Define a rule so we can track line numbers
-def t_newline(t):
-  r'\n+'
-  t.lexer.lineno += len(t.value)
 # William Venegas
 def t_BOOL(t):
   r'(true|false)'
@@ -122,14 +117,13 @@ def t_BACKTICK(t):
   return t
 
 def t_VARIABLE(t):
-  r'[a-zA-Z]+[0-9]'
+  r'[a-zA-Z_][a-zA-Z_0-9]*'
   t.type = reserved.get(t.value,'VARIABLE')
   return t
 
-def t_ID(t):
-  r'[a-zA-Z_][a-zA-Z_0-9]*'
-  t.type = reserved.get(t.value,'ID')
-  return t
+def t_newline(t):
+  r'\n+'
+  t.lexer.lineno += len(t.value)
 
 t_ignore  = ' \t'
  

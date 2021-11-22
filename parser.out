@@ -1,0 +1,379 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ASIGNADOR
+    ASIGNADORDIV
+    ASIGNADORMULT
+    ASIGNADORRESTA
+    ASIGNADORSUM
+    BACKTICK
+    BOOLEAN
+    BREAK
+    CASE
+    CHAN
+    COMILLASDOBLES
+    CONST
+    CONTINUE
+    DECREMENTO
+    DEFAULT
+    DEFER
+    DIFERENTE
+    ELSE
+    EQUIVALENTE
+    FALLTHROUGH
+    FLOTANTE
+    FLOTANTEI
+    FOR
+    FUNCTION
+    GO
+    GOTO
+    ID
+    IF
+    IMPORT
+    INCREMENTO
+    INTERFACE
+    LLAVEDE
+    LLAVEIZ
+    MAP
+    MAYOROIGUALQUE
+    MAYORQUE
+    MENOROIGUALQUE
+    MENORQUE
+    MODULO
+    PACKAGE
+    RANGE
+    RETURN
+    SELECT
+    STRING
+    STRUCT
+    TYPE
+    VAR
+
+Grammar
+
+Rule 0     S' -> golang
+Rule 1     golang -> expression
+Rule 2     expression -> expression MAS term
+Rule 3     expression -> expression RESTA term
+Rule 4     expression -> term
+Rule 5     term -> term MULTI factor
+Rule 6     term -> term DIVIDE factor
+Rule 7     term -> factor
+Rule 8     factor -> NUMBER
+Rule 9     factor -> VARIABLE
+Rule 10    factor -> LPAREN expression RPAREN
+
+Terminals, with rules where they appear
+
+ASIGNADOR            : 
+ASIGNADORDIV         : 
+ASIGNADORMULT        : 
+ASIGNADORRESTA       : 
+ASIGNADORSUM         : 
+BACKTICK             : 
+BOOLEAN              : 
+BREAK                : 
+CASE                 : 
+CHAN                 : 
+COMILLASDOBLES       : 
+CONST                : 
+CONTINUE             : 
+DECREMENTO           : 
+DEFAULT              : 
+DEFER                : 
+DIFERENTE            : 
+DIVIDE               : 6
+ELSE                 : 
+EQUIVALENTE          : 
+FALLTHROUGH          : 
+FLOTANTE             : 
+FLOTANTEI            : 
+FOR                  : 
+FUNCTION             : 
+GO                   : 
+GOTO                 : 
+ID                   : 
+IF                   : 
+IMPORT               : 
+INCREMENTO           : 
+INTERFACE            : 
+LLAVEDE              : 
+LLAVEIZ              : 
+LPAREN               : 10
+MAP                  : 
+MAS                  : 2
+MAYOROIGUALQUE       : 
+MAYORQUE             : 
+MENOROIGUALQUE       : 
+MENORQUE             : 
+MODULO               : 
+MULTI                : 5
+NUMBER               : 8
+PACKAGE              : 
+RANGE                : 
+RESTA                : 3
+RETURN               : 
+RPAREN               : 10
+SELECT               : 
+STRING               : 
+STRUCT               : 
+TYPE                 : 
+VAR                  : 
+VARIABLE             : 9
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 1 2 3 10
+factor               : 5 6 7
+golang               : 0
+term                 : 2 3 4 5 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . golang
+    (1) golang -> . expression
+    (2) expression -> . expression MAS term
+    (3) expression -> . expression RESTA term
+    (4) expression -> . term
+    (5) term -> . term MULTI factor
+    (6) term -> . term DIVIDE factor
+    (7) term -> . factor
+    (8) factor -> . NUMBER
+    (9) factor -> . VARIABLE
+    (10) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 5
+    VARIABLE        shift and go to state 6
+    LPAREN          shift and go to state 7
+
+    golang                         shift and go to state 1
+    expression                     shift and go to state 2
+    term                           shift and go to state 3
+    factor                         shift and go to state 4
+
+state 1
+
+    (0) S' -> golang .
+
+
+
+state 2
+
+    (1) golang -> expression .
+    (2) expression -> expression . MAS term
+    (3) expression -> expression . RESTA term
+
+    $end            reduce using rule 1 (golang -> expression .)
+    MAS             shift and go to state 8
+    RESTA           shift and go to state 9
+
+
+state 3
+
+    (4) expression -> term .
+    (5) term -> term . MULTI factor
+    (6) term -> term . DIVIDE factor
+
+    MAS             reduce using rule 4 (expression -> term .)
+    RESTA           reduce using rule 4 (expression -> term .)
+    $end            reduce using rule 4 (expression -> term .)
+    RPAREN          reduce using rule 4 (expression -> term .)
+    MULTI           shift and go to state 10
+    DIVIDE          shift and go to state 11
+
+
+state 4
+
+    (7) term -> factor .
+
+    MULTI           reduce using rule 7 (term -> factor .)
+    DIVIDE          reduce using rule 7 (term -> factor .)
+    MAS             reduce using rule 7 (term -> factor .)
+    RESTA           reduce using rule 7 (term -> factor .)
+    $end            reduce using rule 7 (term -> factor .)
+    RPAREN          reduce using rule 7 (term -> factor .)
+
+
+state 5
+
+    (8) factor -> NUMBER .
+
+    MULTI           reduce using rule 8 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 8 (factor -> NUMBER .)
+    MAS             reduce using rule 8 (factor -> NUMBER .)
+    RESTA           reduce using rule 8 (factor -> NUMBER .)
+    $end            reduce using rule 8 (factor -> NUMBER .)
+    RPAREN          reduce using rule 8 (factor -> NUMBER .)
+
+
+state 6
+
+    (9) factor -> VARIABLE .
+
+    MULTI           reduce using rule 9 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 9 (factor -> VARIABLE .)
+    MAS             reduce using rule 9 (factor -> VARIABLE .)
+    RESTA           reduce using rule 9 (factor -> VARIABLE .)
+    $end            reduce using rule 9 (factor -> VARIABLE .)
+    RPAREN          reduce using rule 9 (factor -> VARIABLE .)
+
+
+state 7
+
+    (10) factor -> LPAREN . expression RPAREN
+    (2) expression -> . expression MAS term
+    (3) expression -> . expression RESTA term
+    (4) expression -> . term
+    (5) term -> . term MULTI factor
+    (6) term -> . term DIVIDE factor
+    (7) term -> . factor
+    (8) factor -> . NUMBER
+    (9) factor -> . VARIABLE
+    (10) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 5
+    VARIABLE        shift and go to state 6
+    LPAREN          shift and go to state 7
+
+    expression                     shift and go to state 12
+    term                           shift and go to state 3
+    factor                         shift and go to state 4
+
+state 8
+
+    (2) expression -> expression MAS . term
+    (5) term -> . term MULTI factor
+    (6) term -> . term DIVIDE factor
+    (7) term -> . factor
+    (8) factor -> . NUMBER
+    (9) factor -> . VARIABLE
+    (10) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 5
+    VARIABLE        shift and go to state 6
+    LPAREN          shift and go to state 7
+
+    term                           shift and go to state 13
+    factor                         shift and go to state 4
+
+state 9
+
+    (3) expression -> expression RESTA . term
+    (5) term -> . term MULTI factor
+    (6) term -> . term DIVIDE factor
+    (7) term -> . factor
+    (8) factor -> . NUMBER
+    (9) factor -> . VARIABLE
+    (10) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 5
+    VARIABLE        shift and go to state 6
+    LPAREN          shift and go to state 7
+
+    term                           shift and go to state 14
+    factor                         shift and go to state 4
+
+state 10
+
+    (5) term -> term MULTI . factor
+    (8) factor -> . NUMBER
+    (9) factor -> . VARIABLE
+    (10) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 5
+    VARIABLE        shift and go to state 6
+    LPAREN          shift and go to state 7
+
+    factor                         shift and go to state 15
+
+state 11
+
+    (6) term -> term DIVIDE . factor
+    (8) factor -> . NUMBER
+    (9) factor -> . VARIABLE
+    (10) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 5
+    VARIABLE        shift and go to state 6
+    LPAREN          shift and go to state 7
+
+    factor                         shift and go to state 16
+
+state 12
+
+    (10) factor -> LPAREN expression . RPAREN
+    (2) expression -> expression . MAS term
+    (3) expression -> expression . RESTA term
+
+    RPAREN          shift and go to state 17
+    MAS             shift and go to state 8
+    RESTA           shift and go to state 9
+
+
+state 13
+
+    (2) expression -> expression MAS term .
+    (5) term -> term . MULTI factor
+    (6) term -> term . DIVIDE factor
+
+    MAS             reduce using rule 2 (expression -> expression MAS term .)
+    RESTA           reduce using rule 2 (expression -> expression MAS term .)
+    $end            reduce using rule 2 (expression -> expression MAS term .)
+    RPAREN          reduce using rule 2 (expression -> expression MAS term .)
+    MULTI           shift and go to state 10
+    DIVIDE          shift and go to state 11
+
+
+state 14
+
+    (3) expression -> expression RESTA term .
+    (5) term -> term . MULTI factor
+    (6) term -> term . DIVIDE factor
+
+    MAS             reduce using rule 3 (expression -> expression RESTA term .)
+    RESTA           reduce using rule 3 (expression -> expression RESTA term .)
+    $end            reduce using rule 3 (expression -> expression RESTA term .)
+    RPAREN          reduce using rule 3 (expression -> expression RESTA term .)
+    MULTI           shift and go to state 10
+    DIVIDE          shift and go to state 11
+
+
+state 15
+
+    (5) term -> term MULTI factor .
+
+    MULTI           reduce using rule 5 (term -> term MULTI factor .)
+    DIVIDE          reduce using rule 5 (term -> term MULTI factor .)
+    MAS             reduce using rule 5 (term -> term MULTI factor .)
+    RESTA           reduce using rule 5 (term -> term MULTI factor .)
+    $end            reduce using rule 5 (term -> term MULTI factor .)
+    RPAREN          reduce using rule 5 (term -> term MULTI factor .)
+
+
+state 16
+
+    (6) term -> term DIVIDE factor .
+
+    MULTI           reduce using rule 6 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 6 (term -> term DIVIDE factor .)
+    MAS             reduce using rule 6 (term -> term DIVIDE factor .)
+    RESTA           reduce using rule 6 (term -> term DIVIDE factor .)
+    $end            reduce using rule 6 (term -> term DIVIDE factor .)
+    RPAREN          reduce using rule 6 (term -> term DIVIDE factor .)
+
+
+state 17
+
+    (10) factor -> LPAREN expression RPAREN .
+
+    MULTI           reduce using rule 10 (factor -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 10 (factor -> LPAREN expression RPAREN .)
+    MAS             reduce using rule 10 (factor -> LPAREN expression RPAREN .)
+    RESTA           reduce using rule 10 (factor -> LPAREN expression RPAREN .)
+    $end            reduce using rule 10 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 10 (factor -> LPAREN expression RPAREN .)
+
