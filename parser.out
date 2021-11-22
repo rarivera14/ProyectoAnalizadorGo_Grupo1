@@ -48,8 +48,8 @@ Unused terminals:
 Grammar
 
 Rule 0     S' -> golang
-Rule 1     golang -> expression
-Rule 2     golang -> asignacion
+Rule 1     golang -> asignacion
+Rule 2     golang -> expression
 Rule 3     asignacion -> asignacionMate
 Rule 4     asignacion -> asignacionOtros
 Rule 5     asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression
@@ -134,10 +134,10 @@ error                :
 
 Nonterminals, with rules where they appear
 
-asignacion           : 2
+asignacion           : 1
 asignacionMate       : 3
 asignacionOtros      : 4
-expression           : 1 5 6 7 13 14 22
+expression           : 2 5 6 7 13 14 22
 factor               : 16 17 18
 golang               : 0
 term                 : 13 14 15 16 17
@@ -148,40 +148,40 @@ Parsing method: LALR
 state 0
 
     (0) S' -> . golang
-    (1) golang -> . expression
-    (2) golang -> . asignacion
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) asignacion -> . asignacionMate
+    (4) asignacion -> . asignacionOtros
     (13) expression -> . expression MAS term
     (14) expression -> . expression RESTA term
     (15) expression -> . term
-    (3) asignacion -> . asignacionMate
-    (4) asignacion -> . asignacionOtros
-    (16) term -> . term MULTI factor
-    (17) term -> . term DIVIDE factor
-    (18) term -> . factor
     (5) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
     (6) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
     (7) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
     (8) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
     (9) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
     (10) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (16) term -> . term MULTI factor
+    (17) term -> . term DIVIDE factor
+    (18) term -> . factor
     (19) factor -> . NUMBER
     (20) factor -> . FLOTANTE
     (21) factor -> . VARIABLE
     (22) factor -> . LPAREN expression RPAREN
 
-    VAR             shift and go to state 8
-    VARIABLE        shift and go to state 9
+    VAR             shift and go to state 7
+    VARIABLE        shift and go to state 8
     NUMBER          shift and go to state 10
     FLOTANTE        shift and go to state 11
     LPAREN          shift and go to state 12
 
     golang                         shift and go to state 1
-    expression                     shift and go to state 2
-    asignacion                     shift and go to state 3
-    term                           shift and go to state 4
-    asignacionMate                 shift and go to state 5
-    asignacionOtros                shift and go to state 6
-    factor                         shift and go to state 7
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    asignacionMate                 shift and go to state 4
+    asignacionOtros                shift and go to state 5
+    term                           shift and go to state 6
+    factor                         shift and go to state 9
 
 state 1
 
@@ -191,23 +191,37 @@ state 1
 
 state 2
 
-    (1) golang -> expression .
-    (13) expression -> expression . MAS term
-    (14) expression -> expression . RESTA term
+    (1) golang -> asignacion .
 
-    $end            reduce using rule 1 (golang -> expression .)
-    MAS             shift and go to state 13
-    RESTA           shift and go to state 14
+    $end            reduce using rule 1 (golang -> asignacion .)
 
 
 state 3
 
-    (2) golang -> asignacion .
+    (2) golang -> expression .
+    (13) expression -> expression . MAS term
+    (14) expression -> expression . RESTA term
 
-    $end            reduce using rule 2 (golang -> asignacion .)
+    $end            reduce using rule 2 (golang -> expression .)
+    MAS             shift and go to state 13
+    RESTA           shift and go to state 14
 
 
 state 4
+
+    (3) asignacion -> asignacionMate .
+
+    $end            reduce using rule 3 (asignacion -> asignacionMate .)
+
+
+state 5
+
+    (4) asignacion -> asignacionOtros .
+
+    $end            reduce using rule 4 (asignacion -> asignacionOtros .)
+
+
+state 6
 
     (15) expression -> term .
     (16) term -> term . MULTI factor
@@ -221,33 +235,7 @@ state 4
     DIVIDE          shift and go to state 16
 
 
-state 5
-
-    (3) asignacion -> asignacionMate .
-
-    $end            reduce using rule 3 (asignacion -> asignacionMate .)
-
-
-state 6
-
-    (4) asignacion -> asignacionOtros .
-
-    $end            reduce using rule 4 (asignacion -> asignacionOtros .)
-
-
 state 7
-
-    (18) term -> factor .
-
-    MULTI           reduce using rule 18 (term -> factor .)
-    DIVIDE          reduce using rule 18 (term -> factor .)
-    MAS             reduce using rule 18 (term -> factor .)
-    RESTA           reduce using rule 18 (term -> factor .)
-    $end            reduce using rule 18 (term -> factor .)
-    RPAREN          reduce using rule 18 (term -> factor .)
-
-
-state 8
 
     (5) asignacionMate -> VAR . VARIABLE TIPODATOS ASIGNADOR expression
     (7) asignacionMate -> VAR . VARIABLE ASIGNADOR expression
@@ -257,7 +245,7 @@ state 8
     VARIABLE        shift and go to state 17
 
 
-state 9
+state 8
 
     (6) asignacionMate -> VARIABLE . DOSPUNTOS ASIGNADOR expression
     (9) asignacionOtros -> VARIABLE . DOSPUNTOS ASIGNADOR valoresOtros
@@ -269,6 +257,18 @@ state 9
     MAS             reduce using rule 21 (factor -> VARIABLE .)
     RESTA           reduce using rule 21 (factor -> VARIABLE .)
     $end            reduce using rule 21 (factor -> VARIABLE .)
+
+
+state 9
+
+    (18) term -> factor .
+
+    MULTI           reduce using rule 18 (term -> factor .)
+    DIVIDE          reduce using rule 18 (term -> factor .)
+    MAS             reduce using rule 18 (term -> factor .)
+    RESTA           reduce using rule 18 (term -> factor .)
+    $end            reduce using rule 18 (term -> factor .)
+    RPAREN          reduce using rule 18 (term -> factor .)
 
 
 state 10
@@ -315,8 +315,8 @@ state 12
     LPAREN          shift and go to state 12
 
     expression                     shift and go to state 19
-    term                           shift and go to state 4
-    factor                         shift and go to state 7
+    term                           shift and go to state 6
+    factor                         shift and go to state 9
 
 state 13
 
@@ -335,7 +335,7 @@ state 13
     LPAREN          shift and go to state 12
 
     term                           shift and go to state 21
-    factor                         shift and go to state 7
+    factor                         shift and go to state 9
 
 state 14
 
@@ -354,7 +354,7 @@ state 14
     LPAREN          shift and go to state 12
 
     term                           shift and go to state 22
-    factor                         shift and go to state 7
+    factor                         shift and go to state 9
 
 state 15
 
@@ -514,8 +514,8 @@ state 26
 
     expression                     shift and go to state 30
     valoresOtros                   shift and go to state 31
-    term                           shift and go to state 4
-    factor                         shift and go to state 7
+    term                           shift and go to state 6
+    factor                         shift and go to state 9
 
 state 27
 
@@ -543,8 +543,8 @@ state 27
 
     expression                     shift and go to state 34
     valoresOtros                   shift and go to state 35
-    term                           shift and go to state 4
-    factor                         shift and go to state 7
+    term                           shift and go to state 6
+    factor                         shift and go to state 9
 
 state 28
 
@@ -584,8 +584,8 @@ state 29
 
     expression                     shift and go to state 36
     valoresOtros                   shift and go to state 37
-    term                           shift and go to state 4
-    factor                         shift and go to state 7
+    term                           shift and go to state 6
+    factor                         shift and go to state 9
 
 state 30
 

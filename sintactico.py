@@ -4,7 +4,7 @@ from lexer import tokens
 
 # William Venegas
 def p_golang(p):
-  ''' golang : asignacionexpression 
+  ''' golang : asignacion 
               | expression
   '''
 
