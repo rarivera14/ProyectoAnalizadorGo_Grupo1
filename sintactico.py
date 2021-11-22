@@ -11,6 +11,8 @@ def p_golang(p):
               | bucleFor
               | funcion
               | imports
+              | array
+              | metodosPropiedadesArray
   '''
 
 def p_asignacion(p):
@@ -31,6 +33,9 @@ def p_asignacion_otros(p):
                      | VAR VARIABLE ASIGNADOR valoresOtros
   '''
 
+def p_asignacion_corta(p):
+  ' asigacionCorta : DOSPUNTOS ASIGNADOR'
+
 def p_valores_otros(p):
     ''' valoresOtros : STRING
                     | BOOLEAN
@@ -43,7 +48,8 @@ def p_funcion_go(p):
   '''
 
 def p_parametros_func(p):
-  ''' parametros : VARIABLE TIPODATOS
+  ''' parametros : valoresPosibles
+                  | VARIABLE TIPODATOS
                   | VARIABLE TIPODATOS COMA parametros
   '''
 ##################
@@ -58,14 +64,54 @@ def p_paquetes_go(p):
   ' package : PACKAGE VARIABLE'
 
 def p_import_go(p):
-  ' import : IMPORT variosImports '
+  ''' import : IMPORT variosImports 
+              | IMPORT LPAREN variosImports RPAREN 
+  '''
 
 def p_variosImports(p):
   ''' variosImports : STRING
-                    | LPAREN STRING RPAREN
-                    | LPAREN STRING variosImports RPAREN
+                    | STRING variosImports
+  '''
+######## Todo Arrays
+def p_array(p):
+  ''' array : arrayNoInit
+            | arrayInit
   '''
 
+def p_array_noinit(p):
+  ' arrayNoInit : VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS'
+
+def p_array_init(p): 
+  ' arrayInit : VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE'
+
+def p_array_elementos(p):
+  ''' arrayElementos : valoresPosibles
+                      | valoresPosibles COMA valoresPosibles 
+  '''
+
+####### METODOS ARRAY
+def p_metodos_propiedades_array(p):
+  ''' metodosPropiedadesArray : slice
+                              | remove
+                              | sliceAsignacion
+   '''
+
+def p_remove_array(p):
+  ' remove : VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN'
+
+def p_sliceasignacion_array(p):
+  ' sliceAsignacion : slice ASIGNADOR valoresPosibles'
+
+def p_slice_array(p):
+  ' slice : VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER'
+
+def p_valores_posibles(p):
+  ''' valoresPosibles : NUMBER
+                      | BOOLEAN
+                      | STRING
+                      | FLOTANTE
+                      | VARIABLE
+  '''
 ######## Todo condicionales
 def p_condicional(p):
   ''' condicional : tiposCondicion condicion LLAVEIZ golang LLAVEDE 

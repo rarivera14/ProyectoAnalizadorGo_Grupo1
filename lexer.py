@@ -26,6 +26,7 @@ reserved = {
     'for': 'FOR',
     'import': 'IMPORT',
     'var': 'VAR',
+    'remove': 'REMOVE'
 
 }
 ##############################
@@ -40,6 +41,8 @@ tokens = (
   'DIVIDE',
   'LPAREN',
   'RPAREN',
+  'CORCHETEDER',
+  'CORCHETEIZ',
   'FLOTANTE',
   'MODULO',
   'DIFERENTE',
@@ -70,6 +73,7 @@ tokens = (
   'DOSPUNTOS',
   'PUNTOCOMA',
   'COMA',
+  'PUNTO',
   'TIPODATOS'
  # Ricardo Zevallos
 ) + tuple(reserved.values())
@@ -82,6 +86,8 @@ t_MULTI = r'\*'
 t_DIVIDE = r'/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
+t_CORCHETEDER = r'\]'
+t_CORCHETEIZ = r'\['
 t_NUMBER = r'\d+'
 t_FLOTANTE = r'\d+\.\d+'
 t_MODULO = r'%'
@@ -95,6 +101,7 @@ t_DECREMENTO = r'\-\-'
 t_DOSPUNTOS = r':'
 t_PUNTOCOMA = r';'
 t_COMA = r','
+t_PUNTO = r'\.'
 # William Venegas
 # t_VARIABLE = r'[a-z]+'
 
