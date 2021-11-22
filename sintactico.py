@@ -10,6 +10,7 @@ def p_golang(p):
               | condicional
               | bucleFor
               | funcion
+              | imports
   '''
 
 def p_asignacion(p):
@@ -45,6 +46,26 @@ def p_parametros_func(p):
   ''' parametros : VARIABLE TIPODATOS
                   | VARIABLE TIPODATOS COMA parametros
   '''
+##################
+
+##### Todo importar paquetes
+def p_imports(p):
+  ''' imports : package
+              | import
+  '''
+
+def p_paquetes_go(p):
+  ' package : PACKAGE VARIABLE'
+
+def p_import_go(p):
+  ' import : IMPORT variosImports '
+
+def p_variosImports(p):
+  ''' variosImports : STRING
+                    | LPAREN STRING RPAREN
+                    | LPAREN STRING variosImports RPAREN
+  '''
+
 ######## Todo condicionales
 def p_condicional(p):
   ''' condicional : tiposCondicion condicion LLAVEIZ golang LLAVEDE 
