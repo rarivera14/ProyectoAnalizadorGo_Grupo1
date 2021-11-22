@@ -68,6 +68,7 @@ tokens = (
   'FLOTANTEI',
   'STRING',
   'DOSPUNTOS',
+  'PUNTOCOMA',
   'TIPODATOS'
  # Ricardo Zevallos
 ) + tuple(reserved.values())
@@ -91,6 +92,7 @@ t_COMILLASDOBLES = r'\"'
 t_INCREMENTO = r'\+\+'
 t_DECREMENTO = r'\-\-'
 t_DOSPUNTOS = r':'
+t_PUNTOCOMA = r';'
 # William Venegas
 #t_VARIABLE = r'[a-z]+'
 

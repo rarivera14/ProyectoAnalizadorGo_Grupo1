@@ -13,30 +13,17 @@ Unused terminals:
     COMILLASDOBLES
     CONST
     CONTINUE
-    DECREMENTO
     DEFAULT
     DEFER
-    DIFERENTE
-    ELSE
-    EQUIVALENTE
     FALLTHROUGH
     FLOTANTEI
-    FOR
     FUNCTION
     GO
     GOTO
     ID
-    IF
     IMPORT
-    INCREMENTO
     INTERFACE
-    LLAVEDE
-    LLAVEIZ
     MAP
-    MAYOROIGUALQUE
-    MAYORQUE
-    MENOROIGUALQUE
-    MENORQUE
     MODULO
     PACKAGE
     RANGE
@@ -50,98 +37,130 @@ Grammar
 Rule 0     S' -> golang
 Rule 1     golang -> asignacion
 Rule 2     golang -> expression
-Rule 3     asignacion -> asignacionMate
-Rule 4     asignacion -> asignacionOtros
-Rule 5     asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression
-Rule 6     asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression
-Rule 7     asignacionMate -> VAR VARIABLE ASIGNADOR expression
-Rule 8     asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
-Rule 9     asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
-Rule 10    asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros
-Rule 11    valoresOtros -> STRING
-Rule 12    valoresOtros -> BOOLEAN
-Rule 13    expression -> expression MAS term
-Rule 14    expression -> expression RESTA term
-Rule 15    expression -> term
-Rule 16    term -> term MULTI factor
-Rule 17    term -> term DIVIDE factor
-Rule 18    term -> factor
-Rule 19    factor -> NUMBER
-Rule 20    factor -> FLOTANTE
-Rule 21    factor -> VARIABLE
-Rule 22    factor -> LPAREN expression RPAREN
+Rule 3     golang -> condicional
+Rule 4     golang -> bucleFor
+Rule 5     asignacion -> asignacionMate
+Rule 6     asignacion -> asignacionOtros
+Rule 7     asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression
+Rule 8     asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression
+Rule 9     asignacionMate -> VAR VARIABLE ASIGNADOR expression
+Rule 10    asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+Rule 11    asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+Rule 12    asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros
+Rule 13    valoresOtros -> STRING
+Rule 14    valoresOtros -> BOOLEAN
+Rule 15    condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE
+Rule 16    condicional -> condicional ELSE LLAVEIZ golang LLAVEDE
+Rule 17    tiposCondicion -> IF
+Rule 18    tiposCondicion -> ELSE IF
+Rule 19    condicion -> expression
+Rule 20    condicion -> LPAREN expression comparadores expression RPAREN
+Rule 21    condicion -> LPAREN expression comparadores expression RPAREN comparadores condicion
+Rule 22    condicion -> expression comparadores condicion
+Rule 23    comparadores -> MAYORQUE
+Rule 24    comparadores -> MENORQUE
+Rule 25    comparadores -> MAYOROIGUALQUE
+Rule 26    comparadores -> MENOROIGUALQUE
+Rule 27    comparadores -> EQUIVALENTE
+Rule 28    comparadores -> DIFERENTE
+Rule 29    bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+Rule 30    asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA
+Rule 31    condicionFOR -> VARIABLE comparadores expression PUNTOCOMA
+Rule 32    updateFOR -> VARIABLE incrementoDecremento
+Rule 33    incrementoDecremento -> INCREMENTO
+Rule 34    incrementoDecremento -> DECREMENTO
+Rule 35    expression -> expression MAS term
+Rule 36    expression -> expression RESTA term
+Rule 37    expression -> term
+Rule 38    term -> term MULTI factor
+Rule 39    term -> term DIVIDE factor
+Rule 40    term -> factor
+Rule 41    factor -> NUMBER
+Rule 42    factor -> FLOTANTE
+Rule 43    factor -> VARIABLE
+Rule 44    factor -> LPAREN expression RPAREN
 
 Terminals, with rules where they appear
 
-ASIGNADOR            : 5 6 7 8 9 10
+ASIGNADOR            : 7 8 9 10 11 12 30
 ASIGNADORDIV         : 
 ASIGNADORMULT        : 
 ASIGNADORRESTA       : 
 ASIGNADORSUM         : 
 BACKTICK             : 
-BOOLEAN              : 12
+BOOLEAN              : 14
 BREAK                : 
 CASE                 : 
 CHAN                 : 
 COMILLASDOBLES       : 
 CONST                : 
 CONTINUE             : 
-DECREMENTO           : 
+DECREMENTO           : 34
 DEFAULT              : 
 DEFER                : 
-DIFERENTE            : 
-DIVIDE               : 17
-DOSPUNTOS            : 6 9
-ELSE                 : 
-EQUIVALENTE          : 
+DIFERENTE            : 28
+DIVIDE               : 39
+DOSPUNTOS            : 8 11 30
+ELSE                 : 16 18
+EQUIVALENTE          : 27
 FALLTHROUGH          : 
-FLOTANTE             : 20
+FLOTANTE             : 42
 FLOTANTEI            : 
-FOR                  : 
+FOR                  : 29
 FUNCTION             : 
 GO                   : 
 GOTO                 : 
 ID                   : 
-IF                   : 
+IF                   : 17 18
 IMPORT               : 
-INCREMENTO           : 
+INCREMENTO           : 33
 INTERFACE            : 
-LLAVEDE              : 
-LLAVEIZ              : 
-LPAREN               : 22
+LLAVEDE              : 15 16 29
+LLAVEIZ              : 15 16 29
+LPAREN               : 20 21 44
 MAP                  : 
-MAS                  : 13
-MAYOROIGUALQUE       : 
-MAYORQUE             : 
-MENOROIGUALQUE       : 
-MENORQUE             : 
+MAS                  : 35
+MAYOROIGUALQUE       : 25
+MAYORQUE             : 23
+MENOROIGUALQUE       : 26
+MENORQUE             : 24
 MODULO               : 
-MULTI                : 16
-NUMBER               : 19
+MULTI                : 38
+NUMBER               : 41
 PACKAGE              : 
+PUNTOCOMA            : 30 31
 RANGE                : 
-RESTA                : 14
+RESTA                : 36
 RETURN               : 
-RPAREN               : 22
+RPAREN               : 20 21 44
 SELECT               : 
-STRING               : 11
+STRING               : 13
 STRUCT               : 
-TIPODATOS            : 5 8
+TIPODATOS            : 7 10
 TYPE                 : 
-VAR                  : 5 7 8 10
-VARIABLE             : 5 6 7 8 9 10 21
+VAR                  : 7 9 10 12
+VARIABLE             : 7 8 9 10 11 12 30 31 32 43
 error                : 
 
 Nonterminals, with rules where they appear
 
 asignacion           : 1
-asignacionMate       : 3
-asignacionOtros      : 4
-expression           : 2 5 6 7 13 14 22
-factor               : 16 17 18
-golang               : 0
-term                 : 13 14 15 16 17
-valoresOtros         : 8 9 10
+asignacionFOR        : 29
+asignacionMate       : 5
+asignacionOtros      : 6
+bucleFor             : 4
+comparadores         : 20 21 21 22 31
+condicion            : 15 21 22
+condicionFOR         : 29
+condicional          : 3 16
+expression           : 2 7 8 9 19 20 20 21 21 22 30 31 35 36 44
+factor               : 38 39 40
+golang               : 15 16 29 0
+incrementoDecremento : 32
+term                 : 35 36 37 38 39
+tiposCondicion       : 15
+updateFOR            : 29
+valoresOtros         : 10 11 12
 
 Parsing method: LALR
 
@@ -150,38 +169,51 @@ state 0
     (0) S' -> . golang
     (1) golang -> . asignacion
     (2) golang -> . expression
-    (3) asignacion -> . asignacionMate
-    (4) asignacion -> . asignacionOtros
-    (13) expression -> . expression MAS term
-    (14) expression -> . expression RESTA term
-    (15) expression -> . term
-    (5) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
-    (6) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
-    (7) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
-    (8) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
-    (9) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
-    (10) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
-    (16) term -> . term MULTI factor
-    (17) term -> . term DIVIDE factor
-    (18) term -> . factor
-    (19) factor -> . NUMBER
-    (20) factor -> . FLOTANTE
-    (21) factor -> . VARIABLE
-    (22) factor -> . LPAREN expression RPAREN
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) asignacion -> . asignacionMate
+    (6) asignacion -> . asignacionOtros
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (15) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (16) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (29) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (7) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (8) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (9) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (10) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (11) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (12) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (17) tiposCondicion -> . IF
+    (18) tiposCondicion -> . ELSE IF
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
 
-    VAR             shift and go to state 7
-    VARIABLE        shift and go to state 8
-    NUMBER          shift and go to state 10
-    FLOTANTE        shift and go to state 11
-    LPAREN          shift and go to state 12
+    FOR             shift and go to state 11
+    VAR             shift and go to state 12
+    VARIABLE        shift and go to state 13
+    IF              shift and go to state 15
+    ELSE            shift and go to state 10
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    LPAREN          shift and go to state 18
 
     golang                         shift and go to state 1
     asignacion                     shift and go to state 2
     expression                     shift and go to state 3
-    asignacionMate                 shift and go to state 4
-    asignacionOtros                shift and go to state 5
-    term                           shift and go to state 6
-    factor                         shift and go to state 9
+    condicional                    shift and go to state 4
+    bucleFor                       shift and go to state 5
+    asignacionMate                 shift and go to state 6
+    asignacionOtros                shift and go to state 7
+    term                           shift and go to state 8
+    tiposCondicion                 shift and go to state 9
+    factor                         shift and go to state 14
 
 state 1
 
@@ -194,463 +226,1297 @@ state 2
     (1) golang -> asignacion .
 
     $end            reduce using rule 1 (golang -> asignacion .)
+    LLAVEDE         reduce using rule 1 (golang -> asignacion .)
 
 
 state 3
 
     (2) golang -> expression .
-    (13) expression -> expression . MAS term
-    (14) expression -> expression . RESTA term
+    (35) expression -> expression . MAS term
+    (36) expression -> expression . RESTA term
 
     $end            reduce using rule 2 (golang -> expression .)
-    MAS             shift and go to state 13
-    RESTA           shift and go to state 14
+    LLAVEDE         reduce using rule 2 (golang -> expression .)
+    MAS             shift and go to state 19
+    RESTA           shift and go to state 20
 
 
 state 4
 
-    (3) asignacion -> asignacionMate .
+    (3) golang -> condicional .
+    (16) condicional -> condicional . ELSE LLAVEIZ golang LLAVEDE
 
-    $end            reduce using rule 3 (asignacion -> asignacionMate .)
+    $end            reduce using rule 3 (golang -> condicional .)
+    LLAVEDE         reduce using rule 3 (golang -> condicional .)
+    ELSE            shift and go to state 21
 
 
 state 5
 
-    (4) asignacion -> asignacionOtros .
+    (4) golang -> bucleFor .
 
-    $end            reduce using rule 4 (asignacion -> asignacionOtros .)
+    $end            reduce using rule 4 (golang -> bucleFor .)
+    LLAVEDE         reduce using rule 4 (golang -> bucleFor .)
 
 
 state 6
 
-    (15) expression -> term .
-    (16) term -> term . MULTI factor
-    (17) term -> term . DIVIDE factor
+    (5) asignacion -> asignacionMate .
 
-    MAS             reduce using rule 15 (expression -> term .)
-    RESTA           reduce using rule 15 (expression -> term .)
-    $end            reduce using rule 15 (expression -> term .)
-    RPAREN          reduce using rule 15 (expression -> term .)
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
+    $end            reduce using rule 5 (asignacion -> asignacionMate .)
+    LLAVEDE         reduce using rule 5 (asignacion -> asignacionMate .)
 
 
 state 7
 
-    (5) asignacionMate -> VAR . VARIABLE TIPODATOS ASIGNADOR expression
-    (7) asignacionMate -> VAR . VARIABLE ASIGNADOR expression
-    (8) asignacionOtros -> VAR . VARIABLE TIPODATOS ASIGNADOR valoresOtros
-    (10) asignacionOtros -> VAR . VARIABLE ASIGNADOR valoresOtros
+    (6) asignacion -> asignacionOtros .
 
-    VARIABLE        shift and go to state 17
+    $end            reduce using rule 6 (asignacion -> asignacionOtros .)
+    LLAVEDE         reduce using rule 6 (asignacion -> asignacionOtros .)
 
 
 state 8
 
-    (6) asignacionMate -> VARIABLE . DOSPUNTOS ASIGNADOR expression
-    (9) asignacionOtros -> VARIABLE . DOSPUNTOS ASIGNADOR valoresOtros
-    (21) factor -> VARIABLE .
+    (37) expression -> term .
+    (38) term -> term . MULTI factor
+    (39) term -> term . DIVIDE factor
 
-    DOSPUNTOS       shift and go to state 18
-    MULTI           reduce using rule 21 (factor -> VARIABLE .)
-    DIVIDE          reduce using rule 21 (factor -> VARIABLE .)
-    MAS             reduce using rule 21 (factor -> VARIABLE .)
-    RESTA           reduce using rule 21 (factor -> VARIABLE .)
-    $end            reduce using rule 21 (factor -> VARIABLE .)
+    MAS             reduce using rule 37 (expression -> term .)
+    RESTA           reduce using rule 37 (expression -> term .)
+    $end            reduce using rule 37 (expression -> term .)
+    MAYORQUE        reduce using rule 37 (expression -> term .)
+    MENORQUE        reduce using rule 37 (expression -> term .)
+    MAYOROIGUALQUE  reduce using rule 37 (expression -> term .)
+    MENOROIGUALQUE  reduce using rule 37 (expression -> term .)
+    EQUIVALENTE     reduce using rule 37 (expression -> term .)
+    DIFERENTE       reduce using rule 37 (expression -> term .)
+    LLAVEIZ         reduce using rule 37 (expression -> term .)
+    RPAREN          reduce using rule 37 (expression -> term .)
+    LLAVEDE         reduce using rule 37 (expression -> term .)
+    PUNTOCOMA       reduce using rule 37 (expression -> term .)
+    MULTI           shift and go to state 22
+    DIVIDE          shift and go to state 23
 
 
 state 9
 
-    (18) term -> factor .
+    (15) condicional -> tiposCondicion . condicion LLAVEIZ golang LLAVEDE
+    (19) condicion -> . expression
+    (20) condicion -> . LPAREN expression comparadores expression RPAREN
+    (21) condicion -> . LPAREN expression comparadores expression RPAREN comparadores condicion
+    (22) condicion -> . expression comparadores condicion
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
 
-    MULTI           reduce using rule 18 (term -> factor .)
-    DIVIDE          reduce using rule 18 (term -> factor .)
-    MAS             reduce using rule 18 (term -> factor .)
-    RESTA           reduce using rule 18 (term -> factor .)
-    $end            reduce using rule 18 (term -> factor .)
-    RPAREN          reduce using rule 18 (term -> factor .)
+    LPAREN          shift and go to state 26
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
 
+    condicion                      shift and go to state 24
+    expression                     shift and go to state 25
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
 
 state 10
 
-    (19) factor -> NUMBER .
+    (18) tiposCondicion -> ELSE . IF
 
-    MULTI           reduce using rule 19 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 19 (factor -> NUMBER .)
-    MAS             reduce using rule 19 (factor -> NUMBER .)
-    RESTA           reduce using rule 19 (factor -> NUMBER .)
-    $end            reduce using rule 19 (factor -> NUMBER .)
-    RPAREN          reduce using rule 19 (factor -> NUMBER .)
+    IF              shift and go to state 28
 
 
 state 11
 
-    (20) factor -> FLOTANTE .
+    (29) bucleFor -> FOR . asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (30) asignacionFOR -> . VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA
 
-    MULTI           reduce using rule 20 (factor -> FLOTANTE .)
-    DIVIDE          reduce using rule 20 (factor -> FLOTANTE .)
-    MAS             reduce using rule 20 (factor -> FLOTANTE .)
-    RESTA           reduce using rule 20 (factor -> FLOTANTE .)
-    $end            reduce using rule 20 (factor -> FLOTANTE .)
-    RPAREN          reduce using rule 20 (factor -> FLOTANTE .)
+    VARIABLE        shift and go to state 30
 
+    asignacionFOR                  shift and go to state 29
 
 state 12
 
-    (22) factor -> LPAREN . expression RPAREN
-    (13) expression -> . expression MAS term
-    (14) expression -> . expression RESTA term
-    (15) expression -> . term
-    (16) term -> . term MULTI factor
-    (17) term -> . term DIVIDE factor
-    (18) term -> . factor
-    (19) factor -> . NUMBER
-    (20) factor -> . FLOTANTE
-    (21) factor -> . VARIABLE
-    (22) factor -> . LPAREN expression RPAREN
+    (7) asignacionMate -> VAR . VARIABLE TIPODATOS ASIGNADOR expression
+    (9) asignacionMate -> VAR . VARIABLE ASIGNADOR expression
+    (10) asignacionOtros -> VAR . VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (12) asignacionOtros -> VAR . VARIABLE ASIGNADOR valoresOtros
 
-    NUMBER          shift and go to state 10
-    FLOTANTE        shift and go to state 11
-    VARIABLE        shift and go to state 20
-    LPAREN          shift and go to state 12
+    VARIABLE        shift and go to state 31
 
-    expression                     shift and go to state 19
-    term                           shift and go to state 6
-    factor                         shift and go to state 9
 
 state 13
 
-    (13) expression -> expression MAS . term
-    (16) term -> . term MULTI factor
-    (17) term -> . term DIVIDE factor
-    (18) term -> . factor
-    (19) factor -> . NUMBER
-    (20) factor -> . FLOTANTE
-    (21) factor -> . VARIABLE
-    (22) factor -> . LPAREN expression RPAREN
+    (8) asignacionMate -> VARIABLE . DOSPUNTOS ASIGNADOR expression
+    (11) asignacionOtros -> VARIABLE . DOSPUNTOS ASIGNADOR valoresOtros
+    (43) factor -> VARIABLE .
 
-    NUMBER          shift and go to state 10
-    FLOTANTE        shift and go to state 11
-    VARIABLE        shift and go to state 20
-    LPAREN          shift and go to state 12
+    DOSPUNTOS       shift and go to state 32
+    MULTI           reduce using rule 43 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 43 (factor -> VARIABLE .)
+    MAS             reduce using rule 43 (factor -> VARIABLE .)
+    RESTA           reduce using rule 43 (factor -> VARIABLE .)
+    $end            reduce using rule 43 (factor -> VARIABLE .)
+    LLAVEDE         reduce using rule 43 (factor -> VARIABLE .)
 
-    term                           shift and go to state 21
-    factor                         shift and go to state 9
 
 state 14
 
-    (14) expression -> expression RESTA . term
-    (16) term -> . term MULTI factor
-    (17) term -> . term DIVIDE factor
-    (18) term -> . factor
-    (19) factor -> . NUMBER
-    (20) factor -> . FLOTANTE
-    (21) factor -> . VARIABLE
-    (22) factor -> . LPAREN expression RPAREN
+    (40) term -> factor .
 
-    NUMBER          shift and go to state 10
-    FLOTANTE        shift and go to state 11
-    VARIABLE        shift and go to state 20
-    LPAREN          shift and go to state 12
+    MULTI           reduce using rule 40 (term -> factor .)
+    DIVIDE          reduce using rule 40 (term -> factor .)
+    MAS             reduce using rule 40 (term -> factor .)
+    RESTA           reduce using rule 40 (term -> factor .)
+    $end            reduce using rule 40 (term -> factor .)
+    MAYORQUE        reduce using rule 40 (term -> factor .)
+    MENORQUE        reduce using rule 40 (term -> factor .)
+    MAYOROIGUALQUE  reduce using rule 40 (term -> factor .)
+    MENOROIGUALQUE  reduce using rule 40 (term -> factor .)
+    EQUIVALENTE     reduce using rule 40 (term -> factor .)
+    DIFERENTE       reduce using rule 40 (term -> factor .)
+    LLAVEIZ         reduce using rule 40 (term -> factor .)
+    RPAREN          reduce using rule 40 (term -> factor .)
+    LLAVEDE         reduce using rule 40 (term -> factor .)
+    PUNTOCOMA       reduce using rule 40 (term -> factor .)
 
-    term                           shift and go to state 22
-    factor                         shift and go to state 9
 
 state 15
 
-    (16) term -> term MULTI . factor
-    (19) factor -> . NUMBER
-    (20) factor -> . FLOTANTE
-    (21) factor -> . VARIABLE
-    (22) factor -> . LPAREN expression RPAREN
+    (17) tiposCondicion -> IF .
 
-    NUMBER          shift and go to state 10
-    FLOTANTE        shift and go to state 11
-    VARIABLE        shift and go to state 20
-    LPAREN          shift and go to state 12
+    LPAREN          reduce using rule 17 (tiposCondicion -> IF .)
+    NUMBER          reduce using rule 17 (tiposCondicion -> IF .)
+    FLOTANTE        reduce using rule 17 (tiposCondicion -> IF .)
+    VARIABLE        reduce using rule 17 (tiposCondicion -> IF .)
 
-    factor                         shift and go to state 23
 
 state 16
 
-    (17) term -> term DIVIDE . factor
-    (19) factor -> . NUMBER
-    (20) factor -> . FLOTANTE
-    (21) factor -> . VARIABLE
-    (22) factor -> . LPAREN expression RPAREN
+    (41) factor -> NUMBER .
 
-    NUMBER          shift and go to state 10
-    FLOTANTE        shift and go to state 11
-    VARIABLE        shift and go to state 20
-    LPAREN          shift and go to state 12
+    MULTI           reduce using rule 41 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 41 (factor -> NUMBER .)
+    MAS             reduce using rule 41 (factor -> NUMBER .)
+    RESTA           reduce using rule 41 (factor -> NUMBER .)
+    $end            reduce using rule 41 (factor -> NUMBER .)
+    MAYORQUE        reduce using rule 41 (factor -> NUMBER .)
+    MENORQUE        reduce using rule 41 (factor -> NUMBER .)
+    MAYOROIGUALQUE  reduce using rule 41 (factor -> NUMBER .)
+    MENOROIGUALQUE  reduce using rule 41 (factor -> NUMBER .)
+    EQUIVALENTE     reduce using rule 41 (factor -> NUMBER .)
+    DIFERENTE       reduce using rule 41 (factor -> NUMBER .)
+    LLAVEIZ         reduce using rule 41 (factor -> NUMBER .)
+    RPAREN          reduce using rule 41 (factor -> NUMBER .)
+    LLAVEDE         reduce using rule 41 (factor -> NUMBER .)
+    PUNTOCOMA       reduce using rule 41 (factor -> NUMBER .)
 
-    factor                         shift and go to state 24
 
 state 17
 
-    (5) asignacionMate -> VAR VARIABLE . TIPODATOS ASIGNADOR expression
-    (7) asignacionMate -> VAR VARIABLE . ASIGNADOR expression
-    (8) asignacionOtros -> VAR VARIABLE . TIPODATOS ASIGNADOR valoresOtros
-    (10) asignacionOtros -> VAR VARIABLE . ASIGNADOR valoresOtros
+    (42) factor -> FLOTANTE .
 
-    TIPODATOS       shift and go to state 25
-    ASIGNADOR       shift and go to state 26
+    MULTI           reduce using rule 42 (factor -> FLOTANTE .)
+    DIVIDE          reduce using rule 42 (factor -> FLOTANTE .)
+    MAS             reduce using rule 42 (factor -> FLOTANTE .)
+    RESTA           reduce using rule 42 (factor -> FLOTANTE .)
+    $end            reduce using rule 42 (factor -> FLOTANTE .)
+    MAYORQUE        reduce using rule 42 (factor -> FLOTANTE .)
+    MENORQUE        reduce using rule 42 (factor -> FLOTANTE .)
+    MAYOROIGUALQUE  reduce using rule 42 (factor -> FLOTANTE .)
+    MENOROIGUALQUE  reduce using rule 42 (factor -> FLOTANTE .)
+    EQUIVALENTE     reduce using rule 42 (factor -> FLOTANTE .)
+    DIFERENTE       reduce using rule 42 (factor -> FLOTANTE .)
+    LLAVEIZ         reduce using rule 42 (factor -> FLOTANTE .)
+    RPAREN          reduce using rule 42 (factor -> FLOTANTE .)
+    LLAVEDE         reduce using rule 42 (factor -> FLOTANTE .)
+    PUNTOCOMA       reduce using rule 42 (factor -> FLOTANTE .)
 
 
 state 18
 
-    (6) asignacionMate -> VARIABLE DOSPUNTOS . ASIGNADOR expression
-    (9) asignacionOtros -> VARIABLE DOSPUNTOS . ASIGNADOR valoresOtros
+    (44) factor -> LPAREN . expression RPAREN
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
 
-    ASIGNADOR       shift and go to state 27
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
 
+    expression                     shift and go to state 33
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
 
 state 19
 
-    (22) factor -> LPAREN expression . RPAREN
-    (13) expression -> expression . MAS term
-    (14) expression -> expression . RESTA term
+    (35) expression -> expression MAS . term
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
 
-    RPAREN          shift and go to state 28
-    MAS             shift and go to state 13
-    RESTA           shift and go to state 14
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
 
+    term                           shift and go to state 34
+    factor                         shift and go to state 14
 
 state 20
 
-    (21) factor -> VARIABLE .
+    (36) expression -> expression RESTA . term
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
 
-    MULTI           reduce using rule 21 (factor -> VARIABLE .)
-    DIVIDE          reduce using rule 21 (factor -> VARIABLE .)
-    RPAREN          reduce using rule 21 (factor -> VARIABLE .)
-    MAS             reduce using rule 21 (factor -> VARIABLE .)
-    RESTA           reduce using rule 21 (factor -> VARIABLE .)
-    $end            reduce using rule 21 (factor -> VARIABLE .)
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
 
+    term                           shift and go to state 35
+    factor                         shift and go to state 14
 
 state 21
 
-    (13) expression -> expression MAS term .
-    (16) term -> term . MULTI factor
-    (17) term -> term . DIVIDE factor
+    (16) condicional -> condicional ELSE . LLAVEIZ golang LLAVEDE
 
-    MAS             reduce using rule 13 (expression -> expression MAS term .)
-    RESTA           reduce using rule 13 (expression -> expression MAS term .)
-    $end            reduce using rule 13 (expression -> expression MAS term .)
-    RPAREN          reduce using rule 13 (expression -> expression MAS term .)
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
+    LLAVEIZ         shift and go to state 36
 
 
 state 22
 
-    (14) expression -> expression RESTA term .
-    (16) term -> term . MULTI factor
-    (17) term -> term . DIVIDE factor
+    (38) term -> term MULTI . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
 
-    MAS             reduce using rule 14 (expression -> expression RESTA term .)
-    RESTA           reduce using rule 14 (expression -> expression RESTA term .)
-    $end            reduce using rule 14 (expression -> expression RESTA term .)
-    RPAREN          reduce using rule 14 (expression -> expression RESTA term .)
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
 
+    factor                         shift and go to state 37
 
 state 23
 
-    (16) term -> term MULTI factor .
+    (39) term -> term DIVIDE . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
 
-    MULTI           reduce using rule 16 (term -> term MULTI factor .)
-    DIVIDE          reduce using rule 16 (term -> term MULTI factor .)
-    MAS             reduce using rule 16 (term -> term MULTI factor .)
-    RESTA           reduce using rule 16 (term -> term MULTI factor .)
-    $end            reduce using rule 16 (term -> term MULTI factor .)
-    RPAREN          reduce using rule 16 (term -> term MULTI factor .)
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
 
+    factor                         shift and go to state 38
 
 state 24
 
-    (17) term -> term DIVIDE factor .
+    (15) condicional -> tiposCondicion condicion . LLAVEIZ golang LLAVEDE
 
-    MULTI           reduce using rule 17 (term -> term DIVIDE factor .)
-    DIVIDE          reduce using rule 17 (term -> term DIVIDE factor .)
-    MAS             reduce using rule 17 (term -> term DIVIDE factor .)
-    RESTA           reduce using rule 17 (term -> term DIVIDE factor .)
-    $end            reduce using rule 17 (term -> term DIVIDE factor .)
-    RPAREN          reduce using rule 17 (term -> term DIVIDE factor .)
+    LLAVEIZ         shift and go to state 39
 
 
 state 25
 
-    (5) asignacionMate -> VAR VARIABLE TIPODATOS . ASIGNADOR expression
-    (8) asignacionOtros -> VAR VARIABLE TIPODATOS . ASIGNADOR valoresOtros
+    (19) condicion -> expression .
+    (22) condicion -> expression . comparadores condicion
+    (35) expression -> expression . MAS term
+    (36) expression -> expression . RESTA term
+    (23) comparadores -> . MAYORQUE
+    (24) comparadores -> . MENORQUE
+    (25) comparadores -> . MAYOROIGUALQUE
+    (26) comparadores -> . MENOROIGUALQUE
+    (27) comparadores -> . EQUIVALENTE
+    (28) comparadores -> . DIFERENTE
 
-    ASIGNADOR       shift and go to state 29
+    LLAVEIZ         reduce using rule 19 (condicion -> expression .)
+    MAS             shift and go to state 19
+    RESTA           shift and go to state 20
+    MAYORQUE        shift and go to state 41
+    MENORQUE        shift and go to state 42
+    MAYOROIGUALQUE  shift and go to state 43
+    MENOROIGUALQUE  shift and go to state 44
+    EQUIVALENTE     shift and go to state 45
+    DIFERENTE       shift and go to state 46
 
+    comparadores                   shift and go to state 40
 
 state 26
 
-    (7) asignacionMate -> VAR VARIABLE ASIGNADOR . expression
-    (10) asignacionOtros -> VAR VARIABLE ASIGNADOR . valoresOtros
-    (13) expression -> . expression MAS term
-    (14) expression -> . expression RESTA term
-    (15) expression -> . term
-    (11) valoresOtros -> . STRING
-    (12) valoresOtros -> . BOOLEAN
-    (16) term -> . term MULTI factor
-    (17) term -> . term DIVIDE factor
-    (18) term -> . factor
-    (19) factor -> . NUMBER
-    (20) factor -> . FLOTANTE
-    (21) factor -> . VARIABLE
-    (22) factor -> . LPAREN expression RPAREN
+    (20) condicion -> LPAREN . expression comparadores expression RPAREN
+    (21) condicion -> LPAREN . expression comparadores expression RPAREN comparadores condicion
+    (44) factor -> LPAREN . expression RPAREN
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
 
-    STRING          shift and go to state 32
-    BOOLEAN         shift and go to state 33
-    NUMBER          shift and go to state 10
-    FLOTANTE        shift and go to state 11
-    VARIABLE        shift and go to state 20
-    LPAREN          shift and go to state 12
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
 
-    expression                     shift and go to state 30
-    valoresOtros                   shift and go to state 31
-    term                           shift and go to state 6
-    factor                         shift and go to state 9
+    expression                     shift and go to state 47
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
 
 state 27
 
-    (6) asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR . expression
-    (9) asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR . valoresOtros
-    (13) expression -> . expression MAS term
-    (14) expression -> . expression RESTA term
-    (15) expression -> . term
-    (11) valoresOtros -> . STRING
-    (12) valoresOtros -> . BOOLEAN
-    (16) term -> . term MULTI factor
-    (17) term -> . term DIVIDE factor
-    (18) term -> . factor
-    (19) factor -> . NUMBER
-    (20) factor -> . FLOTANTE
-    (21) factor -> . VARIABLE
-    (22) factor -> . LPAREN expression RPAREN
+    (43) factor -> VARIABLE .
 
-    STRING          shift and go to state 32
-    BOOLEAN         shift and go to state 33
-    NUMBER          shift and go to state 10
-    FLOTANTE        shift and go to state 11
-    VARIABLE        shift and go to state 20
-    LPAREN          shift and go to state 12
+    MULTI           reduce using rule 43 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 43 (factor -> VARIABLE .)
+    MAS             reduce using rule 43 (factor -> VARIABLE .)
+    RESTA           reduce using rule 43 (factor -> VARIABLE .)
+    MAYORQUE        reduce using rule 43 (factor -> VARIABLE .)
+    MENORQUE        reduce using rule 43 (factor -> VARIABLE .)
+    MAYOROIGUALQUE  reduce using rule 43 (factor -> VARIABLE .)
+    MENOROIGUALQUE  reduce using rule 43 (factor -> VARIABLE .)
+    EQUIVALENTE     reduce using rule 43 (factor -> VARIABLE .)
+    DIFERENTE       reduce using rule 43 (factor -> VARIABLE .)
+    LLAVEIZ         reduce using rule 43 (factor -> VARIABLE .)
+    RPAREN          reduce using rule 43 (factor -> VARIABLE .)
+    $end            reduce using rule 43 (factor -> VARIABLE .)
+    LLAVEDE         reduce using rule 43 (factor -> VARIABLE .)
+    PUNTOCOMA       reduce using rule 43 (factor -> VARIABLE .)
 
-    expression                     shift and go to state 34
-    valoresOtros                   shift and go to state 35
-    term                           shift and go to state 6
-    factor                         shift and go to state 9
 
 state 28
 
-    (22) factor -> LPAREN expression RPAREN .
+    (18) tiposCondicion -> ELSE IF .
 
-    MULTI           reduce using rule 22 (factor -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 22 (factor -> LPAREN expression RPAREN .)
-    MAS             reduce using rule 22 (factor -> LPAREN expression RPAREN .)
-    RESTA           reduce using rule 22 (factor -> LPAREN expression RPAREN .)
-    $end            reduce using rule 22 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 22 (factor -> LPAREN expression RPAREN .)
+    LPAREN          reduce using rule 18 (tiposCondicion -> ELSE IF .)
+    NUMBER          reduce using rule 18 (tiposCondicion -> ELSE IF .)
+    FLOTANTE        reduce using rule 18 (tiposCondicion -> ELSE IF .)
+    VARIABLE        reduce using rule 18 (tiposCondicion -> ELSE IF .)
 
 
 state 29
 
-    (5) asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR . expression
-    (8) asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR . valoresOtros
-    (13) expression -> . expression MAS term
-    (14) expression -> . expression RESTA term
-    (15) expression -> . term
-    (11) valoresOtros -> . STRING
-    (12) valoresOtros -> . BOOLEAN
-    (16) term -> . term MULTI factor
-    (17) term -> . term DIVIDE factor
-    (18) term -> . factor
-    (19) factor -> . NUMBER
-    (20) factor -> . FLOTANTE
-    (21) factor -> . VARIABLE
-    (22) factor -> . LPAREN expression RPAREN
+    (29) bucleFor -> FOR asignacionFOR . condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (31) condicionFOR -> . VARIABLE comparadores expression PUNTOCOMA
 
-    STRING          shift and go to state 32
-    BOOLEAN         shift and go to state 33
-    NUMBER          shift and go to state 10
-    FLOTANTE        shift and go to state 11
-    VARIABLE        shift and go to state 20
-    LPAREN          shift and go to state 12
+    VARIABLE        shift and go to state 49
 
-    expression                     shift and go to state 36
-    valoresOtros                   shift and go to state 37
-    term                           shift and go to state 6
-    factor                         shift and go to state 9
+    condicionFOR                   shift and go to state 48
 
 state 30
 
-    (7) asignacionMate -> VAR VARIABLE ASIGNADOR expression .
-    (13) expression -> expression . MAS term
-    (14) expression -> expression . RESTA term
+    (30) asignacionFOR -> VARIABLE . DOSPUNTOS ASIGNADOR expression PUNTOCOMA
 
-    $end            reduce using rule 7 (asignacionMate -> VAR VARIABLE ASIGNADOR expression .)
-    MAS             shift and go to state 13
-    RESTA           shift and go to state 14
+    DOSPUNTOS       shift and go to state 50
 
 
 state 31
 
-    (10) asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros .
+    (7) asignacionMate -> VAR VARIABLE . TIPODATOS ASIGNADOR expression
+    (9) asignacionMate -> VAR VARIABLE . ASIGNADOR expression
+    (10) asignacionOtros -> VAR VARIABLE . TIPODATOS ASIGNADOR valoresOtros
+    (12) asignacionOtros -> VAR VARIABLE . ASIGNADOR valoresOtros
 
-    $end            reduce using rule 10 (asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros .)
+    TIPODATOS       shift and go to state 51
+    ASIGNADOR       shift and go to state 52
 
 
 state 32
 
-    (11) valoresOtros -> STRING .
+    (8) asignacionMate -> VARIABLE DOSPUNTOS . ASIGNADOR expression
+    (11) asignacionOtros -> VARIABLE DOSPUNTOS . ASIGNADOR valoresOtros
 
-    $end            reduce using rule 11 (valoresOtros -> STRING .)
+    ASIGNADOR       shift and go to state 53
 
 
 state 33
 
-    (12) valoresOtros -> BOOLEAN .
+    (44) factor -> LPAREN expression . RPAREN
+    (35) expression -> expression . MAS term
+    (36) expression -> expression . RESTA term
 
-    $end            reduce using rule 12 (valoresOtros -> BOOLEAN .)
+    RPAREN          shift and go to state 54
+    MAS             shift and go to state 19
+    RESTA           shift and go to state 20
 
 
 state 34
 
-    (6) asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression .
-    (13) expression -> expression . MAS term
-    (14) expression -> expression . RESTA term
+    (35) expression -> expression MAS term .
+    (38) term -> term . MULTI factor
+    (39) term -> term . DIVIDE factor
 
-    $end            reduce using rule 6 (asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression .)
-    MAS             shift and go to state 13
-    RESTA           shift and go to state 14
+    MAS             reduce using rule 35 (expression -> expression MAS term .)
+    RESTA           reduce using rule 35 (expression -> expression MAS term .)
+    $end            reduce using rule 35 (expression -> expression MAS term .)
+    MAYORQUE        reduce using rule 35 (expression -> expression MAS term .)
+    MENORQUE        reduce using rule 35 (expression -> expression MAS term .)
+    MAYOROIGUALQUE  reduce using rule 35 (expression -> expression MAS term .)
+    MENOROIGUALQUE  reduce using rule 35 (expression -> expression MAS term .)
+    EQUIVALENTE     reduce using rule 35 (expression -> expression MAS term .)
+    DIFERENTE       reduce using rule 35 (expression -> expression MAS term .)
+    LLAVEIZ         reduce using rule 35 (expression -> expression MAS term .)
+    RPAREN          reduce using rule 35 (expression -> expression MAS term .)
+    LLAVEDE         reduce using rule 35 (expression -> expression MAS term .)
+    PUNTOCOMA       reduce using rule 35 (expression -> expression MAS term .)
+    MULTI           shift and go to state 22
+    DIVIDE          shift and go to state 23
 
 
 state 35
 
-    (9) asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros .
+    (36) expression -> expression RESTA term .
+    (38) term -> term . MULTI factor
+    (39) term -> term . DIVIDE factor
 
-    $end            reduce using rule 9 (asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros .)
+    MAS             reduce using rule 36 (expression -> expression RESTA term .)
+    RESTA           reduce using rule 36 (expression -> expression RESTA term .)
+    $end            reduce using rule 36 (expression -> expression RESTA term .)
+    MAYORQUE        reduce using rule 36 (expression -> expression RESTA term .)
+    MENORQUE        reduce using rule 36 (expression -> expression RESTA term .)
+    MAYOROIGUALQUE  reduce using rule 36 (expression -> expression RESTA term .)
+    MENOROIGUALQUE  reduce using rule 36 (expression -> expression RESTA term .)
+    EQUIVALENTE     reduce using rule 36 (expression -> expression RESTA term .)
+    DIFERENTE       reduce using rule 36 (expression -> expression RESTA term .)
+    LLAVEIZ         reduce using rule 36 (expression -> expression RESTA term .)
+    RPAREN          reduce using rule 36 (expression -> expression RESTA term .)
+    LLAVEDE         reduce using rule 36 (expression -> expression RESTA term .)
+    PUNTOCOMA       reduce using rule 36 (expression -> expression RESTA term .)
+    MULTI           shift and go to state 22
+    DIVIDE          shift and go to state 23
 
 
 state 36
 
-    (5) asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression .
-    (13) expression -> expression . MAS term
-    (14) expression -> expression . RESTA term
+    (16) condicional -> condicional ELSE LLAVEIZ . golang LLAVEDE
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) asignacion -> . asignacionMate
+    (6) asignacion -> . asignacionOtros
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (15) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (16) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (29) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (7) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (8) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (9) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (10) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (11) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (12) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (17) tiposCondicion -> . IF
+    (18) tiposCondicion -> . ELSE IF
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
 
-    $end            reduce using rule 5 (asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression .)
-    MAS             shift and go to state 13
-    RESTA           shift and go to state 14
+    FOR             shift and go to state 11
+    VAR             shift and go to state 12
+    VARIABLE        shift and go to state 13
+    IF              shift and go to state 15
+    ELSE            shift and go to state 10
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    LPAREN          shift and go to state 18
 
+    condicional                    shift and go to state 4
+    golang                         shift and go to state 55
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    bucleFor                       shift and go to state 5
+    asignacionMate                 shift and go to state 6
+    asignacionOtros                shift and go to state 7
+    term                           shift and go to state 8
+    tiposCondicion                 shift and go to state 9
+    factor                         shift and go to state 14
 
 state 37
 
-    (8) asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros .
+    (38) term -> term MULTI factor .
 
-    $end            reduce using rule 8 (asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros .)
+    MULTI           reduce using rule 38 (term -> term MULTI factor .)
+    DIVIDE          reduce using rule 38 (term -> term MULTI factor .)
+    MAS             reduce using rule 38 (term -> term MULTI factor .)
+    RESTA           reduce using rule 38 (term -> term MULTI factor .)
+    $end            reduce using rule 38 (term -> term MULTI factor .)
+    MAYORQUE        reduce using rule 38 (term -> term MULTI factor .)
+    MENORQUE        reduce using rule 38 (term -> term MULTI factor .)
+    MAYOROIGUALQUE  reduce using rule 38 (term -> term MULTI factor .)
+    MENOROIGUALQUE  reduce using rule 38 (term -> term MULTI factor .)
+    EQUIVALENTE     reduce using rule 38 (term -> term MULTI factor .)
+    DIFERENTE       reduce using rule 38 (term -> term MULTI factor .)
+    LLAVEIZ         reduce using rule 38 (term -> term MULTI factor .)
+    RPAREN          reduce using rule 38 (term -> term MULTI factor .)
+    LLAVEDE         reduce using rule 38 (term -> term MULTI factor .)
+    PUNTOCOMA       reduce using rule 38 (term -> term MULTI factor .)
+
+
+state 38
+
+    (39) term -> term DIVIDE factor .
+
+    MULTI           reduce using rule 39 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 39 (term -> term DIVIDE factor .)
+    MAS             reduce using rule 39 (term -> term DIVIDE factor .)
+    RESTA           reduce using rule 39 (term -> term DIVIDE factor .)
+    $end            reduce using rule 39 (term -> term DIVIDE factor .)
+    MAYORQUE        reduce using rule 39 (term -> term DIVIDE factor .)
+    MENORQUE        reduce using rule 39 (term -> term DIVIDE factor .)
+    MAYOROIGUALQUE  reduce using rule 39 (term -> term DIVIDE factor .)
+    MENOROIGUALQUE  reduce using rule 39 (term -> term DIVIDE factor .)
+    EQUIVALENTE     reduce using rule 39 (term -> term DIVIDE factor .)
+    DIFERENTE       reduce using rule 39 (term -> term DIVIDE factor .)
+    LLAVEIZ         reduce using rule 39 (term -> term DIVIDE factor .)
+    RPAREN          reduce using rule 39 (term -> term DIVIDE factor .)
+    LLAVEDE         reduce using rule 39 (term -> term DIVIDE factor .)
+    PUNTOCOMA       reduce using rule 39 (term -> term DIVIDE factor .)
+
+
+state 39
+
+    (15) condicional -> tiposCondicion condicion LLAVEIZ . golang LLAVEDE
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) asignacion -> . asignacionMate
+    (6) asignacion -> . asignacionOtros
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (15) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (16) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (29) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (7) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (8) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (9) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (10) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (11) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (12) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (17) tiposCondicion -> . IF
+    (18) tiposCondicion -> . ELSE IF
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
+
+    FOR             shift and go to state 11
+    VAR             shift and go to state 12
+    VARIABLE        shift and go to state 13
+    IF              shift and go to state 15
+    ELSE            shift and go to state 10
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    LPAREN          shift and go to state 18
+
+    tiposCondicion                 shift and go to state 9
+    golang                         shift and go to state 56
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    condicional                    shift and go to state 4
+    bucleFor                       shift and go to state 5
+    asignacionMate                 shift and go to state 6
+    asignacionOtros                shift and go to state 7
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
+
+state 40
+
+    (22) condicion -> expression comparadores . condicion
+    (19) condicion -> . expression
+    (20) condicion -> . LPAREN expression comparadores expression RPAREN
+    (21) condicion -> . LPAREN expression comparadores expression RPAREN comparadores condicion
+    (22) condicion -> . expression comparadores condicion
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
+
+    LPAREN          shift and go to state 26
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+
+    expression                     shift and go to state 25
+    condicion                      shift and go to state 57
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
+
+state 41
+
+    (23) comparadores -> MAYORQUE .
+
+    LPAREN          reduce using rule 23 (comparadores -> MAYORQUE .)
+    NUMBER          reduce using rule 23 (comparadores -> MAYORQUE .)
+    FLOTANTE        reduce using rule 23 (comparadores -> MAYORQUE .)
+    VARIABLE        reduce using rule 23 (comparadores -> MAYORQUE .)
+
+
+state 42
+
+    (24) comparadores -> MENORQUE .
+
+    LPAREN          reduce using rule 24 (comparadores -> MENORQUE .)
+    NUMBER          reduce using rule 24 (comparadores -> MENORQUE .)
+    FLOTANTE        reduce using rule 24 (comparadores -> MENORQUE .)
+    VARIABLE        reduce using rule 24 (comparadores -> MENORQUE .)
+
+
+state 43
+
+    (25) comparadores -> MAYOROIGUALQUE .
+
+    LPAREN          reduce using rule 25 (comparadores -> MAYOROIGUALQUE .)
+    NUMBER          reduce using rule 25 (comparadores -> MAYOROIGUALQUE .)
+    FLOTANTE        reduce using rule 25 (comparadores -> MAYOROIGUALQUE .)
+    VARIABLE        reduce using rule 25 (comparadores -> MAYOROIGUALQUE .)
+
+
+state 44
+
+    (26) comparadores -> MENOROIGUALQUE .
+
+    LPAREN          reduce using rule 26 (comparadores -> MENOROIGUALQUE .)
+    NUMBER          reduce using rule 26 (comparadores -> MENOROIGUALQUE .)
+    FLOTANTE        reduce using rule 26 (comparadores -> MENOROIGUALQUE .)
+    VARIABLE        reduce using rule 26 (comparadores -> MENOROIGUALQUE .)
+
+
+state 45
+
+    (27) comparadores -> EQUIVALENTE .
+
+    LPAREN          reduce using rule 27 (comparadores -> EQUIVALENTE .)
+    NUMBER          reduce using rule 27 (comparadores -> EQUIVALENTE .)
+    FLOTANTE        reduce using rule 27 (comparadores -> EQUIVALENTE .)
+    VARIABLE        reduce using rule 27 (comparadores -> EQUIVALENTE .)
+
+
+state 46
+
+    (28) comparadores -> DIFERENTE .
+
+    LPAREN          reduce using rule 28 (comparadores -> DIFERENTE .)
+    NUMBER          reduce using rule 28 (comparadores -> DIFERENTE .)
+    FLOTANTE        reduce using rule 28 (comparadores -> DIFERENTE .)
+    VARIABLE        reduce using rule 28 (comparadores -> DIFERENTE .)
+
+
+state 47
+
+    (20) condicion -> LPAREN expression . comparadores expression RPAREN
+    (21) condicion -> LPAREN expression . comparadores expression RPAREN comparadores condicion
+    (44) factor -> LPAREN expression . RPAREN
+    (35) expression -> expression . MAS term
+    (36) expression -> expression . RESTA term
+    (23) comparadores -> . MAYORQUE
+    (24) comparadores -> . MENORQUE
+    (25) comparadores -> . MAYOROIGUALQUE
+    (26) comparadores -> . MENOROIGUALQUE
+    (27) comparadores -> . EQUIVALENTE
+    (28) comparadores -> . DIFERENTE
+
+    RPAREN          shift and go to state 54
+    MAS             shift and go to state 19
+    RESTA           shift and go to state 20
+    MAYORQUE        shift and go to state 41
+    MENORQUE        shift and go to state 42
+    MAYOROIGUALQUE  shift and go to state 43
+    MENOROIGUALQUE  shift and go to state 44
+    EQUIVALENTE     shift and go to state 45
+    DIFERENTE       shift and go to state 46
+
+    comparadores                   shift and go to state 58
+
+state 48
+
+    (29) bucleFor -> FOR asignacionFOR condicionFOR . updateFOR LLAVEIZ golang LLAVEDE
+    (32) updateFOR -> . VARIABLE incrementoDecremento
+
+    VARIABLE        shift and go to state 60
+
+    updateFOR                      shift and go to state 59
+
+state 49
+
+    (31) condicionFOR -> VARIABLE . comparadores expression PUNTOCOMA
+    (23) comparadores -> . MAYORQUE
+    (24) comparadores -> . MENORQUE
+    (25) comparadores -> . MAYOROIGUALQUE
+    (26) comparadores -> . MENOROIGUALQUE
+    (27) comparadores -> . EQUIVALENTE
+    (28) comparadores -> . DIFERENTE
+
+    MAYORQUE        shift and go to state 41
+    MENORQUE        shift and go to state 42
+    MAYOROIGUALQUE  shift and go to state 43
+    MENOROIGUALQUE  shift and go to state 44
+    EQUIVALENTE     shift and go to state 45
+    DIFERENTE       shift and go to state 46
+
+    comparadores                   shift and go to state 61
+
+state 50
+
+    (30) asignacionFOR -> VARIABLE DOSPUNTOS . ASIGNADOR expression PUNTOCOMA
+
+    ASIGNADOR       shift and go to state 62
+
+
+state 51
+
+    (7) asignacionMate -> VAR VARIABLE TIPODATOS . ASIGNADOR expression
+    (10) asignacionOtros -> VAR VARIABLE TIPODATOS . ASIGNADOR valoresOtros
+
+    ASIGNADOR       shift and go to state 63
+
+
+state 52
+
+    (9) asignacionMate -> VAR VARIABLE ASIGNADOR . expression
+    (12) asignacionOtros -> VAR VARIABLE ASIGNADOR . valoresOtros
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (13) valoresOtros -> . STRING
+    (14) valoresOtros -> . BOOLEAN
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
+
+    STRING          shift and go to state 66
+    BOOLEAN         shift and go to state 67
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 64
+    valoresOtros                   shift and go to state 65
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
+
+state 53
+
+    (8) asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR . expression
+    (11) asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR . valoresOtros
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (13) valoresOtros -> . STRING
+    (14) valoresOtros -> . BOOLEAN
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
+
+    STRING          shift and go to state 66
+    BOOLEAN         shift and go to state 67
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 68
+    valoresOtros                   shift and go to state 69
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
+
+state 54
+
+    (44) factor -> LPAREN expression RPAREN .
+
+    MULTI           reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    MAS             reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    RESTA           reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    $end            reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    MAYORQUE        reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    MENORQUE        reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    MAYOROIGUALQUE  reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    MENOROIGUALQUE  reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    EQUIVALENTE     reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    DIFERENTE       reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    LLAVEIZ         reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    LLAVEDE         reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+    PUNTOCOMA       reduce using rule 44 (factor -> LPAREN expression RPAREN .)
+
+
+state 55
+
+    (16) condicional -> condicional ELSE LLAVEIZ golang . LLAVEDE
+
+    LLAVEDE         shift and go to state 70
+
+
+state 56
+
+    (15) condicional -> tiposCondicion condicion LLAVEIZ golang . LLAVEDE
+
+    LLAVEDE         shift and go to state 71
+
+
+state 57
+
+    (22) condicion -> expression comparadores condicion .
+
+    LLAVEIZ         reduce using rule 22 (condicion -> expression comparadores condicion .)
+
+
+state 58
+
+    (20) condicion -> LPAREN expression comparadores . expression RPAREN
+    (21) condicion -> LPAREN expression comparadores . expression RPAREN comparadores condicion
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 72
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
+
+state 59
+
+    (29) bucleFor -> FOR asignacionFOR condicionFOR updateFOR . LLAVEIZ golang LLAVEDE
+
+    LLAVEIZ         shift and go to state 73
+
+
+state 60
+
+    (32) updateFOR -> VARIABLE . incrementoDecremento
+    (33) incrementoDecremento -> . INCREMENTO
+    (34) incrementoDecremento -> . DECREMENTO
+
+    INCREMENTO      shift and go to state 75
+    DECREMENTO      shift and go to state 76
+
+    incrementoDecremento           shift and go to state 74
+
+state 61
+
+    (31) condicionFOR -> VARIABLE comparadores . expression PUNTOCOMA
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 77
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
+
+state 62
+
+    (30) asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR . expression PUNTOCOMA
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 78
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
+
+state 63
+
+    (7) asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR . expression
+    (10) asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR . valoresOtros
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (13) valoresOtros -> . STRING
+    (14) valoresOtros -> . BOOLEAN
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
+
+    STRING          shift and go to state 66
+    BOOLEAN         shift and go to state 67
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 79
+    valoresOtros                   shift and go to state 80
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
+
+state 64
+
+    (9) asignacionMate -> VAR VARIABLE ASIGNADOR expression .
+    (35) expression -> expression . MAS term
+    (36) expression -> expression . RESTA term
+
+    $end            reduce using rule 9 (asignacionMate -> VAR VARIABLE ASIGNADOR expression .)
+    LLAVEDE         reduce using rule 9 (asignacionMate -> VAR VARIABLE ASIGNADOR expression .)
+    MAS             shift and go to state 19
+    RESTA           shift and go to state 20
+
+
+state 65
+
+    (12) asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros .
+
+    $end            reduce using rule 12 (asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros .)
+    LLAVEDE         reduce using rule 12 (asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros .)
+
+
+state 66
+
+    (13) valoresOtros -> STRING .
+
+    $end            reduce using rule 13 (valoresOtros -> STRING .)
+    LLAVEDE         reduce using rule 13 (valoresOtros -> STRING .)
+
+
+state 67
+
+    (14) valoresOtros -> BOOLEAN .
+
+    $end            reduce using rule 14 (valoresOtros -> BOOLEAN .)
+    LLAVEDE         reduce using rule 14 (valoresOtros -> BOOLEAN .)
+
+
+state 68
+
+    (8) asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression .
+    (35) expression -> expression . MAS term
+    (36) expression -> expression . RESTA term
+
+    $end            reduce using rule 8 (asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression .)
+    LLAVEDE         reduce using rule 8 (asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression .)
+    MAS             shift and go to state 19
+    RESTA           shift and go to state 20
+
+
+state 69
+
+    (11) asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros .
+
+    $end            reduce using rule 11 (asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros .)
+    LLAVEDE         reduce using rule 11 (asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros .)
+
+
+state 70
+
+    (16) condicional -> condicional ELSE LLAVEIZ golang LLAVEDE .
+
+    ELSE            reduce using rule 16 (condicional -> condicional ELSE LLAVEIZ golang LLAVEDE .)
+    $end            reduce using rule 16 (condicional -> condicional ELSE LLAVEIZ golang LLAVEDE .)
+    LLAVEDE         reduce using rule 16 (condicional -> condicional ELSE LLAVEIZ golang LLAVEDE .)
+
+
+state 71
+
+    (15) condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE .
+
+    ELSE            reduce using rule 15 (condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE .)
+    $end            reduce using rule 15 (condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE .)
+    LLAVEDE         reduce using rule 15 (condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE .)
+
+
+state 72
+
+    (20) condicion -> LPAREN expression comparadores expression . RPAREN
+    (21) condicion -> LPAREN expression comparadores expression . RPAREN comparadores condicion
+    (35) expression -> expression . MAS term
+    (36) expression -> expression . RESTA term
+
+    RPAREN          shift and go to state 81
+    MAS             shift and go to state 19
+    RESTA           shift and go to state 20
+
+
+state 73
+
+    (29) bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ . golang LLAVEDE
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) asignacion -> . asignacionMate
+    (6) asignacion -> . asignacionOtros
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (15) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (16) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (29) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (7) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (8) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (9) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (10) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (11) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (12) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (17) tiposCondicion -> . IF
+    (18) tiposCondicion -> . ELSE IF
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
+
+    FOR             shift and go to state 11
+    VAR             shift and go to state 12
+    VARIABLE        shift and go to state 13
+    IF              shift and go to state 15
+    ELSE            shift and go to state 10
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    LPAREN          shift and go to state 18
+
+    golang                         shift and go to state 82
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    condicional                    shift and go to state 4
+    bucleFor                       shift and go to state 5
+    asignacionMate                 shift and go to state 6
+    asignacionOtros                shift and go to state 7
+    term                           shift and go to state 8
+    tiposCondicion                 shift and go to state 9
+    factor                         shift and go to state 14
+
+state 74
+
+    (32) updateFOR -> VARIABLE incrementoDecremento .
+
+    LLAVEIZ         reduce using rule 32 (updateFOR -> VARIABLE incrementoDecremento .)
+
+
+state 75
+
+    (33) incrementoDecremento -> INCREMENTO .
+
+    LLAVEIZ         reduce using rule 33 (incrementoDecremento -> INCREMENTO .)
+
+
+state 76
+
+    (34) incrementoDecremento -> DECREMENTO .
+
+    LLAVEIZ         reduce using rule 34 (incrementoDecremento -> DECREMENTO .)
+
+
+state 77
+
+    (31) condicionFOR -> VARIABLE comparadores expression . PUNTOCOMA
+    (35) expression -> expression . MAS term
+    (36) expression -> expression . RESTA term
+
+    PUNTOCOMA       shift and go to state 83
+    MAS             shift and go to state 19
+    RESTA           shift and go to state 20
+
+
+state 78
+
+    (30) asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR expression . PUNTOCOMA
+    (35) expression -> expression . MAS term
+    (36) expression -> expression . RESTA term
+
+    PUNTOCOMA       shift and go to state 84
+    MAS             shift and go to state 19
+    RESTA           shift and go to state 20
+
+
+state 79
+
+    (7) asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression .
+    (35) expression -> expression . MAS term
+    (36) expression -> expression . RESTA term
+
+    $end            reduce using rule 7 (asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression .)
+    LLAVEDE         reduce using rule 7 (asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression .)
+    MAS             shift and go to state 19
+    RESTA           shift and go to state 20
+
+
+state 80
+
+    (10) asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros .
+
+    $end            reduce using rule 10 (asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros .)
+    LLAVEDE         reduce using rule 10 (asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros .)
+
+
+state 81
+
+    (20) condicion -> LPAREN expression comparadores expression RPAREN .
+    (21) condicion -> LPAREN expression comparadores expression RPAREN . comparadores condicion
+    (23) comparadores -> . MAYORQUE
+    (24) comparadores -> . MENORQUE
+    (25) comparadores -> . MAYOROIGUALQUE
+    (26) comparadores -> . MENOROIGUALQUE
+    (27) comparadores -> . EQUIVALENTE
+    (28) comparadores -> . DIFERENTE
+
+    LLAVEIZ         reduce using rule 20 (condicion -> LPAREN expression comparadores expression RPAREN .)
+    MAYORQUE        shift and go to state 41
+    MENORQUE        shift and go to state 42
+    MAYOROIGUALQUE  shift and go to state 43
+    MENOROIGUALQUE  shift and go to state 44
+    EQUIVALENTE     shift and go to state 45
+    DIFERENTE       shift and go to state 46
+
+    comparadores                   shift and go to state 85
+
+state 82
+
+    (29) bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang . LLAVEDE
+
+    LLAVEDE         shift and go to state 86
+
+
+state 83
+
+    (31) condicionFOR -> VARIABLE comparadores expression PUNTOCOMA .
+
+    VARIABLE        reduce using rule 31 (condicionFOR -> VARIABLE comparadores expression PUNTOCOMA .)
+
+
+state 84
+
+    (30) asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA .
+
+    VARIABLE        reduce using rule 30 (asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA .)
+
+
+state 85
+
+    (21) condicion -> LPAREN expression comparadores expression RPAREN comparadores . condicion
+    (19) condicion -> . expression
+    (20) condicion -> . LPAREN expression comparadores expression RPAREN
+    (21) condicion -> . LPAREN expression comparadores expression RPAREN comparadores condicion
+    (22) condicion -> . expression comparadores condicion
+    (35) expression -> . expression MAS term
+    (36) expression -> . expression RESTA term
+    (37) expression -> . term
+    (38) term -> . term MULTI factor
+    (39) term -> . term DIVIDE factor
+    (40) term -> . factor
+    (41) factor -> . NUMBER
+    (42) factor -> . FLOTANTE
+    (43) factor -> . VARIABLE
+    (44) factor -> . LPAREN expression RPAREN
+
+    LPAREN          shift and go to state 26
+    NUMBER          shift and go to state 16
+    FLOTANTE        shift and go to state 17
+    VARIABLE        shift and go to state 27
+
+    expression                     shift and go to state 25
+    condicion                      shift and go to state 87
+    term                           shift and go to state 8
+    factor                         shift and go to state 14
+
+state 86
+
+    (29) bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE .
+
+    $end            reduce using rule 29 (bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE .)
+    LLAVEDE         reduce using rule 29 (bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE .)
+
+
+state 87
+
+    (21) condicion -> LPAREN expression comparadores expression RPAREN comparadores condicion .
+
+    LLAVEIZ         reduce using rule 21 (condicion -> LPAREN expression comparadores expression RPAREN comparadores condicion .)
 

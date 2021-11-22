@@ -6,8 +6,9 @@ from lexer import tokens
 def p_golang(p):
   ''' golang : asignacion 
               | expression
+              | condicional
+              | bucleFor
   '''
-
 
 def p_asignacion(p):
   ''' asignacion : asignacionMate
@@ -29,6 +30,53 @@ def p_valores_otros(p):
   ''' valoresOtros : STRING
                     | BOOLEAN
   '''
+## Todo condicionales
+def p_condicional(p):
+  ''' condicional : tiposCondicion condicion LLAVEIZ golang LLAVEDE 
+                  | condicional ELSE LLAVEIZ golang LLAVEDE
+
+  '''
+
+def p_tipos_condicion(p):
+  ''' tiposCondicion : IF
+                      | ELSE IF
+  '''
+
+def p_condicion(p):
+  ''' condicion : expression
+                | LPAREN expression comparadores expression RPAREN
+                | LPAREN expression comparadores expression RPAREN comparadores condicion
+                | expression comparadores condicion
+  '''
+
+def p_comparadores(p):
+  ''' comparadores : MAYORQUE
+                  | MENORQUE
+                  | MAYOROIGUALQUE
+                  | MENOROIGUALQUE
+                  | EQUIVALENTE
+                  | DIFERENTE
+  '''
+########################
+
+##### Todo FOR
+def p_bucle_for(p):
+  ' bucleFor : FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE'
+
+def p_asignacion_for(p):
+  ' asignacionFOR : VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA '
+
+def p_condicion_for(p):
+  ' condicionFOR : VARIABLE comparadores expression PUNTOCOMA '
+
+def p_update_for(p):
+  ' updateFOR : VARIABLE incrementoDecremento'
+
+def p_incrementos_decrementos(p):
+  ''' incrementoDecremento : INCREMENTO
+                            | DECREMENTO
+  '''
+###################
 
 def p_expression_plus(p):
   'expression : expression MAS term'
