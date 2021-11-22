@@ -65,7 +65,8 @@ tokens = (
   'MAYOROIGUALQUE',
   'MENOROIGUALQUE',
   'FLOTANTEI',
-  'STRING'
+  'STRING',
+  'DOSPUNTOS'
  # Ricardo Zevallos
 ) + tuple(reserved.values())
  
@@ -87,6 +88,7 @@ t_LLAVEDE = r'\}'
 t_COMILLASDOBLES = r'\"'
 t_INCREMENTO = r'\+\+'
 t_DECREMENTO = r'\-\-'
+t_DOSPUNTOS = r':'
 # William Venegas
 #t_VARIABLE = r'[a-z]+'
 
