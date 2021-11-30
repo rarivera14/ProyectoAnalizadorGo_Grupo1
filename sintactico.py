@@ -15,6 +15,8 @@ def p_golang(p):
               | metodosPropiedadesArray
               | print
               | switch
+              | map
+              | metodosPropiedadesMap
   '''
 
 def p_asignacion(p):
@@ -114,6 +116,38 @@ def p_valores_posibles(p):
                       | FLOTANTE
                       | VARIABLE
   '''
+
+######## Todo Maps
+def p_map(p):
+  ''' map : mapMake
+            | mapnoMake
+  '''
+
+def p_map_Make(p):
+  ' mapMake : VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN'
+
+def p_map_noMake(p):
+  ' mapnoMake : VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE'
+
+def p_map_elementos(p):
+  ''' mapElementos : valoresPosibles DOSPUNTOS valoresPosibles
+                      | valoresPosibles DOSPUNTOS valoresPosibles COMA mapElementos
+  '''
+
+####### METODOS MAP
+def p_metodos_propiedades_map(p):
+  ''' metodosPropiedadesMap : mapAppend
+                              | mapDelete
+   '''
+
+def p_append_map(p):
+  ' mapAppend : CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles'
+
+def p_delete_map(p):
+  ' mapDelete : DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN'
+
+
+
 ######## Todo condicionales
 def p_condicional(p):
   ''' condicional : tiposCondicion condicion LLAVEIZ golang LLAVEDE 

@@ -79,7 +79,9 @@ tokens = (
   'TIPODATOS',
    'PRINT',
     'PRINTLN',
-    'PRINTF'
+    'PRINTF',
+    'DELETE',
+    'MAKE'
 
  # Ricardo Zevallos
 ) + tuple(reserved.values())
@@ -124,6 +126,15 @@ t_ASIGNADORSUM = r'\+='
 t_ASIGNADORRESTA = r'-='
 t_ASIGNADORMULT = r'\*='
 t_ASIGNADORDIV = r'/='
+
+
+def t_MAKE(t):
+    r'make'
+    return t
+
+def t_DELETE(t):
+    r'delete'
+    return t
 
 def t_PRINTLN(t):
     r'fmt.Println'
