@@ -146,7 +146,49 @@ def p_append_map(p):
 def p_delete_map(p):
   ' mapDelete : DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN'
 
+#Contribucion Ricardo Rivera: Slice ##############################
 
+####### Todo Slice
+def p_slice(p):
+  ''' slice : sliceNoInit
+            | sliceInit
+  '''
+def p_slice_noinit(p):
+  ' sliceNoInit : VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS'
+
+def p_slice_init(p): 
+  ' sliceInit : VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ sliceElementos LLAVEDE'
+
+def p_slice_elementos(p):
+  ''' sliceElementos : valoresPosibles
+                      | valoresPosibles COMA valoresPosibles '''
+
+######## Meotodos slice
+
+def p_metodos_propiedades_slice(p):
+  ''' metodosPropiedadesSlice : slice
+                              | remove
+                              | sliceAsignacion
+   '''
+
+def p_remove_slice(p):
+  ' remove : VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN'
+
+def p_sliceasignacion_slice(p):
+  ' sliceAsignacion : slice ASIGNADOR valoresPosibles'
+
+def p_slice_slice(p):
+  ' slice : VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER'
+
+def p_valores_posibles(p):
+  ''' valoresPosibles : NUMBER
+                      | BOOLEAN
+                      | STRING
+                      | FLOTANTE
+                      | VARIABLE
+  '''
+
+#Fin de contribucion Ricardo Rivera: Slice ##############################
 
 ######## Todo condicionales
 def p_condicional(p):
