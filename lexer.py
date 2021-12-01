@@ -185,7 +185,7 @@ t_ignore = ' \t'
 
 def t_error(t):
     print("Componente léxico no reconocido '%s'" % t.value[0])
-    t.lexer.skip(1)
+    raise ValueError("Componente léxico no reconocido '%s' en la línea %d" % (t.value[0],t.lexer.lineno))
 
 
 def menu():

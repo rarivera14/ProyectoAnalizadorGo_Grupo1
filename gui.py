@@ -80,29 +80,36 @@ class MainWindow(QMainWindow):
     
     def clickLexer(self):
         self.qlabel.clear()
-        l_token = ejecutarLexer(self.qline.toPlainText())
-        if len(l_token) > 0:
-            self.qlabel.insertPlainText("FORMATO: {:5} ---> {:5}\n\n".format("VALOR", "TOKEN"))
-            for tok in l_token:
-                self.qlabel.insertPlainText("{:5} ---> {:5}".format(tok.value, tok.type))
-                self.qlabel.insertPlainText("\n")
-        self.qlabel.insertPlainText("\n")
-
-    def clickSubirArchivo(self):
-        file, _ = QFileDialog.getOpenFileName(self, 'Buscar Archivo', os.getcwd(), "Text Files (*.go)")
-        if file:
-            text = "Archivo seleccionado: " + str(file)
-            self.qlabel.insertPlainText(text + '\n\n')
-            contenido_archivo = open(file, 'r').read()
-            l_token = ejecutarLexer(contenido_archivo)
+        try:
+            l_token = ejecutarLexer(self.qline.toPlainText())
             if len(l_token) > 0:
                 self.qlabel.insertPlainText("FORMATO: {:5} ---> {:5}\n\n".format("VALOR", "TOKEN"))
                 for tok in l_token:
                     self.qlabel.insertPlainText("{:5} ---> {:5}".format(tok.value, tok.type))
                     self.qlabel.insertPlainText("\n")
-            self.qlabel.insertPlainText("\n")
+        except ValueError as e:
+            self.qlabel.insertPlainText(str(e))
         self.qlabel.insertPlainText("\n")
-        
+
+    def clickSubirArchivo(self):
+        try:
+            file, _ = QFileDialog.getOpenFileName(self, 'Buscar Archivo', os.getcwd(), "Text Files (*.go)")
+            if file:
+                text = "Archivo seleccionado: " + str(file)
+                self.qlabel.insertPlainText(text + '\n\n')
+                contenido_archivo = open(file, 'r').read()
+                l_token = ejecutarLexer(contenido_archivo)
+                print(l_token)
+                if len(l_token) > 0:
+                    self.qlabel.insertPlainText("FORMATO: {:5} ---> {:5}\n\n".format("VALOR", "TOKEN"))
+                    for tok in l_token:
+                        self.qlabel.insertPlainText("{:5} ---> {:5}".format(tok.value, tok.type))
+                        self.qlabel.insertPlainText("\n")
+                self.qlabel.insertPlainText("\n")
+        except ValueError as e:
+            self.qlabel.insertPlainText(str(e))
+        self.qlabel.insertPlainText("\n")
+
 #---------- Funcion principal
 if __name__ == '__main__':
     import sys

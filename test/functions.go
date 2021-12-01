@@ -20,6 +20,7 @@ func main() {
 	fmt.Print("Write your name: ")
 	fmt.Print("Write your lastname: ")
 	greet(name, lastname)
+	scan(&name)
 	var number int
 	fmt.Println("-------------- Second part --------------")
 	fmt.Print("Enter a number: ")
