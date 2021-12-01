@@ -2,10 +2,9 @@ from PyQt5 import QtCore, QtGui
 from PyQt5.QtCore import Qt, pyqtSlot
 from lexer import *
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QMainWindow, QLineEdit, QPushButton, QTextEdit, \
-    QPlainTextEdit, QVBoxLayout, QFileDialog
+    QPlainTextEdit, QVBoxLayout, QFileDialog, QTreeView
 import sys
-#from parser import *
-#from analizadorLex import error
+import os
 
 #------- William Venegas
 class MainWindow(QMainWindow):
@@ -59,7 +58,7 @@ class MainWindow(QMainWindow):
         self.fileButton = QPushButton(self)
         self.fileButton.resize(100, 32)
         self.fileButton.move(10, 220)
-        #self.fileButton.clicked.connect(self.click_file)
+        self.fileButton.clicked.connect(self.clickSubirArchivo)
         self.fileButton.setStyleSheet('background-color: #9ED36A')
         self.fileButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.fileButton.setText('Elija el archivo')
@@ -89,6 +88,21 @@ class MainWindow(QMainWindow):
                 self.qlabel.insertPlainText("\n")
         self.qlabel.insertPlainText("\n")
 
+    def clickSubirArchivo(self):
+        file, _ = QFileDialog.getOpenFileName(self, 'Buscar Archivo', os.getcwd(), "Text Files (*.go)")
+        if file:
+            text = "Archivo seleccionado: " + str(file)
+            self.qlabel.insertPlainText(text + '\n\n')
+            contenido_archivo = open(file, 'r').read()
+            l_token = ejecutarLexer(contenido_archivo)
+            if len(l_token) > 0:
+                self.qlabel.insertPlainText("FORMATO: {:5} ---> {:5}\n\n".format("VALOR", "TOKEN"))
+                for tok in l_token:
+                    self.qlabel.insertPlainText("{:5} ---> {:5}".format(tok.value, tok.type))
+                    self.qlabel.insertPlainText("\n")
+            self.qlabel.insertPlainText("\n")
+        self.qlabel.insertPlainText("\n")
+        
 #---------- Funcion principal
 if __name__ == '__main__':
     import sys
