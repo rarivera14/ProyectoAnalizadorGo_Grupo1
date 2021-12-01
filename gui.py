@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtCore import Qt, pyqtSlot
+from lexer import *
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QMainWindow, QLineEdit, QPushButton, QTextEdit, \
     QPlainTextEdit, QVBoxLayout, QFileDialog
 import sys
@@ -53,7 +54,7 @@ class MainWindow(QMainWindow):
         self.compileButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         
 
-        #self.compileButton.clicked.connect(self.click_compile)
+        self.compileButton.clicked.connect(self.clickLexer)
 
         self.fileButton = QPushButton(self)
         self.fileButton.resize(100, 32)
@@ -77,68 +78,16 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Go Compiler")
         self.setFixedSize(1000, 700)
-'''
-    def return_pressed(self):
-        self.centralWidget().setText(self.centralWidget().selectedText() + "\"")
-
-    def selection_changed(self):
-        print("Selection changed")
-        print(self.centralWidget().selectedText())
-
-    def text_changed(self, s):
-        print("Text changed...")
-        print(s)
-
-    def text_edited(self, s):
-        print("Text edited...")
-        print(s)
-
-    def click_compile(self):
-        analizador = AnalizadorLexico()
-        analizador.build()
-        tokns = analizador.tokenizer(self.qline.toPlainText())
-        if (len(tokns) > 0):
-            text = 'Los tokens son validos!' + "\n"
-            for token in tokns:
-                text += str(token) + "\n"
-            self.qlabel.clear()
-            self.qlabel.insertPlainText(text)
-            parser = yacc.yacc()
-            code = self.qline.toPlainText()
-            resultado = parser.parse(code)
-            if resultado is not None:
-                self.qlabelResult.clear()
-                self.qlabelResult.insertPlainText(str(resultado))
-            else:
-                self.qlabelResult.clear()
-                self.qlabelResult.insertPlainText("Not Ruby languaje")
-                self.qlabel.insertPlainText(error)
-        else:
-            text = 'Caracter no reconocido!'
-            for token in tokns:
-                text+= str(tokns)+"\n"
-            self.qlabel.clear()
-            self.qlabel.insertPlainText(text)
-
-
-
-    def click_file(self):
-        options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "",
-                                                  "All Files (*);;Python Files (*.py)", options=options)
-        if fileName:
-            archivo_prueba = open('test.rb', 'r').read()
-            analizador = AnalizadorLexico()
-            analizador.build()
-            tokns = analizador.tokenizer(archivo_prueba)
-            if(len(tokns)>0):
-                text = 'Los tokens son validos!' + "\n"
-                for token in tokns:
-                    text += str(token) + "\n"
-                self.qlabel.clear()
-                self.qlabel.insertPlainText(text)
-'''
+    
+    def clickLexer(self):
+        self.qlabel.clear()
+        l_token = ejecutarLexer(self.qline.toPlainText())
+        if len(l_token) > 0:
+            self.qlabel.insertPlainText("FORMATO: {:5} ---> {:5}\n\n".format("VALOR", "TOKEN"))
+            for tok in l_token:
+                self.qlabel.insertPlainText("{:5} ---> {:5}".format(tok.value, tok.type))
+                self.qlabel.insertPlainText("\n")
+        self.qlabel.insertPlainText("\n")
 
 #---------- Funcion principal
 if __name__ == '__main__':

@@ -232,12 +232,22 @@ def test(opcion):
             break  # No more input
         print(tok)
 
+def ejecutarLexer(data):
+    l_token = []
+    lexer.input(data)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        l_token.append(tok)
+    return l_token
 
-if __name__ == '_main_':
-    # Principal
-    opcion = 0
-    while opcion != 3:
-        menu()
-        opcion = int(input("Ingrese una opción: "))
-        test(opcion)
+
+# if __name__ == '_main_':
+#     # Principal
+#     opcion = 0
+#     while opcion != 3:
+#         menu()
+#         opcion = int(input("Ingrese una opción: "))
+#         test(opcion)
     
