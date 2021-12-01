@@ -16,7 +16,9 @@ def p_golang(p):
               | print
               | switch
               | map
-              | metodosPropiedadesMap
+              | metodosPropiedadesMap 
+              | mat_semantica_menos 
+              | mat_semantica_multi
   '''
 
 def p_asignacion(p):
@@ -344,8 +346,23 @@ def p_casos(p):
 
 
 
-#######################
+##---WILLIAM VENEGAS
 
+def p_mat_semantica_plus(p):
+  'mat_semantica_plus : NUMBER MAS NUMBER'
+  p[0] = int(p[1]) + int(p[3]) 
+  print(p[0])
+
+def p_mat_semantica_menos(p):
+  'mat_semantica_menos : NUMBER MAS NUMBER'
+  p[0] = int(p[1]) - int(p[3]) 
+  print(p[0])
+
+def p_mat_semantica_multi(p):
+  'mat_semantica_multi : NUMBER MAS NUMBER'
+  p[0] = int(p[1]) * int(p[3]) 
+  print(p[0])
+######################
 
 def p_expression_plus(p):
     'expression : expression MAS term'
@@ -387,15 +404,18 @@ def p_factor_expr(p):
 # Funcion de error
 def p_error(p):
     print("Error de sintaxis!")
+    raise ValueError("Error de sintaxis!")
 
 
 parser = yacc.yacc()
-
-while True:
+def p_ejecutar_sintactico(data):
+  while True:
     try:
-        s = input('go > ')
+        s = data
     except EOFError:
         break
     if not s: continue
     result = parser.parse(s)
-    print(result)
+    return result
+  
+
