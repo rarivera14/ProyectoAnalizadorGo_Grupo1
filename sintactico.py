@@ -190,15 +190,6 @@ def p_metodos_propiedades_slice(p):
                               | sliceAsignacion
    '''
 
-def p_remove_slice(p):
-  ' remove : VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN'
-
-def p_sliceasignacion_slice(p):
-  ' sliceAsignacion : slice ASIGNADOR valoresPosibles'
-
-def p_slice_slice(p):
-  ' slice : VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER'
-
 def p_valores_posibles(p):
   ''' valoresPosibles : NUMBER
                       | BOOLEAN
