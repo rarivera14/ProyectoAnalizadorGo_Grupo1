@@ -22,6 +22,7 @@ def p_golang(p):
 def p_asignacion(p):
     ''' asignacion : asignacionMate
                   | asignacionOtros
+
   '''
 
 
@@ -35,7 +36,25 @@ def p_asignacion_otros(p):
     ''' asignacionOtros : VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
                      | VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
                      | VAR VARIABLE ASIGNADOR valoresOtros
+                     | asignacionSuma
+                     | asignacionResta
+                     | asignacionMult
+                     | asignacionDiv
+
   '''
+
+
+def p_asignacion_suma(p):
+    ' asignacionSuma : VARIABLE ASIGNADORSUM expression'
+
+def p_asignacion_resta(p):
+    ' asignacionResta : VARIABLE ASIGNADORRESTA expression'
+
+def p_asignacion_mult(p):
+    ' asignacionMult : VARIABLE ASIGNADORMULT expression'
+
+def p_asignacion_div(p):
+    ' asignacionDiv : VARIABLE ASIGNADORDIV expression'
 
 def p_asignacion_corta(p):
   ' asigacionCorta : DOSPUNTOS ASIGNADOR'

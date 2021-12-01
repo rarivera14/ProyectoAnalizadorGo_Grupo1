@@ -1,1 +1,3847 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    BACKTICK
+    BREAK
+    CHAN
+    COMILLASDOBLES
+    CONST
+    CONTINUE
+    DEFAULT
+    DEFER
+    FALLTHROUGH
+    FLOTANTEI
+    GO
+    GOTO
+    ID
+    INTERFACE
+    MODULO
+    RANGE
+    RETURN
+    SELECT
+    STRUCT
+    TYPE
+
+Grammar
+
+Rule 0     S' -> golang
+Rule 1     golang -> asignacion
+Rule 2     golang -> expression
+Rule 3     golang -> condicional
+Rule 4     golang -> bucleFor
+Rule 5     golang -> funcion
+Rule 6     golang -> imports
+Rule 7     golang -> array
+Rule 8     golang -> metodosPropiedadesArray
+Rule 9     golang -> print
+Rule 10    golang -> switch
+Rule 11    golang -> map
+Rule 12    golang -> metodosPropiedadesMap
+Rule 13    asignacion -> asignacionMate
+Rule 14    asignacion -> asignacionOtros
+Rule 15    asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression
+Rule 16    asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression
+Rule 17    asignacionMate -> VAR VARIABLE ASIGNADOR expression
+Rule 18    asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+Rule 19    asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+Rule 20    asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros
+Rule 21    asignacionOtros -> asignacionSuma
+Rule 22    asignacionOtros -> asignacionResta
+Rule 23    asignacionOtros -> asignacionMult
+Rule 24    asignacionOtros -> asignacionDiv
+Rule 25    asignacionSuma -> VARIABLE ASIGNADORSUM expression
+Rule 26    asignacionResta -> VARIABLE ASIGNADORRESTA expression
+Rule 27    asignacionMult -> VARIABLE ASIGNADORMULT expression
+Rule 28    asignacionDiv -> VARIABLE ASIGNADORDIV expression
+Rule 29    asigacionCorta -> DOSPUNTOS ASIGNADOR
+Rule 30    valoresOtros -> STRING
+Rule 31    valoresOtros -> BOOLEAN
+Rule 32    funcion -> FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE
+Rule 33    funcion -> FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+Rule 34    parametros -> valoresPosibles
+Rule 35    parametros -> VARIABLE TIPODATOS
+Rule 36    parametros -> VARIABLE TIPODATOS COMA parametros
+Rule 37    imports -> package
+Rule 38    imports -> import
+Rule 39    package -> PACKAGE VARIABLE
+Rule 40    import -> IMPORT variosImports
+Rule 41    import -> IMPORT LPAREN variosImports RPAREN
+Rule 42    variosImports -> STRING
+Rule 43    variosImports -> STRING variosImports
+Rule 44    array -> arrayNoInit
+Rule 45    array -> arrayInit
+Rule 46    arrayNoInit -> VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS
+Rule 47    arrayInit -> VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+Rule 48    arrayElementos -> valoresPosibles
+Rule 49    arrayElementos -> valoresPosibles COMA valoresPosibles
+Rule 50    metodosPropiedadesArray -> slice
+Rule 51    metodosPropiedadesArray -> remove
+Rule 52    metodosPropiedadesArray -> sliceAsignacion
+Rule 53    remove -> VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN
+Rule 54    sliceAsignacion -> slice ASIGNADOR valoresPosibles
+Rule 55    slice -> VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER
+Rule 56    valoresPosibles -> NUMBER
+Rule 57    valoresPosibles -> BOOLEAN
+Rule 58    valoresPosibles -> STRING
+Rule 59    valoresPosibles -> FLOTANTE
+Rule 60    valoresPosibles -> VARIABLE
+Rule 61    map -> mapMake
+Rule 62    map -> mapnoMake
+Rule 63    mapMake -> VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+Rule 64    mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+Rule 65    mapElementos -> valoresPosibles DOSPUNTOS valoresPosibles
+Rule 66    mapElementos -> valoresPosibles DOSPUNTOS valoresPosibles COMA mapElementos
+Rule 67    metodosPropiedadesMap -> mapAppend
+Rule 68    metodosPropiedadesMap -> mapDelete
+Rule 69    mapAppend -> CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles
+Rule 70    mapDelete -> DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN
+Rule 71    condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE
+Rule 72    condicional -> condicional ELSE LLAVEIZ golang LLAVEDE
+Rule 73    tiposCondicion -> IF
+Rule 74    tiposCondicion -> ELSE IF
+Rule 75    condicion -> expression
+Rule 76    condicion -> LPAREN expression comparadores expression RPAREN
+Rule 77    condicion -> LPAREN expression comparadores expression RPAREN comparadores condicion
+Rule 78    condicion -> expression comparadores condicion
+Rule 79    comparadores -> MAYORQUE
+Rule 80    comparadores -> MENORQUE
+Rule 81    comparadores -> MAYOROIGUALQUE
+Rule 82    comparadores -> MENOROIGUALQUE
+Rule 83    comparadores -> EQUIVALENTE
+Rule 84    comparadores -> DIFERENTE
+Rule 85    bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+Rule 86    asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA
+Rule 87    condicionFOR -> VARIABLE comparadores expression PUNTOCOMA
+Rule 88    updateFOR -> VARIABLE incrementoDecremento
+Rule 89    incrementoDecremento -> INCREMENTO
+Rule 90    incrementoDecremento -> DECREMENTO
+Rule 91    print -> PRINT LPAREN parametro RPAREN
+Rule 92    print -> PRINTLN LPAREN parametro RPAREN
+Rule 93    print -> PRINTF LPAREN parametro RPAREN
+Rule 94    parametro -> argumento
+Rule 95    parametro -> argumento COMA parametro
+Rule 96    argumento -> NUMBER
+Rule 97    argumento -> FLOTANTE
+Rule 98    argumento -> VARIABLE
+Rule 99    argumento -> STRING
+Rule 100   switch -> SWITCH argumento LLAVEIZ casos LLAVEDE
+Rule 101   casos -> CASE argumento DOSPUNTOS golang
+Rule 102   casos -> CASE argumento DOSPUNTOS golang casos
+Rule 103   expression -> expression MAS term
+Rule 104   expression -> expression RESTA term
+Rule 105   expression -> term
+Rule 106   term -> term MULTI factor
+Rule 107   term -> term DIVIDE factor
+Rule 108   term -> factor
+Rule 109   factor -> NUMBER
+Rule 110   factor -> FLOTANTE
+Rule 111   factor -> VARIABLE
+Rule 112   factor -> LPAREN expression RPAREN
+
+Terminals, with rules where they appear
+
+ASIGNADOR            : 15 16 17 18 19 20 29 54 69 86
+ASIGNADORDIV         : 28
+ASIGNADORMULT        : 27
+ASIGNADORRESTA       : 26
+ASIGNADORSUM         : 25
+BACKTICK             : 
+BOOLEAN              : 31 57
+BREAK                : 
+CASE                 : 101 102
+CHAN                 : 
+COMA                 : 36 49 66 70 95
+COMILLASDOBLES       : 
+CONST                : 
+CONTINUE             : 
+CORCHETEDER          : 46 47 55 63 64 69
+CORCHETEIZ           : 46 47 55 63 64 69
+DECREMENTO           : 90
+DEFAULT              : 
+DEFER                : 
+DELETE               : 70
+DIFERENTE            : 84
+DIVIDE               : 107
+DOSPUNTOS            : 16 19 29 65 66 86 101 102
+ELSE                 : 72 74
+EQUIVALENTE          : 83
+FALLTHROUGH          : 
+FLOTANTE             : 59 97 110
+FLOTANTEI            : 
+FOR                  : 85
+FUNCTION             : 32 33
+GO                   : 
+GOTO                 : 
+ID                   : 
+IF                   : 73 74
+IMPORT               : 40 41
+INCREMENTO           : 89
+INTERFACE            : 
+LLAVEDE              : 32 33 47 64 71 72 85 100
+LLAVEIZ              : 32 33 47 64 71 72 85 100
+LPAREN               : 32 33 41 53 63 70 76 77 91 92 93 112
+MAKE                 : 63
+MAP                  : 63 64
+MAS                  : 103
+MAYOROIGUALQUE       : 81
+MAYORQUE             : 79
+MENOROIGUALQUE       : 82
+MENORQUE             : 80
+MODULO               : 
+MULTI                : 106
+NUMBER               : 46 47 53 56 96 109
+PACKAGE              : 39
+PRINT                : 91
+PRINTF               : 93
+PRINTLN              : 92
+PUNTO                : 53
+PUNTOCOMA            : 86 87
+RANGE                : 
+REMOVE               : 53
+RESTA                : 104
+RETURN               : 
+RPAREN               : 32 33 41 53 63 70 76 77 91 92 93 112
+SELECT               : 
+STRING               : 30 42 43 58 99
+STRUCT               : 
+SWITCH               : 100
+TIPODATOS            : 15 18 35 36 46 47 63 63 64 64
+TYPE                 : 
+VAR                  : 15 17 18 20 46
+VARIABLE             : 15 16 17 18 19 20 25 26 27 28 32 33 35 36 39 46 47 53 55 60 63 64 70 86 87 88 98 111
+error                : 
+
+Nonterminals, with rules where they appear
+
+argumento            : 94 95 100 101 102
+array                : 7
+arrayElementos       : 47
+arrayInit            : 45
+arrayNoInit          : 44
+asigacionCorta       : 47 63 64
+asignacion           : 1
+asignacionDiv        : 24
+asignacionFOR        : 85
+asignacionMate       : 13
+asignacionMult       : 23
+asignacionOtros      : 14
+asignacionResta      : 22
+asignacionSuma       : 21
+bucleFor             : 4
+casos                : 100 102
+comparadores         : 76 77 77 78 87
+condicion            : 71 77 78
+condicionFOR         : 85
+condicional          : 3 72
+expression           : 2 15 16 17 25 26 27 28 75 76 76 77 77 78 86 87 103 104 112
+factor               : 106 107 108
+funcion              : 5
+golang               : 32 33 71 72 85 101 102 0
+import               : 38
+imports              : 6
+incrementoDecremento : 88
+map                  : 11
+mapAppend            : 67
+mapDelete            : 68
+mapElementos         : 64 66
+mapMake              : 61
+mapnoMake            : 62
+metodosPropiedadesArray : 8
+metodosPropiedadesMap : 12
+package              : 37
+parametro            : 91 92 93 95
+parametros           : 33 36
+print                : 9
+remove               : 51
+slice                : 50 54
+sliceAsignacion      : 52
+switch               : 10
+term                 : 103 104 105 106 107
+tiposCondicion       : 71
+updateFOR            : 85
+valoresOtros         : 18 19 20
+valoresPosibles      : 34 48 49 49 54 55 65 65 66 66 69 69 70
+variosImports        : 40 41 43
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . golang
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) golang -> . funcion
+    (6) golang -> . imports
+    (7) golang -> . array
+    (8) golang -> . metodosPropiedadesArray
+    (9) golang -> . print
+    (10) golang -> . switch
+    (11) golang -> . map
+    (12) golang -> . metodosPropiedadesMap
+    (13) asignacion -> . asignacionMate
+    (14) asignacion -> . asignacionOtros
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (71) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (72) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (85) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (32) funcion -> . FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE
+    (33) funcion -> . FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+    (37) imports -> . package
+    (38) imports -> . import
+    (44) array -> . arrayNoInit
+    (45) array -> . arrayInit
+    (50) metodosPropiedadesArray -> . slice
+    (51) metodosPropiedadesArray -> . remove
+    (52) metodosPropiedadesArray -> . sliceAsignacion
+    (91) print -> . PRINT LPAREN parametro RPAREN
+    (92) print -> . PRINTLN LPAREN parametro RPAREN
+    (93) print -> . PRINTF LPAREN parametro RPAREN
+    (100) switch -> . SWITCH argumento LLAVEIZ casos LLAVEDE
+    (61) map -> . mapMake
+    (62) map -> . mapnoMake
+    (67) metodosPropiedadesMap -> . mapAppend
+    (68) metodosPropiedadesMap -> . mapDelete
+    (15) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (16) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (17) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (18) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (19) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (20) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (21) asignacionOtros -> . asignacionSuma
+    (22) asignacionOtros -> . asignacionResta
+    (23) asignacionOtros -> . asignacionMult
+    (24) asignacionOtros -> . asignacionDiv
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (73) tiposCondicion -> . IF
+    (74) tiposCondicion -> . ELSE IF
+    (39) package -> . PACKAGE VARIABLE
+    (40) import -> . IMPORT variosImports
+    (41) import -> . IMPORT LPAREN variosImports RPAREN
+    (46) arrayNoInit -> . VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS
+    (47) arrayInit -> . VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+    (55) slice -> . VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER
+    (53) remove -> . VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN
+    (54) sliceAsignacion -> . slice ASIGNADOR valoresPosibles
+    (63) mapMake -> . VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+    (64) mapnoMake -> . VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+    (69) mapAppend -> . CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles
+    (70) mapDelete -> . DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN
+    (25) asignacionSuma -> . VARIABLE ASIGNADORSUM expression
+    (26) asignacionResta -> . VARIABLE ASIGNADORRESTA expression
+    (27) asignacionMult -> . VARIABLE ASIGNADORMULT expression
+    (28) asignacionDiv -> . VARIABLE ASIGNADORDIV expression
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    FOR             shift and go to state 19
+    FUNCTION        shift and go to state 20
+    PRINT           shift and go to state 30
+    PRINTLN         shift and go to state 31
+    PRINTF          shift and go to state 32
+    SWITCH          shift and go to state 33
+    VAR             shift and go to state 38
+    VARIABLE        shift and go to state 21
+    IF              shift and go to state 44
+    ELSE            shift and go to state 18
+    PACKAGE         shift and go to state 45
+    IMPORT          shift and go to state 46
+    CORCHETEIZ      shift and go to state 47
+    DELETE          shift and go to state 49
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    LPAREN          shift and go to state 22
+
+    golang                         shift and go to state 1
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    condicional                    shift and go to state 4
+    bucleFor                       shift and go to state 5
+    funcion                        shift and go to state 6
+    imports                        shift and go to state 7
+    array                          shift and go to state 8
+    metodosPropiedadesArray        shift and go to state 9
+    print                          shift and go to state 10
+    switch                         shift and go to state 11
+    map                            shift and go to state 12
+    metodosPropiedadesMap          shift and go to state 13
+    asignacionMate                 shift and go to state 14
+    asignacionOtros                shift and go to state 15
+    term                           shift and go to state 16
+    tiposCondicion                 shift and go to state 17
+    package                        shift and go to state 23
+    import                         shift and go to state 24
+    arrayNoInit                    shift and go to state 25
+    arrayInit                      shift and go to state 26
+    slice                          shift and go to state 27
+    remove                         shift and go to state 28
+    sliceAsignacion                shift and go to state 29
+    mapMake                        shift and go to state 34
+    mapnoMake                      shift and go to state 35
+    mapAppend                      shift and go to state 36
+    mapDelete                      shift and go to state 37
+    asignacionSuma                 shift and go to state 39
+    asignacionResta                shift and go to state 40
+    asignacionMult                 shift and go to state 41
+    asignacionDiv                  shift and go to state 42
+    factor                         shift and go to state 43
+
+state 1
+
+    (0) S' -> golang .
+
+
+
+state 2
+
+    (1) golang -> asignacion .
+
+    $end            reduce using rule 1 (golang -> asignacion .)
+    LLAVEDE         reduce using rule 1 (golang -> asignacion .)
+    CASE            reduce using rule 1 (golang -> asignacion .)
+
+
+state 3
+
+    (2) golang -> expression .
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    $end            reduce using rule 2 (golang -> expression .)
+    LLAVEDE         reduce using rule 2 (golang -> expression .)
+    CASE            reduce using rule 2 (golang -> expression .)
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 4
+
+    (3) golang -> condicional .
+    (72) condicional -> condicional . ELSE LLAVEIZ golang LLAVEDE
+
+    $end            reduce using rule 3 (golang -> condicional .)
+    LLAVEDE         reduce using rule 3 (golang -> condicional .)
+    CASE            reduce using rule 3 (golang -> condicional .)
+    ELSE            shift and go to state 53
+
+
+state 5
+
+    (4) golang -> bucleFor .
+
+    $end            reduce using rule 4 (golang -> bucleFor .)
+    LLAVEDE         reduce using rule 4 (golang -> bucleFor .)
+    CASE            reduce using rule 4 (golang -> bucleFor .)
+
+
+state 6
+
+    (5) golang -> funcion .
+
+    $end            reduce using rule 5 (golang -> funcion .)
+    LLAVEDE         reduce using rule 5 (golang -> funcion .)
+    CASE            reduce using rule 5 (golang -> funcion .)
+
+
+state 7
+
+    (6) golang -> imports .
+
+    $end            reduce using rule 6 (golang -> imports .)
+    LLAVEDE         reduce using rule 6 (golang -> imports .)
+    CASE            reduce using rule 6 (golang -> imports .)
+
+
+state 8
+
+    (7) golang -> array .
+
+    $end            reduce using rule 7 (golang -> array .)
+    LLAVEDE         reduce using rule 7 (golang -> array .)
+    CASE            reduce using rule 7 (golang -> array .)
+
+
+state 9
+
+    (8) golang -> metodosPropiedadesArray .
+
+    $end            reduce using rule 8 (golang -> metodosPropiedadesArray .)
+    LLAVEDE         reduce using rule 8 (golang -> metodosPropiedadesArray .)
+    CASE            reduce using rule 8 (golang -> metodosPropiedadesArray .)
+
+
+state 10
+
+    (9) golang -> print .
+
+    $end            reduce using rule 9 (golang -> print .)
+    LLAVEDE         reduce using rule 9 (golang -> print .)
+    CASE            reduce using rule 9 (golang -> print .)
+
+
+state 11
+
+    (10) golang -> switch .
+
+    $end            reduce using rule 10 (golang -> switch .)
+    LLAVEDE         reduce using rule 10 (golang -> switch .)
+    CASE            reduce using rule 10 (golang -> switch .)
+
+
+state 12
+
+    (11) golang -> map .
+
+    $end            reduce using rule 11 (golang -> map .)
+    LLAVEDE         reduce using rule 11 (golang -> map .)
+    CASE            reduce using rule 11 (golang -> map .)
+
+
+state 13
+
+    (12) golang -> metodosPropiedadesMap .
+
+    $end            reduce using rule 12 (golang -> metodosPropiedadesMap .)
+    LLAVEDE         reduce using rule 12 (golang -> metodosPropiedadesMap .)
+    CASE            reduce using rule 12 (golang -> metodosPropiedadesMap .)
+
+
+state 14
+
+    (13) asignacion -> asignacionMate .
+
+    $end            reduce using rule 13 (asignacion -> asignacionMate .)
+    LLAVEDE         reduce using rule 13 (asignacion -> asignacionMate .)
+    CASE            reduce using rule 13 (asignacion -> asignacionMate .)
+
+
+state 15
+
+    (14) asignacion -> asignacionOtros .
+
+    $end            reduce using rule 14 (asignacion -> asignacionOtros .)
+    LLAVEDE         reduce using rule 14 (asignacion -> asignacionOtros .)
+    CASE            reduce using rule 14 (asignacion -> asignacionOtros .)
+
+
+state 16
+
+    (105) expression -> term .
+    (106) term -> term . MULTI factor
+    (107) term -> term . DIVIDE factor
+
+    MAS             reduce using rule 105 (expression -> term .)
+    RESTA           reduce using rule 105 (expression -> term .)
+    $end            reduce using rule 105 (expression -> term .)
+    MAYORQUE        reduce using rule 105 (expression -> term .)
+    MENORQUE        reduce using rule 105 (expression -> term .)
+    MAYOROIGUALQUE  reduce using rule 105 (expression -> term .)
+    MENOROIGUALQUE  reduce using rule 105 (expression -> term .)
+    EQUIVALENTE     reduce using rule 105 (expression -> term .)
+    DIFERENTE       reduce using rule 105 (expression -> term .)
+    LLAVEIZ         reduce using rule 105 (expression -> term .)
+    RPAREN          reduce using rule 105 (expression -> term .)
+    LLAVEDE         reduce using rule 105 (expression -> term .)
+    CASE            reduce using rule 105 (expression -> term .)
+    PUNTOCOMA       reduce using rule 105 (expression -> term .)
+    MULTI           shift and go to state 54
+    DIVIDE          shift and go to state 55
+
+
+state 17
+
+    (71) condicional -> tiposCondicion . condicion LLAVEIZ golang LLAVEDE
+    (75) condicion -> . expression
+    (76) condicion -> . LPAREN expression comparadores expression RPAREN
+    (77) condicion -> . LPAREN expression comparadores expression RPAREN comparadores condicion
+    (78) condicion -> . expression comparadores condicion
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    LPAREN          shift and go to state 58
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+
+    condicion                      shift and go to state 56
+    expression                     shift and go to state 57
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 18
+
+    (74) tiposCondicion -> ELSE . IF
+
+    IF              shift and go to state 60
+
+
+state 19
+
+    (85) bucleFor -> FOR . asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (86) asignacionFOR -> . VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA
+
+    VARIABLE        shift and go to state 62
+
+    asignacionFOR                  shift and go to state 61
+
+state 20
+
+    (32) funcion -> FUNCTION . VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE
+    (33) funcion -> FUNCTION . VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+
+    VARIABLE        shift and go to state 63
+
+
+state 21
+
+    (16) asignacionMate -> VARIABLE . DOSPUNTOS ASIGNADOR expression
+    (19) asignacionOtros -> VARIABLE . DOSPUNTOS ASIGNADOR valoresOtros
+    (47) arrayInit -> VARIABLE . asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+    (55) slice -> VARIABLE . CORCHETEIZ valoresPosibles CORCHETEDER
+    (53) remove -> VARIABLE . PUNTO REMOVE LPAREN NUMBER RPAREN
+    (63) mapMake -> VARIABLE . asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+    (64) mapnoMake -> VARIABLE . asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+    (25) asignacionSuma -> VARIABLE . ASIGNADORSUM expression
+    (26) asignacionResta -> VARIABLE . ASIGNADORRESTA expression
+    (27) asignacionMult -> VARIABLE . ASIGNADORMULT expression
+    (28) asignacionDiv -> VARIABLE . ASIGNADORDIV expression
+    (111) factor -> VARIABLE .
+    (29) asigacionCorta -> . DOSPUNTOS ASIGNADOR
+
+    DOSPUNTOS       shift and go to state 64
+    CORCHETEIZ      shift and go to state 66
+    PUNTO           shift and go to state 67
+    ASIGNADORSUM    shift and go to state 68
+    ASIGNADORRESTA  shift and go to state 69
+    ASIGNADORMULT   shift and go to state 70
+    ASIGNADORDIV    shift and go to state 71
+    MULTI           reduce using rule 111 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 111 (factor -> VARIABLE .)
+    MAS             reduce using rule 111 (factor -> VARIABLE .)
+    RESTA           reduce using rule 111 (factor -> VARIABLE .)
+    $end            reduce using rule 111 (factor -> VARIABLE .)
+    LLAVEDE         reduce using rule 111 (factor -> VARIABLE .)
+    CASE            reduce using rule 111 (factor -> VARIABLE .)
+
+    asigacionCorta                 shift and go to state 65
+
+state 22
+
+    (112) factor -> LPAREN . expression RPAREN
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 72
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 23
+
+    (37) imports -> package .
+
+    $end            reduce using rule 37 (imports -> package .)
+    LLAVEDE         reduce using rule 37 (imports -> package .)
+    CASE            reduce using rule 37 (imports -> package .)
+
+
+state 24
+
+    (38) imports -> import .
+
+    $end            reduce using rule 38 (imports -> import .)
+    LLAVEDE         reduce using rule 38 (imports -> import .)
+    CASE            reduce using rule 38 (imports -> import .)
+
+
+state 25
+
+    (44) array -> arrayNoInit .
+
+    $end            reduce using rule 44 (array -> arrayNoInit .)
+    LLAVEDE         reduce using rule 44 (array -> arrayNoInit .)
+    CASE            reduce using rule 44 (array -> arrayNoInit .)
+
+
+state 26
+
+    (45) array -> arrayInit .
+
+    $end            reduce using rule 45 (array -> arrayInit .)
+    LLAVEDE         reduce using rule 45 (array -> arrayInit .)
+    CASE            reduce using rule 45 (array -> arrayInit .)
+
+
+state 27
+
+    (50) metodosPropiedadesArray -> slice .
+    (54) sliceAsignacion -> slice . ASIGNADOR valoresPosibles
+
+    $end            reduce using rule 50 (metodosPropiedadesArray -> slice .)
+    LLAVEDE         reduce using rule 50 (metodosPropiedadesArray -> slice .)
+    CASE            reduce using rule 50 (metodosPropiedadesArray -> slice .)
+    ASIGNADOR       shift and go to state 73
+
+
+state 28
+
+    (51) metodosPropiedadesArray -> remove .
+
+    $end            reduce using rule 51 (metodosPropiedadesArray -> remove .)
+    LLAVEDE         reduce using rule 51 (metodosPropiedadesArray -> remove .)
+    CASE            reduce using rule 51 (metodosPropiedadesArray -> remove .)
+
+
+state 29
+
+    (52) metodosPropiedadesArray -> sliceAsignacion .
+
+    $end            reduce using rule 52 (metodosPropiedadesArray -> sliceAsignacion .)
+    LLAVEDE         reduce using rule 52 (metodosPropiedadesArray -> sliceAsignacion .)
+    CASE            reduce using rule 52 (metodosPropiedadesArray -> sliceAsignacion .)
+
+
+state 30
+
+    (91) print -> PRINT . LPAREN parametro RPAREN
+
+    LPAREN          shift and go to state 74
+
+
+state 31
+
+    (92) print -> PRINTLN . LPAREN parametro RPAREN
+
+    LPAREN          shift and go to state 75
+
+
+state 32
+
+    (93) print -> PRINTF . LPAREN parametro RPAREN
+
+    LPAREN          shift and go to state 76
+
+
+state 33
+
+    (100) switch -> SWITCH . argumento LLAVEIZ casos LLAVEDE
+    (96) argumento -> . NUMBER
+    (97) argumento -> . FLOTANTE
+    (98) argumento -> . VARIABLE
+    (99) argumento -> . STRING
+
+    NUMBER          shift and go to state 78
+    FLOTANTE        shift and go to state 79
+    VARIABLE        shift and go to state 80
+    STRING          shift and go to state 81
+
+    argumento                      shift and go to state 77
+
+state 34
+
+    (61) map -> mapMake .
+
+    $end            reduce using rule 61 (map -> mapMake .)
+    LLAVEDE         reduce using rule 61 (map -> mapMake .)
+    CASE            reduce using rule 61 (map -> mapMake .)
+
+
+state 35
+
+    (62) map -> mapnoMake .
+
+    $end            reduce using rule 62 (map -> mapnoMake .)
+    LLAVEDE         reduce using rule 62 (map -> mapnoMake .)
+    CASE            reduce using rule 62 (map -> mapnoMake .)
+
+
+state 36
+
+    (67) metodosPropiedadesMap -> mapAppend .
+
+    $end            reduce using rule 67 (metodosPropiedadesMap -> mapAppend .)
+    LLAVEDE         reduce using rule 67 (metodosPropiedadesMap -> mapAppend .)
+    CASE            reduce using rule 67 (metodosPropiedadesMap -> mapAppend .)
+
+
+state 37
+
+    (68) metodosPropiedadesMap -> mapDelete .
+
+    $end            reduce using rule 68 (metodosPropiedadesMap -> mapDelete .)
+    LLAVEDE         reduce using rule 68 (metodosPropiedadesMap -> mapDelete .)
+    CASE            reduce using rule 68 (metodosPropiedadesMap -> mapDelete .)
+
+
+state 38
+
+    (15) asignacionMate -> VAR . VARIABLE TIPODATOS ASIGNADOR expression
+    (17) asignacionMate -> VAR . VARIABLE ASIGNADOR expression
+    (18) asignacionOtros -> VAR . VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (20) asignacionOtros -> VAR . VARIABLE ASIGNADOR valoresOtros
+    (46) arrayNoInit -> VAR . VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS
+
+    VARIABLE        shift and go to state 82
+
+
+state 39
+
+    (21) asignacionOtros -> asignacionSuma .
+
+    $end            reduce using rule 21 (asignacionOtros -> asignacionSuma .)
+    LLAVEDE         reduce using rule 21 (asignacionOtros -> asignacionSuma .)
+    CASE            reduce using rule 21 (asignacionOtros -> asignacionSuma .)
+
+
+state 40
+
+    (22) asignacionOtros -> asignacionResta .
+
+    $end            reduce using rule 22 (asignacionOtros -> asignacionResta .)
+    LLAVEDE         reduce using rule 22 (asignacionOtros -> asignacionResta .)
+    CASE            reduce using rule 22 (asignacionOtros -> asignacionResta .)
+
+
+state 41
+
+    (23) asignacionOtros -> asignacionMult .
+
+    $end            reduce using rule 23 (asignacionOtros -> asignacionMult .)
+    LLAVEDE         reduce using rule 23 (asignacionOtros -> asignacionMult .)
+    CASE            reduce using rule 23 (asignacionOtros -> asignacionMult .)
+
+
+state 42
+
+    (24) asignacionOtros -> asignacionDiv .
+
+    $end            reduce using rule 24 (asignacionOtros -> asignacionDiv .)
+    LLAVEDE         reduce using rule 24 (asignacionOtros -> asignacionDiv .)
+    CASE            reduce using rule 24 (asignacionOtros -> asignacionDiv .)
+
+
+state 43
+
+    (108) term -> factor .
+
+    MULTI           reduce using rule 108 (term -> factor .)
+    DIVIDE          reduce using rule 108 (term -> factor .)
+    MAS             reduce using rule 108 (term -> factor .)
+    RESTA           reduce using rule 108 (term -> factor .)
+    $end            reduce using rule 108 (term -> factor .)
+    MAYORQUE        reduce using rule 108 (term -> factor .)
+    MENORQUE        reduce using rule 108 (term -> factor .)
+    MAYOROIGUALQUE  reduce using rule 108 (term -> factor .)
+    MENOROIGUALQUE  reduce using rule 108 (term -> factor .)
+    EQUIVALENTE     reduce using rule 108 (term -> factor .)
+    DIFERENTE       reduce using rule 108 (term -> factor .)
+    LLAVEIZ         reduce using rule 108 (term -> factor .)
+    RPAREN          reduce using rule 108 (term -> factor .)
+    LLAVEDE         reduce using rule 108 (term -> factor .)
+    CASE            reduce using rule 108 (term -> factor .)
+    PUNTOCOMA       reduce using rule 108 (term -> factor .)
+
+
+state 44
+
+    (73) tiposCondicion -> IF .
+
+    LPAREN          reduce using rule 73 (tiposCondicion -> IF .)
+    NUMBER          reduce using rule 73 (tiposCondicion -> IF .)
+    FLOTANTE        reduce using rule 73 (tiposCondicion -> IF .)
+    VARIABLE        reduce using rule 73 (tiposCondicion -> IF .)
+
+
+state 45
+
+    (39) package -> PACKAGE . VARIABLE
+
+    VARIABLE        shift and go to state 83
+
+
+state 46
+
+    (40) import -> IMPORT . variosImports
+    (41) import -> IMPORT . LPAREN variosImports RPAREN
+    (42) variosImports -> . STRING
+    (43) variosImports -> . STRING variosImports
+
+    LPAREN          shift and go to state 85
+    STRING          shift and go to state 86
+
+    variosImports                  shift and go to state 84
+
+state 47
+
+    (69) mapAppend -> CORCHETEIZ . valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+    VARIABLE        shift and go to state 92
+
+    valoresPosibles                shift and go to state 87
+
+state 48
+
+    (109) factor -> NUMBER .
+
+    MULTI           reduce using rule 109 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 109 (factor -> NUMBER .)
+    MAS             reduce using rule 109 (factor -> NUMBER .)
+    RESTA           reduce using rule 109 (factor -> NUMBER .)
+    $end            reduce using rule 109 (factor -> NUMBER .)
+    MAYORQUE        reduce using rule 109 (factor -> NUMBER .)
+    MENORQUE        reduce using rule 109 (factor -> NUMBER .)
+    MAYOROIGUALQUE  reduce using rule 109 (factor -> NUMBER .)
+    MENOROIGUALQUE  reduce using rule 109 (factor -> NUMBER .)
+    EQUIVALENTE     reduce using rule 109 (factor -> NUMBER .)
+    DIFERENTE       reduce using rule 109 (factor -> NUMBER .)
+    LLAVEIZ         reduce using rule 109 (factor -> NUMBER .)
+    RPAREN          reduce using rule 109 (factor -> NUMBER .)
+    LLAVEDE         reduce using rule 109 (factor -> NUMBER .)
+    CASE            reduce using rule 109 (factor -> NUMBER .)
+    PUNTOCOMA       reduce using rule 109 (factor -> NUMBER .)
+
+
+state 49
+
+    (70) mapDelete -> DELETE . LPAREN VARIABLE COMA valoresPosibles RPAREN
+
+    LPAREN          shift and go to state 93
+
+
+state 50
+
+    (110) factor -> FLOTANTE .
+
+    MULTI           reduce using rule 110 (factor -> FLOTANTE .)
+    DIVIDE          reduce using rule 110 (factor -> FLOTANTE .)
+    MAS             reduce using rule 110 (factor -> FLOTANTE .)
+    RESTA           reduce using rule 110 (factor -> FLOTANTE .)
+    $end            reduce using rule 110 (factor -> FLOTANTE .)
+    MAYORQUE        reduce using rule 110 (factor -> FLOTANTE .)
+    MENORQUE        reduce using rule 110 (factor -> FLOTANTE .)
+    MAYOROIGUALQUE  reduce using rule 110 (factor -> FLOTANTE .)
+    MENOROIGUALQUE  reduce using rule 110 (factor -> FLOTANTE .)
+    EQUIVALENTE     reduce using rule 110 (factor -> FLOTANTE .)
+    DIFERENTE       reduce using rule 110 (factor -> FLOTANTE .)
+    LLAVEIZ         reduce using rule 110 (factor -> FLOTANTE .)
+    RPAREN          reduce using rule 110 (factor -> FLOTANTE .)
+    LLAVEDE         reduce using rule 110 (factor -> FLOTANTE .)
+    CASE            reduce using rule 110 (factor -> FLOTANTE .)
+    PUNTOCOMA       reduce using rule 110 (factor -> FLOTANTE .)
+
+
+state 51
+
+    (103) expression -> expression MAS . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    term                           shift and go to state 94
+    factor                         shift and go to state 43
+
+state 52
+
+    (104) expression -> expression RESTA . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    term                           shift and go to state 95
+    factor                         shift and go to state 43
+
+state 53
+
+    (72) condicional -> condicional ELSE . LLAVEIZ golang LLAVEDE
+
+    LLAVEIZ         shift and go to state 96
+
+
+state 54
+
+    (106) term -> term MULTI . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    factor                         shift and go to state 97
+
+state 55
+
+    (107) term -> term DIVIDE . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    factor                         shift and go to state 98
+
+state 56
+
+    (71) condicional -> tiposCondicion condicion . LLAVEIZ golang LLAVEDE
+
+    LLAVEIZ         shift and go to state 99
+
+
+state 57
+
+    (75) condicion -> expression .
+    (78) condicion -> expression . comparadores condicion
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+    (79) comparadores -> . MAYORQUE
+    (80) comparadores -> . MENORQUE
+    (81) comparadores -> . MAYOROIGUALQUE
+    (82) comparadores -> . MENOROIGUALQUE
+    (83) comparadores -> . EQUIVALENTE
+    (84) comparadores -> . DIFERENTE
+
+    LLAVEIZ         reduce using rule 75 (condicion -> expression .)
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+    MAYORQUE        shift and go to state 101
+    MENORQUE        shift and go to state 102
+    MAYOROIGUALQUE  shift and go to state 103
+    MENOROIGUALQUE  shift and go to state 104
+    EQUIVALENTE     shift and go to state 105
+    DIFERENTE       shift and go to state 106
+
+    comparadores                   shift and go to state 100
+
+state 58
+
+    (76) condicion -> LPAREN . expression comparadores expression RPAREN
+    (77) condicion -> LPAREN . expression comparadores expression RPAREN comparadores condicion
+    (112) factor -> LPAREN . expression RPAREN
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 107
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 59
+
+    (111) factor -> VARIABLE .
+
+    MULTI           reduce using rule 111 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 111 (factor -> VARIABLE .)
+    MAS             reduce using rule 111 (factor -> VARIABLE .)
+    RESTA           reduce using rule 111 (factor -> VARIABLE .)
+    MAYORQUE        reduce using rule 111 (factor -> VARIABLE .)
+    MENORQUE        reduce using rule 111 (factor -> VARIABLE .)
+    MAYOROIGUALQUE  reduce using rule 111 (factor -> VARIABLE .)
+    MENOROIGUALQUE  reduce using rule 111 (factor -> VARIABLE .)
+    EQUIVALENTE     reduce using rule 111 (factor -> VARIABLE .)
+    DIFERENTE       reduce using rule 111 (factor -> VARIABLE .)
+    LLAVEIZ         reduce using rule 111 (factor -> VARIABLE .)
+    RPAREN          reduce using rule 111 (factor -> VARIABLE .)
+    $end            reduce using rule 111 (factor -> VARIABLE .)
+    LLAVEDE         reduce using rule 111 (factor -> VARIABLE .)
+    CASE            reduce using rule 111 (factor -> VARIABLE .)
+    PUNTOCOMA       reduce using rule 111 (factor -> VARIABLE .)
+
+
+state 60
+
+    (74) tiposCondicion -> ELSE IF .
+
+    LPAREN          reduce using rule 74 (tiposCondicion -> ELSE IF .)
+    NUMBER          reduce using rule 74 (tiposCondicion -> ELSE IF .)
+    FLOTANTE        reduce using rule 74 (tiposCondicion -> ELSE IF .)
+    VARIABLE        reduce using rule 74 (tiposCondicion -> ELSE IF .)
+
+
+state 61
+
+    (85) bucleFor -> FOR asignacionFOR . condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (87) condicionFOR -> . VARIABLE comparadores expression PUNTOCOMA
+
+    VARIABLE        shift and go to state 109
+
+    condicionFOR                   shift and go to state 108
+
+state 62
+
+    (86) asignacionFOR -> VARIABLE . DOSPUNTOS ASIGNADOR expression PUNTOCOMA
+
+    DOSPUNTOS       shift and go to state 110
+
+
+state 63
+
+    (32) funcion -> FUNCTION VARIABLE . LPAREN RPAREN LLAVEIZ golang LLAVEDE
+    (33) funcion -> FUNCTION VARIABLE . LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+
+    LPAREN          shift and go to state 111
+
+
+state 64
+
+    (16) asignacionMate -> VARIABLE DOSPUNTOS . ASIGNADOR expression
+    (19) asignacionOtros -> VARIABLE DOSPUNTOS . ASIGNADOR valoresOtros
+    (29) asigacionCorta -> DOSPUNTOS . ASIGNADOR
+
+    ASIGNADOR       shift and go to state 112
+
+
+state 65
+
+    (47) arrayInit -> VARIABLE asigacionCorta . CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+    (63) mapMake -> VARIABLE asigacionCorta . MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+    (64) mapnoMake -> VARIABLE asigacionCorta . MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+
+    CORCHETEIZ      shift and go to state 113
+    MAKE            shift and go to state 114
+    MAP             shift and go to state 115
+
+
+state 66
+
+    (55) slice -> VARIABLE CORCHETEIZ . valoresPosibles CORCHETEDER
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+    VARIABLE        shift and go to state 92
+
+    valoresPosibles                shift and go to state 116
+
+state 67
+
+    (53) remove -> VARIABLE PUNTO . REMOVE LPAREN NUMBER RPAREN
+
+    REMOVE          shift and go to state 117
+
+
+state 68
+
+    (25) asignacionSuma -> VARIABLE ASIGNADORSUM . expression
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 118
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 69
+
+    (26) asignacionResta -> VARIABLE ASIGNADORRESTA . expression
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 119
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 70
+
+    (27) asignacionMult -> VARIABLE ASIGNADORMULT . expression
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 120
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 71
+
+    (28) asignacionDiv -> VARIABLE ASIGNADORDIV . expression
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 121
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 72
+
+    (112) factor -> LPAREN expression . RPAREN
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    RPAREN          shift and go to state 122
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 73
+
+    (54) sliceAsignacion -> slice ASIGNADOR . valoresPosibles
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+    VARIABLE        shift and go to state 92
+
+    valoresPosibles                shift and go to state 123
+
+state 74
+
+    (91) print -> PRINT LPAREN . parametro RPAREN
+    (94) parametro -> . argumento
+    (95) parametro -> . argumento COMA parametro
+    (96) argumento -> . NUMBER
+    (97) argumento -> . FLOTANTE
+    (98) argumento -> . VARIABLE
+    (99) argumento -> . STRING
+
+    NUMBER          shift and go to state 78
+    FLOTANTE        shift and go to state 79
+    VARIABLE        shift and go to state 80
+    STRING          shift and go to state 81
+
+    parametro                      shift and go to state 124
+    argumento                      shift and go to state 125
+
+state 75
+
+    (92) print -> PRINTLN LPAREN . parametro RPAREN
+    (94) parametro -> . argumento
+    (95) parametro -> . argumento COMA parametro
+    (96) argumento -> . NUMBER
+    (97) argumento -> . FLOTANTE
+    (98) argumento -> . VARIABLE
+    (99) argumento -> . STRING
+
+    NUMBER          shift and go to state 78
+    FLOTANTE        shift and go to state 79
+    VARIABLE        shift and go to state 80
+    STRING          shift and go to state 81
+
+    parametro                      shift and go to state 126
+    argumento                      shift and go to state 125
+
+state 76
+
+    (93) print -> PRINTF LPAREN . parametro RPAREN
+    (94) parametro -> . argumento
+    (95) parametro -> . argumento COMA parametro
+    (96) argumento -> . NUMBER
+    (97) argumento -> . FLOTANTE
+    (98) argumento -> . VARIABLE
+    (99) argumento -> . STRING
+
+    NUMBER          shift and go to state 78
+    FLOTANTE        shift and go to state 79
+    VARIABLE        shift and go to state 80
+    STRING          shift and go to state 81
+
+    parametro                      shift and go to state 127
+    argumento                      shift and go to state 125
+
+state 77
+
+    (100) switch -> SWITCH argumento . LLAVEIZ casos LLAVEDE
+
+    LLAVEIZ         shift and go to state 128
+
+
+state 78
+
+    (96) argumento -> NUMBER .
+
+    LLAVEIZ         reduce using rule 96 (argumento -> NUMBER .)
+    COMA            reduce using rule 96 (argumento -> NUMBER .)
+    RPAREN          reduce using rule 96 (argumento -> NUMBER .)
+    DOSPUNTOS       reduce using rule 96 (argumento -> NUMBER .)
+
+
+state 79
+
+    (97) argumento -> FLOTANTE .
+
+    LLAVEIZ         reduce using rule 97 (argumento -> FLOTANTE .)
+    COMA            reduce using rule 97 (argumento -> FLOTANTE .)
+    RPAREN          reduce using rule 97 (argumento -> FLOTANTE .)
+    DOSPUNTOS       reduce using rule 97 (argumento -> FLOTANTE .)
+
+
+state 80
+
+    (98) argumento -> VARIABLE .
+
+    LLAVEIZ         reduce using rule 98 (argumento -> VARIABLE .)
+    COMA            reduce using rule 98 (argumento -> VARIABLE .)
+    RPAREN          reduce using rule 98 (argumento -> VARIABLE .)
+    DOSPUNTOS       reduce using rule 98 (argumento -> VARIABLE .)
+
+
+state 81
+
+    (99) argumento -> STRING .
+
+    LLAVEIZ         reduce using rule 99 (argumento -> STRING .)
+    COMA            reduce using rule 99 (argumento -> STRING .)
+    RPAREN          reduce using rule 99 (argumento -> STRING .)
+    DOSPUNTOS       reduce using rule 99 (argumento -> STRING .)
+
+
+state 82
+
+    (15) asignacionMate -> VAR VARIABLE . TIPODATOS ASIGNADOR expression
+    (17) asignacionMate -> VAR VARIABLE . ASIGNADOR expression
+    (18) asignacionOtros -> VAR VARIABLE . TIPODATOS ASIGNADOR valoresOtros
+    (20) asignacionOtros -> VAR VARIABLE . ASIGNADOR valoresOtros
+    (46) arrayNoInit -> VAR VARIABLE . CORCHETEIZ NUMBER CORCHETEDER TIPODATOS
+
+    TIPODATOS       shift and go to state 129
+    ASIGNADOR       shift and go to state 130
+    CORCHETEIZ      shift and go to state 131
+
+
+state 83
+
+    (39) package -> PACKAGE VARIABLE .
+
+    $end            reduce using rule 39 (package -> PACKAGE VARIABLE .)
+    LLAVEDE         reduce using rule 39 (package -> PACKAGE VARIABLE .)
+    CASE            reduce using rule 39 (package -> PACKAGE VARIABLE .)
+
+
+state 84
+
+    (40) import -> IMPORT variosImports .
+
+    $end            reduce using rule 40 (import -> IMPORT variosImports .)
+    LLAVEDE         reduce using rule 40 (import -> IMPORT variosImports .)
+    CASE            reduce using rule 40 (import -> IMPORT variosImports .)
+
+
+state 85
+
+    (41) import -> IMPORT LPAREN . variosImports RPAREN
+    (42) variosImports -> . STRING
+    (43) variosImports -> . STRING variosImports
+
+    STRING          shift and go to state 86
+
+    variosImports                  shift and go to state 132
+
+state 86
+
+    (42) variosImports -> STRING .
+    (43) variosImports -> STRING . variosImports
+    (42) variosImports -> . STRING
+    (43) variosImports -> . STRING variosImports
+
+    $end            reduce using rule 42 (variosImports -> STRING .)
+    LLAVEDE         reduce using rule 42 (variosImports -> STRING .)
+    CASE            reduce using rule 42 (variosImports -> STRING .)
+    RPAREN          reduce using rule 42 (variosImports -> STRING .)
+    STRING          shift and go to state 86
+
+    variosImports                  shift and go to state 133
+
+state 87
+
+    (69) mapAppend -> CORCHETEIZ valoresPosibles . CORCHETEDER ASIGNADOR valoresPosibles
+
+    CORCHETEDER     shift and go to state 134
+
+
+state 88
+
+    (56) valoresPosibles -> NUMBER .
+
+    CORCHETEDER     reduce using rule 56 (valoresPosibles -> NUMBER .)
+    $end            reduce using rule 56 (valoresPosibles -> NUMBER .)
+    LLAVEDE         reduce using rule 56 (valoresPosibles -> NUMBER .)
+    CASE            reduce using rule 56 (valoresPosibles -> NUMBER .)
+    RPAREN          reduce using rule 56 (valoresPosibles -> NUMBER .)
+    COMA            reduce using rule 56 (valoresPosibles -> NUMBER .)
+    DOSPUNTOS       reduce using rule 56 (valoresPosibles -> NUMBER .)
+
+
+state 89
+
+    (57) valoresPosibles -> BOOLEAN .
+
+    CORCHETEDER     reduce using rule 57 (valoresPosibles -> BOOLEAN .)
+    $end            reduce using rule 57 (valoresPosibles -> BOOLEAN .)
+    LLAVEDE         reduce using rule 57 (valoresPosibles -> BOOLEAN .)
+    CASE            reduce using rule 57 (valoresPosibles -> BOOLEAN .)
+    RPAREN          reduce using rule 57 (valoresPosibles -> BOOLEAN .)
+    COMA            reduce using rule 57 (valoresPosibles -> BOOLEAN .)
+    DOSPUNTOS       reduce using rule 57 (valoresPosibles -> BOOLEAN .)
+
+
+state 90
+
+    (58) valoresPosibles -> STRING .
+
+    CORCHETEDER     reduce using rule 58 (valoresPosibles -> STRING .)
+    $end            reduce using rule 58 (valoresPosibles -> STRING .)
+    LLAVEDE         reduce using rule 58 (valoresPosibles -> STRING .)
+    CASE            reduce using rule 58 (valoresPosibles -> STRING .)
+    RPAREN          reduce using rule 58 (valoresPosibles -> STRING .)
+    COMA            reduce using rule 58 (valoresPosibles -> STRING .)
+    DOSPUNTOS       reduce using rule 58 (valoresPosibles -> STRING .)
+
+
+state 91
+
+    (59) valoresPosibles -> FLOTANTE .
+
+    CORCHETEDER     reduce using rule 59 (valoresPosibles -> FLOTANTE .)
+    $end            reduce using rule 59 (valoresPosibles -> FLOTANTE .)
+    LLAVEDE         reduce using rule 59 (valoresPosibles -> FLOTANTE .)
+    CASE            reduce using rule 59 (valoresPosibles -> FLOTANTE .)
+    RPAREN          reduce using rule 59 (valoresPosibles -> FLOTANTE .)
+    COMA            reduce using rule 59 (valoresPosibles -> FLOTANTE .)
+    DOSPUNTOS       reduce using rule 59 (valoresPosibles -> FLOTANTE .)
+
+
+state 92
+
+    (60) valoresPosibles -> VARIABLE .
+
+    CORCHETEDER     reduce using rule 60 (valoresPosibles -> VARIABLE .)
+    $end            reduce using rule 60 (valoresPosibles -> VARIABLE .)
+    LLAVEDE         reduce using rule 60 (valoresPosibles -> VARIABLE .)
+    CASE            reduce using rule 60 (valoresPosibles -> VARIABLE .)
+    RPAREN          reduce using rule 60 (valoresPosibles -> VARIABLE .)
+    COMA            reduce using rule 60 (valoresPosibles -> VARIABLE .)
+    DOSPUNTOS       reduce using rule 60 (valoresPosibles -> VARIABLE .)
+
+
+state 93
+
+    (70) mapDelete -> DELETE LPAREN . VARIABLE COMA valoresPosibles RPAREN
+
+    VARIABLE        shift and go to state 135
+
+
+state 94
+
+    (103) expression -> expression MAS term .
+    (106) term -> term . MULTI factor
+    (107) term -> term . DIVIDE factor
+
+    MAS             reduce using rule 103 (expression -> expression MAS term .)
+    RESTA           reduce using rule 103 (expression -> expression MAS term .)
+    $end            reduce using rule 103 (expression -> expression MAS term .)
+    MAYORQUE        reduce using rule 103 (expression -> expression MAS term .)
+    MENORQUE        reduce using rule 103 (expression -> expression MAS term .)
+    MAYOROIGUALQUE  reduce using rule 103 (expression -> expression MAS term .)
+    MENOROIGUALQUE  reduce using rule 103 (expression -> expression MAS term .)
+    EQUIVALENTE     reduce using rule 103 (expression -> expression MAS term .)
+    DIFERENTE       reduce using rule 103 (expression -> expression MAS term .)
+    LLAVEIZ         reduce using rule 103 (expression -> expression MAS term .)
+    RPAREN          reduce using rule 103 (expression -> expression MAS term .)
+    LLAVEDE         reduce using rule 103 (expression -> expression MAS term .)
+    CASE            reduce using rule 103 (expression -> expression MAS term .)
+    PUNTOCOMA       reduce using rule 103 (expression -> expression MAS term .)
+    MULTI           shift and go to state 54
+    DIVIDE          shift and go to state 55
+
+
+state 95
+
+    (104) expression -> expression RESTA term .
+    (106) term -> term . MULTI factor
+    (107) term -> term . DIVIDE factor
+
+    MAS             reduce using rule 104 (expression -> expression RESTA term .)
+    RESTA           reduce using rule 104 (expression -> expression RESTA term .)
+    $end            reduce using rule 104 (expression -> expression RESTA term .)
+    MAYORQUE        reduce using rule 104 (expression -> expression RESTA term .)
+    MENORQUE        reduce using rule 104 (expression -> expression RESTA term .)
+    MAYOROIGUALQUE  reduce using rule 104 (expression -> expression RESTA term .)
+    MENOROIGUALQUE  reduce using rule 104 (expression -> expression RESTA term .)
+    EQUIVALENTE     reduce using rule 104 (expression -> expression RESTA term .)
+    DIFERENTE       reduce using rule 104 (expression -> expression RESTA term .)
+    LLAVEIZ         reduce using rule 104 (expression -> expression RESTA term .)
+    RPAREN          reduce using rule 104 (expression -> expression RESTA term .)
+    LLAVEDE         reduce using rule 104 (expression -> expression RESTA term .)
+    CASE            reduce using rule 104 (expression -> expression RESTA term .)
+    PUNTOCOMA       reduce using rule 104 (expression -> expression RESTA term .)
+    MULTI           shift and go to state 54
+    DIVIDE          shift and go to state 55
+
+
+state 96
+
+    (72) condicional -> condicional ELSE LLAVEIZ . golang LLAVEDE
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) golang -> . funcion
+    (6) golang -> . imports
+    (7) golang -> . array
+    (8) golang -> . metodosPropiedadesArray
+    (9) golang -> . print
+    (10) golang -> . switch
+    (11) golang -> . map
+    (12) golang -> . metodosPropiedadesMap
+    (13) asignacion -> . asignacionMate
+    (14) asignacion -> . asignacionOtros
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (71) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (72) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (85) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (32) funcion -> . FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE
+    (33) funcion -> . FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+    (37) imports -> . package
+    (38) imports -> . import
+    (44) array -> . arrayNoInit
+    (45) array -> . arrayInit
+    (50) metodosPropiedadesArray -> . slice
+    (51) metodosPropiedadesArray -> . remove
+    (52) metodosPropiedadesArray -> . sliceAsignacion
+    (91) print -> . PRINT LPAREN parametro RPAREN
+    (92) print -> . PRINTLN LPAREN parametro RPAREN
+    (93) print -> . PRINTF LPAREN parametro RPAREN
+    (100) switch -> . SWITCH argumento LLAVEIZ casos LLAVEDE
+    (61) map -> . mapMake
+    (62) map -> . mapnoMake
+    (67) metodosPropiedadesMap -> . mapAppend
+    (68) metodosPropiedadesMap -> . mapDelete
+    (15) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (16) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (17) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (18) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (19) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (20) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (21) asignacionOtros -> . asignacionSuma
+    (22) asignacionOtros -> . asignacionResta
+    (23) asignacionOtros -> . asignacionMult
+    (24) asignacionOtros -> . asignacionDiv
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (73) tiposCondicion -> . IF
+    (74) tiposCondicion -> . ELSE IF
+    (39) package -> . PACKAGE VARIABLE
+    (40) import -> . IMPORT variosImports
+    (41) import -> . IMPORT LPAREN variosImports RPAREN
+    (46) arrayNoInit -> . VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS
+    (47) arrayInit -> . VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+    (55) slice -> . VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER
+    (53) remove -> . VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN
+    (54) sliceAsignacion -> . slice ASIGNADOR valoresPosibles
+    (63) mapMake -> . VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+    (64) mapnoMake -> . VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+    (69) mapAppend -> . CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles
+    (70) mapDelete -> . DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN
+    (25) asignacionSuma -> . VARIABLE ASIGNADORSUM expression
+    (26) asignacionResta -> . VARIABLE ASIGNADORRESTA expression
+    (27) asignacionMult -> . VARIABLE ASIGNADORMULT expression
+    (28) asignacionDiv -> . VARIABLE ASIGNADORDIV expression
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    FOR             shift and go to state 19
+    FUNCTION        shift and go to state 20
+    PRINT           shift and go to state 30
+    PRINTLN         shift and go to state 31
+    PRINTF          shift and go to state 32
+    SWITCH          shift and go to state 33
+    VAR             shift and go to state 38
+    VARIABLE        shift and go to state 21
+    IF              shift and go to state 44
+    ELSE            shift and go to state 18
+    PACKAGE         shift and go to state 45
+    IMPORT          shift and go to state 46
+    CORCHETEIZ      shift and go to state 47
+    DELETE          shift and go to state 49
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    LPAREN          shift and go to state 22
+
+    condicional                    shift and go to state 4
+    golang                         shift and go to state 136
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    bucleFor                       shift and go to state 5
+    funcion                        shift and go to state 6
+    imports                        shift and go to state 7
+    array                          shift and go to state 8
+    metodosPropiedadesArray        shift and go to state 9
+    print                          shift and go to state 10
+    switch                         shift and go to state 11
+    map                            shift and go to state 12
+    metodosPropiedadesMap          shift and go to state 13
+    asignacionMate                 shift and go to state 14
+    asignacionOtros                shift and go to state 15
+    term                           shift and go to state 16
+    tiposCondicion                 shift and go to state 17
+    package                        shift and go to state 23
+    import                         shift and go to state 24
+    arrayNoInit                    shift and go to state 25
+    arrayInit                      shift and go to state 26
+    slice                          shift and go to state 27
+    remove                         shift and go to state 28
+    sliceAsignacion                shift and go to state 29
+    mapMake                        shift and go to state 34
+    mapnoMake                      shift and go to state 35
+    mapAppend                      shift and go to state 36
+    mapDelete                      shift and go to state 37
+    asignacionSuma                 shift and go to state 39
+    asignacionResta                shift and go to state 40
+    asignacionMult                 shift and go to state 41
+    asignacionDiv                  shift and go to state 42
+    factor                         shift and go to state 43
+
+state 97
+
+    (106) term -> term MULTI factor .
+
+    MULTI           reduce using rule 106 (term -> term MULTI factor .)
+    DIVIDE          reduce using rule 106 (term -> term MULTI factor .)
+    MAS             reduce using rule 106 (term -> term MULTI factor .)
+    RESTA           reduce using rule 106 (term -> term MULTI factor .)
+    $end            reduce using rule 106 (term -> term MULTI factor .)
+    MAYORQUE        reduce using rule 106 (term -> term MULTI factor .)
+    MENORQUE        reduce using rule 106 (term -> term MULTI factor .)
+    MAYOROIGUALQUE  reduce using rule 106 (term -> term MULTI factor .)
+    MENOROIGUALQUE  reduce using rule 106 (term -> term MULTI factor .)
+    EQUIVALENTE     reduce using rule 106 (term -> term MULTI factor .)
+    DIFERENTE       reduce using rule 106 (term -> term MULTI factor .)
+    LLAVEIZ         reduce using rule 106 (term -> term MULTI factor .)
+    RPAREN          reduce using rule 106 (term -> term MULTI factor .)
+    LLAVEDE         reduce using rule 106 (term -> term MULTI factor .)
+    CASE            reduce using rule 106 (term -> term MULTI factor .)
+    PUNTOCOMA       reduce using rule 106 (term -> term MULTI factor .)
+
+
+state 98
+
+    (107) term -> term DIVIDE factor .
+
+    MULTI           reduce using rule 107 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 107 (term -> term DIVIDE factor .)
+    MAS             reduce using rule 107 (term -> term DIVIDE factor .)
+    RESTA           reduce using rule 107 (term -> term DIVIDE factor .)
+    $end            reduce using rule 107 (term -> term DIVIDE factor .)
+    MAYORQUE        reduce using rule 107 (term -> term DIVIDE factor .)
+    MENORQUE        reduce using rule 107 (term -> term DIVIDE factor .)
+    MAYOROIGUALQUE  reduce using rule 107 (term -> term DIVIDE factor .)
+    MENOROIGUALQUE  reduce using rule 107 (term -> term DIVIDE factor .)
+    EQUIVALENTE     reduce using rule 107 (term -> term DIVIDE factor .)
+    DIFERENTE       reduce using rule 107 (term -> term DIVIDE factor .)
+    LLAVEIZ         reduce using rule 107 (term -> term DIVIDE factor .)
+    RPAREN          reduce using rule 107 (term -> term DIVIDE factor .)
+    LLAVEDE         reduce using rule 107 (term -> term DIVIDE factor .)
+    CASE            reduce using rule 107 (term -> term DIVIDE factor .)
+    PUNTOCOMA       reduce using rule 107 (term -> term DIVIDE factor .)
+
+
+state 99
+
+    (71) condicional -> tiposCondicion condicion LLAVEIZ . golang LLAVEDE
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) golang -> . funcion
+    (6) golang -> . imports
+    (7) golang -> . array
+    (8) golang -> . metodosPropiedadesArray
+    (9) golang -> . print
+    (10) golang -> . switch
+    (11) golang -> . map
+    (12) golang -> . metodosPropiedadesMap
+    (13) asignacion -> . asignacionMate
+    (14) asignacion -> . asignacionOtros
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (71) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (72) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (85) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (32) funcion -> . FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE
+    (33) funcion -> . FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+    (37) imports -> . package
+    (38) imports -> . import
+    (44) array -> . arrayNoInit
+    (45) array -> . arrayInit
+    (50) metodosPropiedadesArray -> . slice
+    (51) metodosPropiedadesArray -> . remove
+    (52) metodosPropiedadesArray -> . sliceAsignacion
+    (91) print -> . PRINT LPAREN parametro RPAREN
+    (92) print -> . PRINTLN LPAREN parametro RPAREN
+    (93) print -> . PRINTF LPAREN parametro RPAREN
+    (100) switch -> . SWITCH argumento LLAVEIZ casos LLAVEDE
+    (61) map -> . mapMake
+    (62) map -> . mapnoMake
+    (67) metodosPropiedadesMap -> . mapAppend
+    (68) metodosPropiedadesMap -> . mapDelete
+    (15) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (16) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (17) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (18) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (19) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (20) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (21) asignacionOtros -> . asignacionSuma
+    (22) asignacionOtros -> . asignacionResta
+    (23) asignacionOtros -> . asignacionMult
+    (24) asignacionOtros -> . asignacionDiv
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (73) tiposCondicion -> . IF
+    (74) tiposCondicion -> . ELSE IF
+    (39) package -> . PACKAGE VARIABLE
+    (40) import -> . IMPORT variosImports
+    (41) import -> . IMPORT LPAREN variosImports RPAREN
+    (46) arrayNoInit -> . VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS
+    (47) arrayInit -> . VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+    (55) slice -> . VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER
+    (53) remove -> . VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN
+    (54) sliceAsignacion -> . slice ASIGNADOR valoresPosibles
+    (63) mapMake -> . VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+    (64) mapnoMake -> . VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+    (69) mapAppend -> . CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles
+    (70) mapDelete -> . DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN
+    (25) asignacionSuma -> . VARIABLE ASIGNADORSUM expression
+    (26) asignacionResta -> . VARIABLE ASIGNADORRESTA expression
+    (27) asignacionMult -> . VARIABLE ASIGNADORMULT expression
+    (28) asignacionDiv -> . VARIABLE ASIGNADORDIV expression
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    FOR             shift and go to state 19
+    FUNCTION        shift and go to state 20
+    PRINT           shift and go to state 30
+    PRINTLN         shift and go to state 31
+    PRINTF          shift and go to state 32
+    SWITCH          shift and go to state 33
+    VAR             shift and go to state 38
+    VARIABLE        shift and go to state 21
+    IF              shift and go to state 44
+    ELSE            shift and go to state 18
+    PACKAGE         shift and go to state 45
+    IMPORT          shift and go to state 46
+    CORCHETEIZ      shift and go to state 47
+    DELETE          shift and go to state 49
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    LPAREN          shift and go to state 22
+
+    tiposCondicion                 shift and go to state 17
+    golang                         shift and go to state 137
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    condicional                    shift and go to state 4
+    bucleFor                       shift and go to state 5
+    funcion                        shift and go to state 6
+    imports                        shift and go to state 7
+    array                          shift and go to state 8
+    metodosPropiedadesArray        shift and go to state 9
+    print                          shift and go to state 10
+    switch                         shift and go to state 11
+    map                            shift and go to state 12
+    metodosPropiedadesMap          shift and go to state 13
+    asignacionMate                 shift and go to state 14
+    asignacionOtros                shift and go to state 15
+    term                           shift and go to state 16
+    package                        shift and go to state 23
+    import                         shift and go to state 24
+    arrayNoInit                    shift and go to state 25
+    arrayInit                      shift and go to state 26
+    slice                          shift and go to state 27
+    remove                         shift and go to state 28
+    sliceAsignacion                shift and go to state 29
+    mapMake                        shift and go to state 34
+    mapnoMake                      shift and go to state 35
+    mapAppend                      shift and go to state 36
+    mapDelete                      shift and go to state 37
+    asignacionSuma                 shift and go to state 39
+    asignacionResta                shift and go to state 40
+    asignacionMult                 shift and go to state 41
+    asignacionDiv                  shift and go to state 42
+    factor                         shift and go to state 43
+
+state 100
+
+    (78) condicion -> expression comparadores . condicion
+    (75) condicion -> . expression
+    (76) condicion -> . LPAREN expression comparadores expression RPAREN
+    (77) condicion -> . LPAREN expression comparadores expression RPAREN comparadores condicion
+    (78) condicion -> . expression comparadores condicion
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    LPAREN          shift and go to state 58
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+
+    expression                     shift and go to state 57
+    condicion                      shift and go to state 138
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 101
+
+    (79) comparadores -> MAYORQUE .
+
+    LPAREN          reduce using rule 79 (comparadores -> MAYORQUE .)
+    NUMBER          reduce using rule 79 (comparadores -> MAYORQUE .)
+    FLOTANTE        reduce using rule 79 (comparadores -> MAYORQUE .)
+    VARIABLE        reduce using rule 79 (comparadores -> MAYORQUE .)
+
+
+state 102
+
+    (80) comparadores -> MENORQUE .
+
+    LPAREN          reduce using rule 80 (comparadores -> MENORQUE .)
+    NUMBER          reduce using rule 80 (comparadores -> MENORQUE .)
+    FLOTANTE        reduce using rule 80 (comparadores -> MENORQUE .)
+    VARIABLE        reduce using rule 80 (comparadores -> MENORQUE .)
+
+
+state 103
+
+    (81) comparadores -> MAYOROIGUALQUE .
+
+    LPAREN          reduce using rule 81 (comparadores -> MAYOROIGUALQUE .)
+    NUMBER          reduce using rule 81 (comparadores -> MAYOROIGUALQUE .)
+    FLOTANTE        reduce using rule 81 (comparadores -> MAYOROIGUALQUE .)
+    VARIABLE        reduce using rule 81 (comparadores -> MAYOROIGUALQUE .)
+
+
+state 104
+
+    (82) comparadores -> MENOROIGUALQUE .
+
+    LPAREN          reduce using rule 82 (comparadores -> MENOROIGUALQUE .)
+    NUMBER          reduce using rule 82 (comparadores -> MENOROIGUALQUE .)
+    FLOTANTE        reduce using rule 82 (comparadores -> MENOROIGUALQUE .)
+    VARIABLE        reduce using rule 82 (comparadores -> MENOROIGUALQUE .)
+
+
+state 105
+
+    (83) comparadores -> EQUIVALENTE .
+
+    LPAREN          reduce using rule 83 (comparadores -> EQUIVALENTE .)
+    NUMBER          reduce using rule 83 (comparadores -> EQUIVALENTE .)
+    FLOTANTE        reduce using rule 83 (comparadores -> EQUIVALENTE .)
+    VARIABLE        reduce using rule 83 (comparadores -> EQUIVALENTE .)
+
+
+state 106
+
+    (84) comparadores -> DIFERENTE .
+
+    LPAREN          reduce using rule 84 (comparadores -> DIFERENTE .)
+    NUMBER          reduce using rule 84 (comparadores -> DIFERENTE .)
+    FLOTANTE        reduce using rule 84 (comparadores -> DIFERENTE .)
+    VARIABLE        reduce using rule 84 (comparadores -> DIFERENTE .)
+
+
+state 107
+
+    (76) condicion -> LPAREN expression . comparadores expression RPAREN
+    (77) condicion -> LPAREN expression . comparadores expression RPAREN comparadores condicion
+    (112) factor -> LPAREN expression . RPAREN
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+    (79) comparadores -> . MAYORQUE
+    (80) comparadores -> . MENORQUE
+    (81) comparadores -> . MAYOROIGUALQUE
+    (82) comparadores -> . MENOROIGUALQUE
+    (83) comparadores -> . EQUIVALENTE
+    (84) comparadores -> . DIFERENTE
+
+    RPAREN          shift and go to state 122
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+    MAYORQUE        shift and go to state 101
+    MENORQUE        shift and go to state 102
+    MAYOROIGUALQUE  shift and go to state 103
+    MENOROIGUALQUE  shift and go to state 104
+    EQUIVALENTE     shift and go to state 105
+    DIFERENTE       shift and go to state 106
+
+    comparadores                   shift and go to state 139
+
+state 108
+
+    (85) bucleFor -> FOR asignacionFOR condicionFOR . updateFOR LLAVEIZ golang LLAVEDE
+    (88) updateFOR -> . VARIABLE incrementoDecremento
+
+    VARIABLE        shift and go to state 141
+
+    updateFOR                      shift and go to state 140
+
+state 109
+
+    (87) condicionFOR -> VARIABLE . comparadores expression PUNTOCOMA
+    (79) comparadores -> . MAYORQUE
+    (80) comparadores -> . MENORQUE
+    (81) comparadores -> . MAYOROIGUALQUE
+    (82) comparadores -> . MENOROIGUALQUE
+    (83) comparadores -> . EQUIVALENTE
+    (84) comparadores -> . DIFERENTE
+
+    MAYORQUE        shift and go to state 101
+    MENORQUE        shift and go to state 102
+    MAYOROIGUALQUE  shift and go to state 103
+    MENOROIGUALQUE  shift and go to state 104
+    EQUIVALENTE     shift and go to state 105
+    DIFERENTE       shift and go to state 106
+
+    comparadores                   shift and go to state 142
+
+state 110
+
+    (86) asignacionFOR -> VARIABLE DOSPUNTOS . ASIGNADOR expression PUNTOCOMA
+
+    ASIGNADOR       shift and go to state 143
+
+
+state 111
+
+    (32) funcion -> FUNCTION VARIABLE LPAREN . RPAREN LLAVEIZ golang LLAVEDE
+    (33) funcion -> FUNCTION VARIABLE LPAREN . parametros RPAREN LLAVEIZ golang LLAVEDE
+    (34) parametros -> . valoresPosibles
+    (35) parametros -> . VARIABLE TIPODATOS
+    (36) parametros -> . VARIABLE TIPODATOS COMA parametros
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    RPAREN          shift and go to state 145
+    VARIABLE        shift and go to state 144
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+
+    parametros                     shift and go to state 146
+    valoresPosibles                shift and go to state 147
+
+state 112
+
+    (16) asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR . expression
+    (19) asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR . valoresOtros
+    (29) asigacionCorta -> DOSPUNTOS ASIGNADOR .
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (30) valoresOtros -> . STRING
+    (31) valoresOtros -> . BOOLEAN
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    CORCHETEIZ      reduce using rule 29 (asigacionCorta -> DOSPUNTOS ASIGNADOR .)
+    MAKE            reduce using rule 29 (asigacionCorta -> DOSPUNTOS ASIGNADOR .)
+    MAP             reduce using rule 29 (asigacionCorta -> DOSPUNTOS ASIGNADOR .)
+    STRING          shift and go to state 150
+    BOOLEAN         shift and go to state 151
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 148
+    valoresOtros                   shift and go to state 149
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 113
+
+    (47) arrayInit -> VARIABLE asigacionCorta CORCHETEIZ . NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+
+    NUMBER          shift and go to state 152
+
+
+state 114
+
+    (63) mapMake -> VARIABLE asigacionCorta MAKE . LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+
+    LPAREN          shift and go to state 153
+
+
+state 115
+
+    (64) mapnoMake -> VARIABLE asigacionCorta MAP . CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+
+    CORCHETEIZ      shift and go to state 154
+
+
+state 116
+
+    (55) slice -> VARIABLE CORCHETEIZ valoresPosibles . CORCHETEDER
+
+    CORCHETEDER     shift and go to state 155
+
+
+state 117
+
+    (53) remove -> VARIABLE PUNTO REMOVE . LPAREN NUMBER RPAREN
+
+    LPAREN          shift and go to state 156
+
+
+state 118
+
+    (25) asignacionSuma -> VARIABLE ASIGNADORSUM expression .
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    $end            reduce using rule 25 (asignacionSuma -> VARIABLE ASIGNADORSUM expression .)
+    LLAVEDE         reduce using rule 25 (asignacionSuma -> VARIABLE ASIGNADORSUM expression .)
+    CASE            reduce using rule 25 (asignacionSuma -> VARIABLE ASIGNADORSUM expression .)
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 119
+
+    (26) asignacionResta -> VARIABLE ASIGNADORRESTA expression .
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    $end            reduce using rule 26 (asignacionResta -> VARIABLE ASIGNADORRESTA expression .)
+    LLAVEDE         reduce using rule 26 (asignacionResta -> VARIABLE ASIGNADORRESTA expression .)
+    CASE            reduce using rule 26 (asignacionResta -> VARIABLE ASIGNADORRESTA expression .)
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 120
+
+    (27) asignacionMult -> VARIABLE ASIGNADORMULT expression .
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    $end            reduce using rule 27 (asignacionMult -> VARIABLE ASIGNADORMULT expression .)
+    LLAVEDE         reduce using rule 27 (asignacionMult -> VARIABLE ASIGNADORMULT expression .)
+    CASE            reduce using rule 27 (asignacionMult -> VARIABLE ASIGNADORMULT expression .)
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 121
+
+    (28) asignacionDiv -> VARIABLE ASIGNADORDIV expression .
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    $end            reduce using rule 28 (asignacionDiv -> VARIABLE ASIGNADORDIV expression .)
+    LLAVEDE         reduce using rule 28 (asignacionDiv -> VARIABLE ASIGNADORDIV expression .)
+    CASE            reduce using rule 28 (asignacionDiv -> VARIABLE ASIGNADORDIV expression .)
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 122
+
+    (112) factor -> LPAREN expression RPAREN .
+
+    MULTI           reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    MAS             reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    RESTA           reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    $end            reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    MAYORQUE        reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    MENORQUE        reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    MAYOROIGUALQUE  reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    MENOROIGUALQUE  reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    EQUIVALENTE     reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    DIFERENTE       reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    LLAVEIZ         reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    LLAVEDE         reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    CASE            reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+    PUNTOCOMA       reduce using rule 112 (factor -> LPAREN expression RPAREN .)
+
+
+state 123
+
+    (54) sliceAsignacion -> slice ASIGNADOR valoresPosibles .
+
+    $end            reduce using rule 54 (sliceAsignacion -> slice ASIGNADOR valoresPosibles .)
+    LLAVEDE         reduce using rule 54 (sliceAsignacion -> slice ASIGNADOR valoresPosibles .)
+    CASE            reduce using rule 54 (sliceAsignacion -> slice ASIGNADOR valoresPosibles .)
+
+
+state 124
+
+    (91) print -> PRINT LPAREN parametro . RPAREN
+
+    RPAREN          shift and go to state 157
+
+
+state 125
+
+    (94) parametro -> argumento .
+    (95) parametro -> argumento . COMA parametro
+
+    RPAREN          reduce using rule 94 (parametro -> argumento .)
+    COMA            shift and go to state 158
+
+
+state 126
+
+    (92) print -> PRINTLN LPAREN parametro . RPAREN
+
+    RPAREN          shift and go to state 159
+
+
+state 127
+
+    (93) print -> PRINTF LPAREN parametro . RPAREN
+
+    RPAREN          shift and go to state 160
+
+
+state 128
+
+    (100) switch -> SWITCH argumento LLAVEIZ . casos LLAVEDE
+    (101) casos -> . CASE argumento DOSPUNTOS golang
+    (102) casos -> . CASE argumento DOSPUNTOS golang casos
+
+    CASE            shift and go to state 162
+
+    casos                          shift and go to state 161
+
+state 129
+
+    (15) asignacionMate -> VAR VARIABLE TIPODATOS . ASIGNADOR expression
+    (18) asignacionOtros -> VAR VARIABLE TIPODATOS . ASIGNADOR valoresOtros
+
+    ASIGNADOR       shift and go to state 163
+
+
+state 130
+
+    (17) asignacionMate -> VAR VARIABLE ASIGNADOR . expression
+    (20) asignacionOtros -> VAR VARIABLE ASIGNADOR . valoresOtros
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (30) valoresOtros -> . STRING
+    (31) valoresOtros -> . BOOLEAN
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    STRING          shift and go to state 150
+    BOOLEAN         shift and go to state 151
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 164
+    valoresOtros                   shift and go to state 165
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 131
+
+    (46) arrayNoInit -> VAR VARIABLE CORCHETEIZ . NUMBER CORCHETEDER TIPODATOS
+
+    NUMBER          shift and go to state 166
+
+
+state 132
+
+    (41) import -> IMPORT LPAREN variosImports . RPAREN
+
+    RPAREN          shift and go to state 167
+
+
+state 133
+
+    (43) variosImports -> STRING variosImports .
+
+    $end            reduce using rule 43 (variosImports -> STRING variosImports .)
+    LLAVEDE         reduce using rule 43 (variosImports -> STRING variosImports .)
+    CASE            reduce using rule 43 (variosImports -> STRING variosImports .)
+    RPAREN          reduce using rule 43 (variosImports -> STRING variosImports .)
+
+
+state 134
+
+    (69) mapAppend -> CORCHETEIZ valoresPosibles CORCHETEDER . ASIGNADOR valoresPosibles
+
+    ASIGNADOR       shift and go to state 168
+
+
+state 135
+
+    (70) mapDelete -> DELETE LPAREN VARIABLE . COMA valoresPosibles RPAREN
+
+    COMA            shift and go to state 169
+
+
+state 136
+
+    (72) condicional -> condicional ELSE LLAVEIZ golang . LLAVEDE
+
+    LLAVEDE         shift and go to state 170
+
+
+state 137
+
+    (71) condicional -> tiposCondicion condicion LLAVEIZ golang . LLAVEDE
+
+    LLAVEDE         shift and go to state 171
+
+
+state 138
+
+    (78) condicion -> expression comparadores condicion .
+
+    LLAVEIZ         reduce using rule 78 (condicion -> expression comparadores condicion .)
+
+
+state 139
+
+    (76) condicion -> LPAREN expression comparadores . expression RPAREN
+    (77) condicion -> LPAREN expression comparadores . expression RPAREN comparadores condicion
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 172
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 140
+
+    (85) bucleFor -> FOR asignacionFOR condicionFOR updateFOR . LLAVEIZ golang LLAVEDE
+
+    LLAVEIZ         shift and go to state 173
+
+
+state 141
+
+    (88) updateFOR -> VARIABLE . incrementoDecremento
+    (89) incrementoDecremento -> . INCREMENTO
+    (90) incrementoDecremento -> . DECREMENTO
+
+    INCREMENTO      shift and go to state 175
+    DECREMENTO      shift and go to state 176
+
+    incrementoDecremento           shift and go to state 174
+
+state 142
+
+    (87) condicionFOR -> VARIABLE comparadores . expression PUNTOCOMA
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 177
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 143
+
+    (86) asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR . expression PUNTOCOMA
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 178
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 144
+
+    (35) parametros -> VARIABLE . TIPODATOS
+    (36) parametros -> VARIABLE . TIPODATOS COMA parametros
+    (60) valoresPosibles -> VARIABLE .
+
+    TIPODATOS       shift and go to state 179
+    RPAREN          reduce using rule 60 (valoresPosibles -> VARIABLE .)
+
+
+state 145
+
+    (32) funcion -> FUNCTION VARIABLE LPAREN RPAREN . LLAVEIZ golang LLAVEDE
+
+    LLAVEIZ         shift and go to state 180
+
+
+state 146
+
+    (33) funcion -> FUNCTION VARIABLE LPAREN parametros . RPAREN LLAVEIZ golang LLAVEDE
+
+    RPAREN          shift and go to state 181
+
+
+state 147
+
+    (34) parametros -> valoresPosibles .
+
+    RPAREN          reduce using rule 34 (parametros -> valoresPosibles .)
+
+
+state 148
+
+    (16) asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression .
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    $end            reduce using rule 16 (asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression .)
+    LLAVEDE         reduce using rule 16 (asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression .)
+    CASE            reduce using rule 16 (asignacionMate -> VARIABLE DOSPUNTOS ASIGNADOR expression .)
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 149
+
+    (19) asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros .
+
+    $end            reduce using rule 19 (asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros .)
+    LLAVEDE         reduce using rule 19 (asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros .)
+    CASE            reduce using rule 19 (asignacionOtros -> VARIABLE DOSPUNTOS ASIGNADOR valoresOtros .)
+
+
+state 150
+
+    (30) valoresOtros -> STRING .
+
+    $end            reduce using rule 30 (valoresOtros -> STRING .)
+    LLAVEDE         reduce using rule 30 (valoresOtros -> STRING .)
+    CASE            reduce using rule 30 (valoresOtros -> STRING .)
+
+
+state 151
+
+    (31) valoresOtros -> BOOLEAN .
+
+    $end            reduce using rule 31 (valoresOtros -> BOOLEAN .)
+    LLAVEDE         reduce using rule 31 (valoresOtros -> BOOLEAN .)
+    CASE            reduce using rule 31 (valoresOtros -> BOOLEAN .)
+
+
+state 152
+
+    (47) arrayInit -> VARIABLE asigacionCorta CORCHETEIZ NUMBER . CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+
+    CORCHETEDER     shift and go to state 182
+
+
+state 153
+
+    (63) mapMake -> VARIABLE asigacionCorta MAKE LPAREN . MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+
+    MAP             shift and go to state 183
+
+
+state 154
+
+    (64) mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ . TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+
+    TIPODATOS       shift and go to state 184
+
+
+state 155
+
+    (55) slice -> VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER .
+
+    ASIGNADOR       reduce using rule 55 (slice -> VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER .)
+    $end            reduce using rule 55 (slice -> VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER .)
+    LLAVEDE         reduce using rule 55 (slice -> VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER .)
+    CASE            reduce using rule 55 (slice -> VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER .)
+
+
+state 156
+
+    (53) remove -> VARIABLE PUNTO REMOVE LPAREN . NUMBER RPAREN
+
+    NUMBER          shift and go to state 185
+
+
+state 157
+
+    (91) print -> PRINT LPAREN parametro RPAREN .
+
+    $end            reduce using rule 91 (print -> PRINT LPAREN parametro RPAREN .)
+    LLAVEDE         reduce using rule 91 (print -> PRINT LPAREN parametro RPAREN .)
+    CASE            reduce using rule 91 (print -> PRINT LPAREN parametro RPAREN .)
+
+
+state 158
+
+    (95) parametro -> argumento COMA . parametro
+    (94) parametro -> . argumento
+    (95) parametro -> . argumento COMA parametro
+    (96) argumento -> . NUMBER
+    (97) argumento -> . FLOTANTE
+    (98) argumento -> . VARIABLE
+    (99) argumento -> . STRING
+
+    NUMBER          shift and go to state 78
+    FLOTANTE        shift and go to state 79
+    VARIABLE        shift and go to state 80
+    STRING          shift and go to state 81
+
+    argumento                      shift and go to state 125
+    parametro                      shift and go to state 186
+
+state 159
+
+    (92) print -> PRINTLN LPAREN parametro RPAREN .
+
+    $end            reduce using rule 92 (print -> PRINTLN LPAREN parametro RPAREN .)
+    LLAVEDE         reduce using rule 92 (print -> PRINTLN LPAREN parametro RPAREN .)
+    CASE            reduce using rule 92 (print -> PRINTLN LPAREN parametro RPAREN .)
+
+
+state 160
+
+    (93) print -> PRINTF LPAREN parametro RPAREN .
+
+    $end            reduce using rule 93 (print -> PRINTF LPAREN parametro RPAREN .)
+    LLAVEDE         reduce using rule 93 (print -> PRINTF LPAREN parametro RPAREN .)
+    CASE            reduce using rule 93 (print -> PRINTF LPAREN parametro RPAREN .)
+
+
+state 161
+
+    (100) switch -> SWITCH argumento LLAVEIZ casos . LLAVEDE
+
+    LLAVEDE         shift and go to state 187
+
+
+state 162
+
+    (101) casos -> CASE . argumento DOSPUNTOS golang
+    (102) casos -> CASE . argumento DOSPUNTOS golang casos
+    (96) argumento -> . NUMBER
+    (97) argumento -> . FLOTANTE
+    (98) argumento -> . VARIABLE
+    (99) argumento -> . STRING
+
+    NUMBER          shift and go to state 78
+    FLOTANTE        shift and go to state 79
+    VARIABLE        shift and go to state 80
+    STRING          shift and go to state 81
+
+    argumento                      shift and go to state 188
+
+state 163
+
+    (15) asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR . expression
+    (18) asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR . valoresOtros
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (30) valoresOtros -> . STRING
+    (31) valoresOtros -> . BOOLEAN
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    STRING          shift and go to state 150
+    BOOLEAN         shift and go to state 151
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 189
+    valoresOtros                   shift and go to state 190
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 164
+
+    (17) asignacionMate -> VAR VARIABLE ASIGNADOR expression .
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    $end            reduce using rule 17 (asignacionMate -> VAR VARIABLE ASIGNADOR expression .)
+    LLAVEDE         reduce using rule 17 (asignacionMate -> VAR VARIABLE ASIGNADOR expression .)
+    CASE            reduce using rule 17 (asignacionMate -> VAR VARIABLE ASIGNADOR expression .)
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 165
+
+    (20) asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros .
+
+    $end            reduce using rule 20 (asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros .)
+    LLAVEDE         reduce using rule 20 (asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros .)
+    CASE            reduce using rule 20 (asignacionOtros -> VAR VARIABLE ASIGNADOR valoresOtros .)
+
+
+state 166
+
+    (46) arrayNoInit -> VAR VARIABLE CORCHETEIZ NUMBER . CORCHETEDER TIPODATOS
+
+    CORCHETEDER     shift and go to state 191
+
+
+state 167
+
+    (41) import -> IMPORT LPAREN variosImports RPAREN .
+
+    $end            reduce using rule 41 (import -> IMPORT LPAREN variosImports RPAREN .)
+    LLAVEDE         reduce using rule 41 (import -> IMPORT LPAREN variosImports RPAREN .)
+    CASE            reduce using rule 41 (import -> IMPORT LPAREN variosImports RPAREN .)
+
+
+state 168
+
+    (69) mapAppend -> CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR . valoresPosibles
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+    VARIABLE        shift and go to state 92
+
+    valoresPosibles                shift and go to state 192
+
+state 169
+
+    (70) mapDelete -> DELETE LPAREN VARIABLE COMA . valoresPosibles RPAREN
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+    VARIABLE        shift and go to state 92
+
+    valoresPosibles                shift and go to state 193
+
+state 170
+
+    (72) condicional -> condicional ELSE LLAVEIZ golang LLAVEDE .
+
+    ELSE            reduce using rule 72 (condicional -> condicional ELSE LLAVEIZ golang LLAVEDE .)
+    $end            reduce using rule 72 (condicional -> condicional ELSE LLAVEIZ golang LLAVEDE .)
+    LLAVEDE         reduce using rule 72 (condicional -> condicional ELSE LLAVEIZ golang LLAVEDE .)
+    CASE            reduce using rule 72 (condicional -> condicional ELSE LLAVEIZ golang LLAVEDE .)
+
+
+state 171
+
+    (71) condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE .
+
+    ELSE            reduce using rule 71 (condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE .)
+    $end            reduce using rule 71 (condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE .)
+    LLAVEDE         reduce using rule 71 (condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE .)
+    CASE            reduce using rule 71 (condicional -> tiposCondicion condicion LLAVEIZ golang LLAVEDE .)
+
+
+state 172
+
+    (76) condicion -> LPAREN expression comparadores expression . RPAREN
+    (77) condicion -> LPAREN expression comparadores expression . RPAREN comparadores condicion
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    RPAREN          shift and go to state 194
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 173
+
+    (85) bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ . golang LLAVEDE
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) golang -> . funcion
+    (6) golang -> . imports
+    (7) golang -> . array
+    (8) golang -> . metodosPropiedadesArray
+    (9) golang -> . print
+    (10) golang -> . switch
+    (11) golang -> . map
+    (12) golang -> . metodosPropiedadesMap
+    (13) asignacion -> . asignacionMate
+    (14) asignacion -> . asignacionOtros
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (71) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (72) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (85) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (32) funcion -> . FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE
+    (33) funcion -> . FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+    (37) imports -> . package
+    (38) imports -> . import
+    (44) array -> . arrayNoInit
+    (45) array -> . arrayInit
+    (50) metodosPropiedadesArray -> . slice
+    (51) metodosPropiedadesArray -> . remove
+    (52) metodosPropiedadesArray -> . sliceAsignacion
+    (91) print -> . PRINT LPAREN parametro RPAREN
+    (92) print -> . PRINTLN LPAREN parametro RPAREN
+    (93) print -> . PRINTF LPAREN parametro RPAREN
+    (100) switch -> . SWITCH argumento LLAVEIZ casos LLAVEDE
+    (61) map -> . mapMake
+    (62) map -> . mapnoMake
+    (67) metodosPropiedadesMap -> . mapAppend
+    (68) metodosPropiedadesMap -> . mapDelete
+    (15) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (16) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (17) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (18) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (19) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (20) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (21) asignacionOtros -> . asignacionSuma
+    (22) asignacionOtros -> . asignacionResta
+    (23) asignacionOtros -> . asignacionMult
+    (24) asignacionOtros -> . asignacionDiv
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (73) tiposCondicion -> . IF
+    (74) tiposCondicion -> . ELSE IF
+    (39) package -> . PACKAGE VARIABLE
+    (40) import -> . IMPORT variosImports
+    (41) import -> . IMPORT LPAREN variosImports RPAREN
+    (46) arrayNoInit -> . VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS
+    (47) arrayInit -> . VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+    (55) slice -> . VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER
+    (53) remove -> . VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN
+    (54) sliceAsignacion -> . slice ASIGNADOR valoresPosibles
+    (63) mapMake -> . VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+    (64) mapnoMake -> . VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+    (69) mapAppend -> . CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles
+    (70) mapDelete -> . DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN
+    (25) asignacionSuma -> . VARIABLE ASIGNADORSUM expression
+    (26) asignacionResta -> . VARIABLE ASIGNADORRESTA expression
+    (27) asignacionMult -> . VARIABLE ASIGNADORMULT expression
+    (28) asignacionDiv -> . VARIABLE ASIGNADORDIV expression
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    FOR             shift and go to state 19
+    FUNCTION        shift and go to state 20
+    PRINT           shift and go to state 30
+    PRINTLN         shift and go to state 31
+    PRINTF          shift and go to state 32
+    SWITCH          shift and go to state 33
+    VAR             shift and go to state 38
+    VARIABLE        shift and go to state 21
+    IF              shift and go to state 44
+    ELSE            shift and go to state 18
+    PACKAGE         shift and go to state 45
+    IMPORT          shift and go to state 46
+    CORCHETEIZ      shift and go to state 47
+    DELETE          shift and go to state 49
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    LPAREN          shift and go to state 22
+
+    golang                         shift and go to state 195
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    condicional                    shift and go to state 4
+    bucleFor                       shift and go to state 5
+    funcion                        shift and go to state 6
+    imports                        shift and go to state 7
+    array                          shift and go to state 8
+    metodosPropiedadesArray        shift and go to state 9
+    print                          shift and go to state 10
+    switch                         shift and go to state 11
+    map                            shift and go to state 12
+    metodosPropiedadesMap          shift and go to state 13
+    asignacionMate                 shift and go to state 14
+    asignacionOtros                shift and go to state 15
+    term                           shift and go to state 16
+    tiposCondicion                 shift and go to state 17
+    package                        shift and go to state 23
+    import                         shift and go to state 24
+    arrayNoInit                    shift and go to state 25
+    arrayInit                      shift and go to state 26
+    slice                          shift and go to state 27
+    remove                         shift and go to state 28
+    sliceAsignacion                shift and go to state 29
+    mapMake                        shift and go to state 34
+    mapnoMake                      shift and go to state 35
+    mapAppend                      shift and go to state 36
+    mapDelete                      shift and go to state 37
+    asignacionSuma                 shift and go to state 39
+    asignacionResta                shift and go to state 40
+    asignacionMult                 shift and go to state 41
+    asignacionDiv                  shift and go to state 42
+    factor                         shift and go to state 43
+
+state 174
+
+    (88) updateFOR -> VARIABLE incrementoDecremento .
+
+    LLAVEIZ         reduce using rule 88 (updateFOR -> VARIABLE incrementoDecremento .)
+
+
+state 175
+
+    (89) incrementoDecremento -> INCREMENTO .
+
+    LLAVEIZ         reduce using rule 89 (incrementoDecremento -> INCREMENTO .)
+
+
+state 176
+
+    (90) incrementoDecremento -> DECREMENTO .
+
+    LLAVEIZ         reduce using rule 90 (incrementoDecremento -> DECREMENTO .)
+
+
+state 177
+
+    (87) condicionFOR -> VARIABLE comparadores expression . PUNTOCOMA
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    PUNTOCOMA       shift and go to state 196
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 178
+
+    (86) asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR expression . PUNTOCOMA
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    PUNTOCOMA       shift and go to state 197
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 179
+
+    (35) parametros -> VARIABLE TIPODATOS .
+    (36) parametros -> VARIABLE TIPODATOS . COMA parametros
+
+    RPAREN          reduce using rule 35 (parametros -> VARIABLE TIPODATOS .)
+    COMA            shift and go to state 198
+
+
+state 180
+
+    (32) funcion -> FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ . golang LLAVEDE
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) golang -> . funcion
+    (6) golang -> . imports
+    (7) golang -> . array
+    (8) golang -> . metodosPropiedadesArray
+    (9) golang -> . print
+    (10) golang -> . switch
+    (11) golang -> . map
+    (12) golang -> . metodosPropiedadesMap
+    (13) asignacion -> . asignacionMate
+    (14) asignacion -> . asignacionOtros
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (71) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (72) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (85) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (32) funcion -> . FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE
+    (33) funcion -> . FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+    (37) imports -> . package
+    (38) imports -> . import
+    (44) array -> . arrayNoInit
+    (45) array -> . arrayInit
+    (50) metodosPropiedadesArray -> . slice
+    (51) metodosPropiedadesArray -> . remove
+    (52) metodosPropiedadesArray -> . sliceAsignacion
+    (91) print -> . PRINT LPAREN parametro RPAREN
+    (92) print -> . PRINTLN LPAREN parametro RPAREN
+    (93) print -> . PRINTF LPAREN parametro RPAREN
+    (100) switch -> . SWITCH argumento LLAVEIZ casos LLAVEDE
+    (61) map -> . mapMake
+    (62) map -> . mapnoMake
+    (67) metodosPropiedadesMap -> . mapAppend
+    (68) metodosPropiedadesMap -> . mapDelete
+    (15) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (16) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (17) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (18) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (19) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (20) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (21) asignacionOtros -> . asignacionSuma
+    (22) asignacionOtros -> . asignacionResta
+    (23) asignacionOtros -> . asignacionMult
+    (24) asignacionOtros -> . asignacionDiv
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (73) tiposCondicion -> . IF
+    (74) tiposCondicion -> . ELSE IF
+    (39) package -> . PACKAGE VARIABLE
+    (40) import -> . IMPORT variosImports
+    (41) import -> . IMPORT LPAREN variosImports RPAREN
+    (46) arrayNoInit -> . VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS
+    (47) arrayInit -> . VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+    (55) slice -> . VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER
+    (53) remove -> . VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN
+    (54) sliceAsignacion -> . slice ASIGNADOR valoresPosibles
+    (63) mapMake -> . VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+    (64) mapnoMake -> . VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+    (69) mapAppend -> . CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles
+    (70) mapDelete -> . DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN
+    (25) asignacionSuma -> . VARIABLE ASIGNADORSUM expression
+    (26) asignacionResta -> . VARIABLE ASIGNADORRESTA expression
+    (27) asignacionMult -> . VARIABLE ASIGNADORMULT expression
+    (28) asignacionDiv -> . VARIABLE ASIGNADORDIV expression
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    FOR             shift and go to state 19
+    FUNCTION        shift and go to state 20
+    PRINT           shift and go to state 30
+    PRINTLN         shift and go to state 31
+    PRINTF          shift and go to state 32
+    SWITCH          shift and go to state 33
+    VAR             shift and go to state 38
+    VARIABLE        shift and go to state 21
+    IF              shift and go to state 44
+    ELSE            shift and go to state 18
+    PACKAGE         shift and go to state 45
+    IMPORT          shift and go to state 46
+    CORCHETEIZ      shift and go to state 47
+    DELETE          shift and go to state 49
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    LPAREN          shift and go to state 22
+
+    golang                         shift and go to state 199
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    condicional                    shift and go to state 4
+    bucleFor                       shift and go to state 5
+    funcion                        shift and go to state 6
+    imports                        shift and go to state 7
+    array                          shift and go to state 8
+    metodosPropiedadesArray        shift and go to state 9
+    print                          shift and go to state 10
+    switch                         shift and go to state 11
+    map                            shift and go to state 12
+    metodosPropiedadesMap          shift and go to state 13
+    asignacionMate                 shift and go to state 14
+    asignacionOtros                shift and go to state 15
+    term                           shift and go to state 16
+    tiposCondicion                 shift and go to state 17
+    package                        shift and go to state 23
+    import                         shift and go to state 24
+    arrayNoInit                    shift and go to state 25
+    arrayInit                      shift and go to state 26
+    slice                          shift and go to state 27
+    remove                         shift and go to state 28
+    sliceAsignacion                shift and go to state 29
+    mapMake                        shift and go to state 34
+    mapnoMake                      shift and go to state 35
+    mapAppend                      shift and go to state 36
+    mapDelete                      shift and go to state 37
+    asignacionSuma                 shift and go to state 39
+    asignacionResta                shift and go to state 40
+    asignacionMult                 shift and go to state 41
+    asignacionDiv                  shift and go to state 42
+    factor                         shift and go to state 43
+
+state 181
+
+    (33) funcion -> FUNCTION VARIABLE LPAREN parametros RPAREN . LLAVEIZ golang LLAVEDE
+
+    LLAVEIZ         shift and go to state 200
+
+
+state 182
+
+    (47) arrayInit -> VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER . TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+
+    TIPODATOS       shift and go to state 201
+
+
+state 183
+
+    (63) mapMake -> VARIABLE asigacionCorta MAKE LPAREN MAP . CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+
+    CORCHETEIZ      shift and go to state 202
+
+
+state 184
+
+    (64) mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS . CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+
+    CORCHETEDER     shift and go to state 203
+
+
+state 185
+
+    (53) remove -> VARIABLE PUNTO REMOVE LPAREN NUMBER . RPAREN
+
+    RPAREN          shift and go to state 204
+
+
+state 186
+
+    (95) parametro -> argumento COMA parametro .
+
+    RPAREN          reduce using rule 95 (parametro -> argumento COMA parametro .)
+
+
+state 187
+
+    (100) switch -> SWITCH argumento LLAVEIZ casos LLAVEDE .
+
+    $end            reduce using rule 100 (switch -> SWITCH argumento LLAVEIZ casos LLAVEDE .)
+    LLAVEDE         reduce using rule 100 (switch -> SWITCH argumento LLAVEIZ casos LLAVEDE .)
+    CASE            reduce using rule 100 (switch -> SWITCH argumento LLAVEIZ casos LLAVEDE .)
+
+
+state 188
+
+    (101) casos -> CASE argumento . DOSPUNTOS golang
+    (102) casos -> CASE argumento . DOSPUNTOS golang casos
+
+    DOSPUNTOS       shift and go to state 205
+
+
+state 189
+
+    (15) asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression .
+    (103) expression -> expression . MAS term
+    (104) expression -> expression . RESTA term
+
+    $end            reduce using rule 15 (asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression .)
+    LLAVEDE         reduce using rule 15 (asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression .)
+    CASE            reduce using rule 15 (asignacionMate -> VAR VARIABLE TIPODATOS ASIGNADOR expression .)
+    MAS             shift and go to state 51
+    RESTA           shift and go to state 52
+
+
+state 190
+
+    (18) asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros .
+
+    $end            reduce using rule 18 (asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros .)
+    LLAVEDE         reduce using rule 18 (asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros .)
+    CASE            reduce using rule 18 (asignacionOtros -> VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros .)
+
+
+state 191
+
+    (46) arrayNoInit -> VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER . TIPODATOS
+
+    TIPODATOS       shift and go to state 206
+
+
+state 192
+
+    (69) mapAppend -> CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles .
+
+    $end            reduce using rule 69 (mapAppend -> CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles .)
+    LLAVEDE         reduce using rule 69 (mapAppend -> CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles .)
+    CASE            reduce using rule 69 (mapAppend -> CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles .)
+
+
+state 193
+
+    (70) mapDelete -> DELETE LPAREN VARIABLE COMA valoresPosibles . RPAREN
+
+    RPAREN          shift and go to state 207
+
+
+state 194
+
+    (76) condicion -> LPAREN expression comparadores expression RPAREN .
+    (77) condicion -> LPAREN expression comparadores expression RPAREN . comparadores condicion
+    (79) comparadores -> . MAYORQUE
+    (80) comparadores -> . MENORQUE
+    (81) comparadores -> . MAYOROIGUALQUE
+    (82) comparadores -> . MENOROIGUALQUE
+    (83) comparadores -> . EQUIVALENTE
+    (84) comparadores -> . DIFERENTE
+
+    LLAVEIZ         reduce using rule 76 (condicion -> LPAREN expression comparadores expression RPAREN .)
+    MAYORQUE        shift and go to state 101
+    MENORQUE        shift and go to state 102
+    MAYOROIGUALQUE  shift and go to state 103
+    MENOROIGUALQUE  shift and go to state 104
+    EQUIVALENTE     shift and go to state 105
+    DIFERENTE       shift and go to state 106
+
+    comparadores                   shift and go to state 208
+
+state 195
+
+    (85) bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang . LLAVEDE
+
+    LLAVEDE         shift and go to state 209
+
+
+state 196
+
+    (87) condicionFOR -> VARIABLE comparadores expression PUNTOCOMA .
+
+    VARIABLE        reduce using rule 87 (condicionFOR -> VARIABLE comparadores expression PUNTOCOMA .)
+
+
+state 197
+
+    (86) asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA .
+
+    VARIABLE        reduce using rule 86 (asignacionFOR -> VARIABLE DOSPUNTOS ASIGNADOR expression PUNTOCOMA .)
+
+
+state 198
+
+    (36) parametros -> VARIABLE TIPODATOS COMA . parametros
+    (34) parametros -> . valoresPosibles
+    (35) parametros -> . VARIABLE TIPODATOS
+    (36) parametros -> . VARIABLE TIPODATOS COMA parametros
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    VARIABLE        shift and go to state 144
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+
+    parametros                     shift and go to state 210
+    valoresPosibles                shift and go to state 147
+
+state 199
+
+    (32) funcion -> FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang . LLAVEDE
+
+    LLAVEDE         shift and go to state 211
+
+
+state 200
+
+    (33) funcion -> FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ . golang LLAVEDE
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) golang -> . funcion
+    (6) golang -> . imports
+    (7) golang -> . array
+    (8) golang -> . metodosPropiedadesArray
+    (9) golang -> . print
+    (10) golang -> . switch
+    (11) golang -> . map
+    (12) golang -> . metodosPropiedadesMap
+    (13) asignacion -> . asignacionMate
+    (14) asignacion -> . asignacionOtros
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (71) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (72) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (85) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (32) funcion -> . FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE
+    (33) funcion -> . FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+    (37) imports -> . package
+    (38) imports -> . import
+    (44) array -> . arrayNoInit
+    (45) array -> . arrayInit
+    (50) metodosPropiedadesArray -> . slice
+    (51) metodosPropiedadesArray -> . remove
+    (52) metodosPropiedadesArray -> . sliceAsignacion
+    (91) print -> . PRINT LPAREN parametro RPAREN
+    (92) print -> . PRINTLN LPAREN parametro RPAREN
+    (93) print -> . PRINTF LPAREN parametro RPAREN
+    (100) switch -> . SWITCH argumento LLAVEIZ casos LLAVEDE
+    (61) map -> . mapMake
+    (62) map -> . mapnoMake
+    (67) metodosPropiedadesMap -> . mapAppend
+    (68) metodosPropiedadesMap -> . mapDelete
+    (15) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (16) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (17) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (18) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (19) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (20) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (21) asignacionOtros -> . asignacionSuma
+    (22) asignacionOtros -> . asignacionResta
+    (23) asignacionOtros -> . asignacionMult
+    (24) asignacionOtros -> . asignacionDiv
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (73) tiposCondicion -> . IF
+    (74) tiposCondicion -> . ELSE IF
+    (39) package -> . PACKAGE VARIABLE
+    (40) import -> . IMPORT variosImports
+    (41) import -> . IMPORT LPAREN variosImports RPAREN
+    (46) arrayNoInit -> . VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS
+    (47) arrayInit -> . VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+    (55) slice -> . VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER
+    (53) remove -> . VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN
+    (54) sliceAsignacion -> . slice ASIGNADOR valoresPosibles
+    (63) mapMake -> . VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+    (64) mapnoMake -> . VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+    (69) mapAppend -> . CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles
+    (70) mapDelete -> . DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN
+    (25) asignacionSuma -> . VARIABLE ASIGNADORSUM expression
+    (26) asignacionResta -> . VARIABLE ASIGNADORRESTA expression
+    (27) asignacionMult -> . VARIABLE ASIGNADORMULT expression
+    (28) asignacionDiv -> . VARIABLE ASIGNADORDIV expression
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    FOR             shift and go to state 19
+    FUNCTION        shift and go to state 20
+    PRINT           shift and go to state 30
+    PRINTLN         shift and go to state 31
+    PRINTF          shift and go to state 32
+    SWITCH          shift and go to state 33
+    VAR             shift and go to state 38
+    VARIABLE        shift and go to state 21
+    IF              shift and go to state 44
+    ELSE            shift and go to state 18
+    PACKAGE         shift and go to state 45
+    IMPORT          shift and go to state 46
+    CORCHETEIZ      shift and go to state 47
+    DELETE          shift and go to state 49
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    LPAREN          shift and go to state 22
+
+    golang                         shift and go to state 212
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    condicional                    shift and go to state 4
+    bucleFor                       shift and go to state 5
+    funcion                        shift and go to state 6
+    imports                        shift and go to state 7
+    array                          shift and go to state 8
+    metodosPropiedadesArray        shift and go to state 9
+    print                          shift and go to state 10
+    switch                         shift and go to state 11
+    map                            shift and go to state 12
+    metodosPropiedadesMap          shift and go to state 13
+    asignacionMate                 shift and go to state 14
+    asignacionOtros                shift and go to state 15
+    term                           shift and go to state 16
+    tiposCondicion                 shift and go to state 17
+    package                        shift and go to state 23
+    import                         shift and go to state 24
+    arrayNoInit                    shift and go to state 25
+    arrayInit                      shift and go to state 26
+    slice                          shift and go to state 27
+    remove                         shift and go to state 28
+    sliceAsignacion                shift and go to state 29
+    mapMake                        shift and go to state 34
+    mapnoMake                      shift and go to state 35
+    mapAppend                      shift and go to state 36
+    mapDelete                      shift and go to state 37
+    asignacionSuma                 shift and go to state 39
+    asignacionResta                shift and go to state 40
+    asignacionMult                 shift and go to state 41
+    asignacionDiv                  shift and go to state 42
+    factor                         shift and go to state 43
+
+state 201
+
+    (47) arrayInit -> VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS . LLAVEIZ arrayElementos LLAVEDE
+
+    LLAVEIZ         shift and go to state 213
+
+
+state 202
+
+    (63) mapMake -> VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ . TIPODATOS CORCHETEDER TIPODATOS RPAREN
+
+    TIPODATOS       shift and go to state 214
+
+
+state 203
+
+    (64) mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER . TIPODATOS LLAVEIZ mapElementos LLAVEDE
+
+    TIPODATOS       shift and go to state 215
+
+
+state 204
+
+    (53) remove -> VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN .
+
+    $end            reduce using rule 53 (remove -> VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN .)
+    LLAVEDE         reduce using rule 53 (remove -> VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN .)
+    CASE            reduce using rule 53 (remove -> VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN .)
+
+
+state 205
+
+    (101) casos -> CASE argumento DOSPUNTOS . golang
+    (102) casos -> CASE argumento DOSPUNTOS . golang casos
+    (1) golang -> . asignacion
+    (2) golang -> . expression
+    (3) golang -> . condicional
+    (4) golang -> . bucleFor
+    (5) golang -> . funcion
+    (6) golang -> . imports
+    (7) golang -> . array
+    (8) golang -> . metodosPropiedadesArray
+    (9) golang -> . print
+    (10) golang -> . switch
+    (11) golang -> . map
+    (12) golang -> . metodosPropiedadesMap
+    (13) asignacion -> . asignacionMate
+    (14) asignacion -> . asignacionOtros
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (71) condicional -> . tiposCondicion condicion LLAVEIZ golang LLAVEDE
+    (72) condicional -> . condicional ELSE LLAVEIZ golang LLAVEDE
+    (85) bucleFor -> . FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE
+    (32) funcion -> . FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE
+    (33) funcion -> . FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE
+    (37) imports -> . package
+    (38) imports -> . import
+    (44) array -> . arrayNoInit
+    (45) array -> . arrayInit
+    (50) metodosPropiedadesArray -> . slice
+    (51) metodosPropiedadesArray -> . remove
+    (52) metodosPropiedadesArray -> . sliceAsignacion
+    (91) print -> . PRINT LPAREN parametro RPAREN
+    (92) print -> . PRINTLN LPAREN parametro RPAREN
+    (93) print -> . PRINTF LPAREN parametro RPAREN
+    (100) switch -> . SWITCH argumento LLAVEIZ casos LLAVEDE
+    (61) map -> . mapMake
+    (62) map -> . mapnoMake
+    (67) metodosPropiedadesMap -> . mapAppend
+    (68) metodosPropiedadesMap -> . mapDelete
+    (15) asignacionMate -> . VAR VARIABLE TIPODATOS ASIGNADOR expression
+    (16) asignacionMate -> . VARIABLE DOSPUNTOS ASIGNADOR expression
+    (17) asignacionMate -> . VAR VARIABLE ASIGNADOR expression
+    (18) asignacionOtros -> . VAR VARIABLE TIPODATOS ASIGNADOR valoresOtros
+    (19) asignacionOtros -> . VARIABLE DOSPUNTOS ASIGNADOR valoresOtros
+    (20) asignacionOtros -> . VAR VARIABLE ASIGNADOR valoresOtros
+    (21) asignacionOtros -> . asignacionSuma
+    (22) asignacionOtros -> . asignacionResta
+    (23) asignacionOtros -> . asignacionMult
+    (24) asignacionOtros -> . asignacionDiv
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (73) tiposCondicion -> . IF
+    (74) tiposCondicion -> . ELSE IF
+    (39) package -> . PACKAGE VARIABLE
+    (40) import -> . IMPORT variosImports
+    (41) import -> . IMPORT LPAREN variosImports RPAREN
+    (46) arrayNoInit -> . VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS
+    (47) arrayInit -> . VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE
+    (55) slice -> . VARIABLE CORCHETEIZ valoresPosibles CORCHETEDER
+    (53) remove -> . VARIABLE PUNTO REMOVE LPAREN NUMBER RPAREN
+    (54) sliceAsignacion -> . slice ASIGNADOR valoresPosibles
+    (63) mapMake -> . VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN
+    (64) mapnoMake -> . VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE
+    (69) mapAppend -> . CORCHETEIZ valoresPosibles CORCHETEDER ASIGNADOR valoresPosibles
+    (70) mapDelete -> . DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN
+    (25) asignacionSuma -> . VARIABLE ASIGNADORSUM expression
+    (26) asignacionResta -> . VARIABLE ASIGNADORRESTA expression
+    (27) asignacionMult -> . VARIABLE ASIGNADORMULT expression
+    (28) asignacionDiv -> . VARIABLE ASIGNADORDIV expression
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    FOR             shift and go to state 19
+    FUNCTION        shift and go to state 20
+    PRINT           shift and go to state 30
+    PRINTLN         shift and go to state 31
+    PRINTF          shift and go to state 32
+    SWITCH          shift and go to state 33
+    VAR             shift and go to state 38
+    VARIABLE        shift and go to state 21
+    IF              shift and go to state 44
+    ELSE            shift and go to state 18
+    PACKAGE         shift and go to state 45
+    IMPORT          shift and go to state 46
+    CORCHETEIZ      shift and go to state 47
+    DELETE          shift and go to state 49
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    LPAREN          shift and go to state 22
+
+    golang                         shift and go to state 216
+    asignacion                     shift and go to state 2
+    expression                     shift and go to state 3
+    condicional                    shift and go to state 4
+    bucleFor                       shift and go to state 5
+    funcion                        shift and go to state 6
+    imports                        shift and go to state 7
+    array                          shift and go to state 8
+    metodosPropiedadesArray        shift and go to state 9
+    print                          shift and go to state 10
+    switch                         shift and go to state 11
+    map                            shift and go to state 12
+    metodosPropiedadesMap          shift and go to state 13
+    asignacionMate                 shift and go to state 14
+    asignacionOtros                shift and go to state 15
+    term                           shift and go to state 16
+    tiposCondicion                 shift and go to state 17
+    package                        shift and go to state 23
+    import                         shift and go to state 24
+    arrayNoInit                    shift and go to state 25
+    arrayInit                      shift and go to state 26
+    slice                          shift and go to state 27
+    remove                         shift and go to state 28
+    sliceAsignacion                shift and go to state 29
+    mapMake                        shift and go to state 34
+    mapnoMake                      shift and go to state 35
+    mapAppend                      shift and go to state 36
+    mapDelete                      shift and go to state 37
+    asignacionSuma                 shift and go to state 39
+    asignacionResta                shift and go to state 40
+    asignacionMult                 shift and go to state 41
+    asignacionDiv                  shift and go to state 42
+    factor                         shift and go to state 43
+
+state 206
+
+    (46) arrayNoInit -> VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS .
+
+    $end            reduce using rule 46 (arrayNoInit -> VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS .)
+    LLAVEDE         reduce using rule 46 (arrayNoInit -> VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS .)
+    CASE            reduce using rule 46 (arrayNoInit -> VAR VARIABLE CORCHETEIZ NUMBER CORCHETEDER TIPODATOS .)
+
+
+state 207
+
+    (70) mapDelete -> DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN .
+
+    $end            reduce using rule 70 (mapDelete -> DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN .)
+    LLAVEDE         reduce using rule 70 (mapDelete -> DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN .)
+    CASE            reduce using rule 70 (mapDelete -> DELETE LPAREN VARIABLE COMA valoresPosibles RPAREN .)
+
+
+state 208
+
+    (77) condicion -> LPAREN expression comparadores expression RPAREN comparadores . condicion
+    (75) condicion -> . expression
+    (76) condicion -> . LPAREN expression comparadores expression RPAREN
+    (77) condicion -> . LPAREN expression comparadores expression RPAREN comparadores condicion
+    (78) condicion -> . expression comparadores condicion
+    (103) expression -> . expression MAS term
+    (104) expression -> . expression RESTA term
+    (105) expression -> . term
+    (106) term -> . term MULTI factor
+    (107) term -> . term DIVIDE factor
+    (108) term -> . factor
+    (109) factor -> . NUMBER
+    (110) factor -> . FLOTANTE
+    (111) factor -> . VARIABLE
+    (112) factor -> . LPAREN expression RPAREN
+
+    LPAREN          shift and go to state 58
+    NUMBER          shift and go to state 48
+    FLOTANTE        shift and go to state 50
+    VARIABLE        shift and go to state 59
+
+    expression                     shift and go to state 57
+    condicion                      shift and go to state 217
+    term                           shift and go to state 16
+    factor                         shift and go to state 43
+
+state 209
+
+    (85) bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE .
+
+    $end            reduce using rule 85 (bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE .)
+    LLAVEDE         reduce using rule 85 (bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE .)
+    CASE            reduce using rule 85 (bucleFor -> FOR asignacionFOR condicionFOR updateFOR LLAVEIZ golang LLAVEDE .)
+
+
+state 210
+
+    (36) parametros -> VARIABLE TIPODATOS COMA parametros .
+
+    RPAREN          reduce using rule 36 (parametros -> VARIABLE TIPODATOS COMA parametros .)
+
+
+state 211
+
+    (32) funcion -> FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE .
+
+    $end            reduce using rule 32 (funcion -> FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE .)
+    LLAVEDE         reduce using rule 32 (funcion -> FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE .)
+    CASE            reduce using rule 32 (funcion -> FUNCTION VARIABLE LPAREN RPAREN LLAVEIZ golang LLAVEDE .)
+
+
+state 212
+
+    (33) funcion -> FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang . LLAVEDE
+
+    LLAVEDE         shift and go to state 218
+
+
+state 213
+
+    (47) arrayInit -> VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ . arrayElementos LLAVEDE
+    (48) arrayElementos -> . valoresPosibles
+    (49) arrayElementos -> . valoresPosibles COMA valoresPosibles
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+    VARIABLE        shift and go to state 92
+
+    arrayElementos                 shift and go to state 219
+    valoresPosibles                shift and go to state 220
+
+state 214
+
+    (63) mapMake -> VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS . CORCHETEDER TIPODATOS RPAREN
+
+    CORCHETEDER     shift and go to state 221
+
+
+state 215
+
+    (64) mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS . LLAVEIZ mapElementos LLAVEDE
+
+    LLAVEIZ         shift and go to state 222
+
+
+state 216
+
+    (101) casos -> CASE argumento DOSPUNTOS golang .
+    (102) casos -> CASE argumento DOSPUNTOS golang . casos
+    (101) casos -> . CASE argumento DOSPUNTOS golang
+    (102) casos -> . CASE argumento DOSPUNTOS golang casos
+
+    LLAVEDE         reduce using rule 101 (casos -> CASE argumento DOSPUNTOS golang .)
+    CASE            shift and go to state 162
+
+    casos                          shift and go to state 223
+
+state 217
+
+    (77) condicion -> LPAREN expression comparadores expression RPAREN comparadores condicion .
+
+    LLAVEIZ         reduce using rule 77 (condicion -> LPAREN expression comparadores expression RPAREN comparadores condicion .)
+
+
+state 218
+
+    (33) funcion -> FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE .
+
+    $end            reduce using rule 33 (funcion -> FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE .)
+    LLAVEDE         reduce using rule 33 (funcion -> FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE .)
+    CASE            reduce using rule 33 (funcion -> FUNCTION VARIABLE LPAREN parametros RPAREN LLAVEIZ golang LLAVEDE .)
+
+
+state 219
+
+    (47) arrayInit -> VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos . LLAVEDE
+
+    LLAVEDE         shift and go to state 224
+
+
+state 220
+
+    (48) arrayElementos -> valoresPosibles .
+    (49) arrayElementos -> valoresPosibles . COMA valoresPosibles
+
+    LLAVEDE         reduce using rule 48 (arrayElementos -> valoresPosibles .)
+    COMA            shift and go to state 225
+
+
+state 221
+
+    (63) mapMake -> VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER . TIPODATOS RPAREN
+
+    TIPODATOS       shift and go to state 226
+
+
+state 222
+
+    (64) mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ . mapElementos LLAVEDE
+    (65) mapElementos -> . valoresPosibles DOSPUNTOS valoresPosibles
+    (66) mapElementos -> . valoresPosibles DOSPUNTOS valoresPosibles COMA mapElementos
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+    VARIABLE        shift and go to state 92
+
+    mapElementos                   shift and go to state 227
+    valoresPosibles                shift and go to state 228
+
+state 223
+
+    (102) casos -> CASE argumento DOSPUNTOS golang casos .
+
+    LLAVEDE         reduce using rule 102 (casos -> CASE argumento DOSPUNTOS golang casos .)
+
+
+state 224
+
+    (47) arrayInit -> VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE .
+
+    $end            reduce using rule 47 (arrayInit -> VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE .)
+    LLAVEDE         reduce using rule 47 (arrayInit -> VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE .)
+    CASE            reduce using rule 47 (arrayInit -> VARIABLE asigacionCorta CORCHETEIZ NUMBER CORCHETEDER TIPODATOS LLAVEIZ arrayElementos LLAVEDE .)
+
+
+state 225
+
+    (49) arrayElementos -> valoresPosibles COMA . valoresPosibles
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+    VARIABLE        shift and go to state 92
+
+    valoresPosibles                shift and go to state 229
+
+state 226
+
+    (63) mapMake -> VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS . RPAREN
+
+    RPAREN          shift and go to state 230
+
+
+state 227
+
+    (64) mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos . LLAVEDE
+
+    LLAVEDE         shift and go to state 231
+
+
+state 228
+
+    (65) mapElementos -> valoresPosibles . DOSPUNTOS valoresPosibles
+    (66) mapElementos -> valoresPosibles . DOSPUNTOS valoresPosibles COMA mapElementos
+
+    DOSPUNTOS       shift and go to state 232
+
+
+state 229
+
+    (49) arrayElementos -> valoresPosibles COMA valoresPosibles .
+
+    LLAVEDE         reduce using rule 49 (arrayElementos -> valoresPosibles COMA valoresPosibles .)
+
+
+state 230
+
+    (63) mapMake -> VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN .
+
+    $end            reduce using rule 63 (mapMake -> VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN .)
+    LLAVEDE         reduce using rule 63 (mapMake -> VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN .)
+    CASE            reduce using rule 63 (mapMake -> VARIABLE asigacionCorta MAKE LPAREN MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS RPAREN .)
+
+
+state 231
+
+    (64) mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE .
+
+    $end            reduce using rule 64 (mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE .)
+    LLAVEDE         reduce using rule 64 (mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE .)
+    CASE            reduce using rule 64 (mapnoMake -> VARIABLE asigacionCorta MAP CORCHETEIZ TIPODATOS CORCHETEDER TIPODATOS LLAVEIZ mapElementos LLAVEDE .)
+
+
+state 232
+
+    (65) mapElementos -> valoresPosibles DOSPUNTOS . valoresPosibles
+    (66) mapElementos -> valoresPosibles DOSPUNTOS . valoresPosibles COMA mapElementos
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+    VARIABLE        shift and go to state 92
+
+    valoresPosibles                shift and go to state 233
+
+state 233
+
+    (65) mapElementos -> valoresPosibles DOSPUNTOS valoresPosibles .
+    (66) mapElementos -> valoresPosibles DOSPUNTOS valoresPosibles . COMA mapElementos
+
+    LLAVEDE         reduce using rule 65 (mapElementos -> valoresPosibles DOSPUNTOS valoresPosibles .)
+    COMA            shift and go to state 234
+
+
+state 234
+
+    (66) mapElementos -> valoresPosibles DOSPUNTOS valoresPosibles COMA . mapElementos
+    (65) mapElementos -> . valoresPosibles DOSPUNTOS valoresPosibles
+    (66) mapElementos -> . valoresPosibles DOSPUNTOS valoresPosibles COMA mapElementos
+    (56) valoresPosibles -> . NUMBER
+    (57) valoresPosibles -> . BOOLEAN
+    (58) valoresPosibles -> . STRING
+    (59) valoresPosibles -> . FLOTANTE
+    (60) valoresPosibles -> . VARIABLE
+
+    NUMBER          shift and go to state 88
+    BOOLEAN         shift and go to state 89
+    STRING          shift and go to state 90
+    FLOTANTE        shift and go to state 91
+    VARIABLE        shift and go to state 92
+
+    valoresPosibles                shift and go to state 228
+    mapElementos                   shift and go to state 235
+
+state 235
+
+    (66) mapElementos -> valoresPosibles DOSPUNTOS valoresPosibles COMA mapElementos .
+
+    LLAVEDE         reduce using rule 66 (mapElementos -> valoresPosibles DOSPUNTOS valoresPosibles COMA mapElementos .)
+
